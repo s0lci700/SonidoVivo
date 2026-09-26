@@ -4,27 +4,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-SonidoVivo — a Vite + React 19 web app, built for the DSY1104 semester project ("Sonido Vivo", a music/audio store). The repo root *is* the Vite project root (there is no nested app folder).
+SonidoVivo — semester project for DSY1104 (Desarrollo Full Stack II, 2026-2), context **Forma B: Tienda Sonido Vivo**, a musical-instrument store in Viña del Mar. Solo project. The same repo evolves across Parcial 2 (React front-end, simulated CRUD), Parcial 3 (Spring Boot microservices + MySQL) and the EFT — never restart it.
 
-## Commands
+## Layout
 
-- `npm install` — install dependencies
-- `npm run dev` — start the Vite dev server with HMR
-- `npm run build` — production build to `dist/`
-- `npm run preview` — serve the production build locally
-- `npm run lint` — run ESLint over the project
+- `frontend/` — Vite + React 19 SPA (JavaScript, not TypeScript). All npm commands run from here.
+- `backend/`, `database/` — added in Parcial 3.
+- `documentacion/instrucciones/` — course brief, case document (`.docx`) and product catalog (`.xlsx`). Reference material, not code.
 
-There is no test suite configured yet.
+## Commands (run in `frontend/`)
 
-## Architecture
+- `npm run dev` — Vite dev server
+- `npm run build` — production build to `frontend/dist/`
+- `npm run lint` — ESLint
 
-- Entry point: `index.html` loads `/src/main.jsx`, which mounts `<App />` (from `src/App.jsx`) into `#root` inside `<StrictMode>`.
-- `src/App.jsx` currently holds the app's markup/logic as a single component (the default Vite React template, not yet built out into the store UI). Styling is split between `src/App.css` (component styles, also linked directly in `index.html`) and `src/index.css` (global styles).
-- Styling stack: Tailwind CSS v4 via the `@tailwindcss/vite` plugin (configured in `vite.config.js`), used alongside plain CSS files.
-- Icons: `public/icons.svg` is an SVG sprite referenced at runtime via `<use href="/icons.svg#icon-id">`; `public/favicon.svg` is the site favicon.
-- `src/assets/` holds imported image assets (e.g. `hero.png`) used directly in JSX via ES imports.
-- `instrucciones/` contains the course's assignment brief and deliverables (PDFs, a `.docx`, an `.xlsx`) — reference material for the project requirements, not application code.
+No test runner yet — testing (Jasmine/Karma per the course) is covered in week 08.
+
+## Frontend conventions
+
+- Structure follows the course's target: `src/components/` (reusable pieces), `src/pages/` (route views), `src/data/` (P2 simulated data), `src/services/` (data access; P2 reads local data, P3 swaps to `fetch` against the REST API — components must not read `data/` directly).
+- Routing: `react-router-dom`, `BrowserRouter` in `main.jsx`, `<Routes>` in `App.jsx`.
+- Styling: Tailwind CSS v4 only (via `@tailwindcss/vite`; `src/index.css` is just `@import "tailwindcss"`). No Bootstrap, no per-component CSS files.
+- Spanish naming for components, props, state and handlers (`ProductoCard`, `onAgregar`, `agregarAlCarrito`), matching the course tutorials. Shared state is lifted to the nearest common parent and passed via props.
+- Prices are CLP integers, formatted with `toLocaleString("es-CL")`.
+- Responsive targets from the brief: 360 px (hamburger menu), 768 px, 1280 px.
 
 ## Linting
 
-ESLint (flat config in `eslint.config.js`) applies `@eslint/js` recommended rules plus `eslint-plugin-react-hooks` and `eslint-plugin-react-refresh` (Vite-flavored) to all `.js`/`.jsx` files, with browser globals. `dist/` is ignored.
+ESLint flat config (`frontend/eslint.config.js`): `@eslint/js` recommended + `eslint-plugin-react-hooks` + `eslint-plugin-react-refresh`, browser globals, `dist/` ignored.

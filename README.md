@@ -1,16 +1,31 @@
-# React + Vite
+# Sonido Vivo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto semestral **DSY1104 · Desarrollo Full Stack II · 2026-2** — Forma B: *Tienda Sonido Vivo*.
 
-Currently, two official plugins are available:
+Tienda de instrumentos y equipos musicales en Viña del Mar que necesita un catálogo en línea con stock actualizado, pedidos formales para clientes remotos y control de inventario y ventas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Estructura
 
-## React Compiler
+```
+SonidoVivo/
+├── frontend/        App React + Vite (Parcial 2)
+├── backend/         Microservicios Spring Boot (Parcial 3)
+├── database/        Modelo y scripts MySQL (Parcial 3)
+└── documentacion/   Instrucciones del curso, caso y catálogo
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Frontend
 
-## Expanding the ESLint configuration
+Requiere Node.js 20.19+ o 22.12+.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+cd frontend
+npm install
+npm run dev
+```
+
+## Decisiones técnicas
+
+- **Diseño responsivo: Tailwind CSS v4.** El curso acepta Bootstrap o Tailwind y pide elegir uno. Se eligió Tailwind porque sus prefijos de breakpoint (`md:`, `lg:`) permiten expresar el comportamiento responsivo directamente en cada componente, sin archivos CSS separados.
+- **Navegación:** React Router (`react-router-dom`).
+- **Datos:** en Parcial 2 los datos son simulados (`frontend/src/data/`) y se consumen a través de `frontend/src/services/`, para que en Parcial 3 solo cambie la capa de servicios al conectarse a la API REST.
