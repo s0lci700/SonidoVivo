@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Catalogo } from "./pages/Catalogo";
 import { Header } from "./components/Header";
+
 function App() {
   return (
     <div className="flex min-h-svh flex-col">
