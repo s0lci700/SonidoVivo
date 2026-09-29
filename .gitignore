@@ -27,3 +27,6 @@ dist-ssr
 .venv/
 __pycache__/
 .ipynb_checkpoints/
+
+# Herramientas locales
+.serena/
