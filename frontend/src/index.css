@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+/* Estética "latón": ver mockup en claude.ai/artifact/17HWqBzWuAiZfgA2BbJwP9 */
+@theme {
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "DM Serif Display", ui-serif, Georgia, serif;
+
+  --color-laca-900: #1a1714;
+  --color-tinta-600: #5c5247;
+
+  --color-marfil-50: #fbf7ee;
+  --color-marfil-100: #f5efe0;
+  --color-marfil-200: #ede4d0;
+  --color-marfil-300: #d9cfbc;
+
+  --color-laton-500: #c9a227;
+  --color-laton-700: #8c6a1f;
+  --color-laton-800: #7a5a16;
+
+  --color-cobre-600: #9a5424;
+  --color-patina-600: #356b5e;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-marfil-100);
+    color: var(--color-laca-900);
+    font-family: var(--font-sans);
+  }
+}

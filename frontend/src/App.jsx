@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { ItemList } from "./components/ItemList";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
         <Routes>
           <Route path="/" element={<h1 className="text-2xl font-bold">Sonido Vivo</h1>} />
         </Routes>
+        <ItemList/>
       </main>
     </div>
   );
