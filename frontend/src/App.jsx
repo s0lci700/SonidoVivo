@@ -1,14 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import { ItemList } from "./components/ItemList";
-
+import { Catalogo } from "./pages/Catalogo";
+import { Header } from "./components/Header";
 function App() {
   return (
     <div className="flex min-h-svh flex-col">
+      <Header/>
       <main className="flex-1 p-4">
         <Routes>
-          <Route path="/" element={<h1 className="text-2xl font-bold">Sonido Vivo</h1>} />
+          {/* <Route path="/" element={<Inicio />} /> */}
+          <Route path="/catalogo" element={<Catalogo />} />
+          {/* <Route path="/producto/:codigo" element={<DetalleProducto />} /> */}
+          {/* <Route path="*" element={<NoEncontrado />} /> */}
         </Routes>
-        <ItemList/>
       </main>
     </div>
   );
