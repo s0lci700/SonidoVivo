@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-29T21:36:56.667Z",
+  "title": "Design System: Sonido Vivo",
+  "extensions": {
+    "colorMeta": {
+      "laca": {
+        "role": "neutral",
+        "displayName": "Laca",
+        "canonical": "oklch(20.699% 0.008 67.392)",
+        "tonalRamp": [
+          "#0d0b08",
+          "#272320",
+          "#423f3c",
+          "#615d59",
+          "#837f7b",
+          "#a8a4a0",
+          "#cecac5",
+          "#f0eeec"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "oklch(44.501% 0.022 69.881)",
+        "tonalRamp": [
+          "#110903",
+          "#2b2218",
+          "#473e33",
+          "#665c50",
+          "#897e72",
+          "#aea396",
+          "#d4c8bc",
+          "#f3ede7"
+        ]
+      },
+      "marfil-50": {
+        "role": "neutral",
+        "displayName": "Marfil 50",
+        "canonical": "oklch(97.676% 0.013 86.829)",
+        "tonalRamp": [
+          "#0d0b06",
+          "#27241d",
+          "#433f38",
+          "#615d56",
+          "#838078",
+          "#a8a49c",
+          "#cecac1",
+          "#f0eeea"
+        ]
+      },
+      "marfil-100": {
+        "role": "neutral",
+        "displayName": "Marfil 100",
+        "canonical": "oklch(95.275% 0.021 88.721)",
+        "tonalRamp": [
+          "#0f0b03",
+          "#282418",
+          "#443f33",
+          "#625d50",
+          "#858072",
+          "#aaa496",
+          "#d0cabc",
+          "#f1eee7"
+        ]
+      },
+      "marfil-200": {
+        "role": "neutral",
+        "displayName": "Marfil 200",
+        "canonical": "oklch(92.064% 0.028 86.647)",
+        "tonalRamp": [
+          "#100a01",
+          "#2a2314",
+          "#463f2f",
+          "#655d4c",
+          "#887f6d",
+          "#aca491",
+          "#d3cab6",
+          "#f3eee4"
+        ]
+      },
+      "marfil-300": {
+        "role": "neutral",
+        "displayName": "Marfil 300",
+        "canonical": "oklch(85.745% 0.028 83.532)",
+        "tonalRamp": [
+          "#110a01",
+          "#2b2314",
+          "#473f2f",
+          "#655d4c",
+          "#887f6e",
+          "#ada391",
+          "#d3c9b6",
+          "#f3eee4"
+        ]
+      },
+      "laton-500": {
+        "role": "primary",
+        "displayName": "Latón Pulido",
+        "canonical": "oklch(72.801% 0.138 89.726)",
+        "tonalRamp": [
+          "#1e0200",
+          "#3a1c00",
+          "#583a00",
+          "#785900",
+          "#9c7c0b",
+          "#c2a140",
+          "#e9c769",
+          "#feedc1"
+        ]
+      },
+      "laton-700": {
+        "role": "primary",
+        "displayName": "Latón Viejo",
+        "canonical": "oklch(54.491% 0.099 82.973)",
+        "tonalRamp": [
+          "#1e0200",
+          "#3a1c00",
+          "#593900",
+          "#795700",
+          "#9d7a32",
+          "#c39f58",
+          "#eac57e",
+          "#ffecca"
+        ]
+      },
+      "laton-800": {
+        "role": "primary",
+        "displayName": "Latón Oscuro",
+        "canonical": "oklch(48.878% 0.091 81.538)",
+        "tonalRamp": [
+          "#1d0300",
+          "#391c00",
+          "#583900",
+          "#775812",
+          "#9c7a3b",
+          "#c29f60",
+          "#e9c585",
+          "#feeccd"
+        ]
+      },
+      "cobre": {
+        "role": "secondary",
+        "displayName": "Cobre",
+        "canonical": "oklch(52.033% 0.111 51.903)",
+        "tonalRamp": [
+          "#290000",
+          "#490700",
+          "#6b2900",
+          "#8d4816",
+          "#b46b3d",
+          "#dc9061",
+          "#ffb686",
+          "#ffe5cd"
+        ]
+      },
+      "patina": {
+        "role": "secondary",
+        "displayName": "Pátina",
+        "canonical": "oklch(48.653% 0.062 175.945)",
+        "tonalRamp": [
+          "#00120a",
+          "#002d23",
+          "#104a3e",
+          "#33695c",
+          "#568d7f",
+          "#7bb2a3",
+          "#a0d8c9",
+          "#daf6ee"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page titles, section and category headings."
+      },
+      "logo": {
+        "displayName": "Logo",
+        "purpose": "The brass 'Sonido Vivo' wordmark in the header."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Product names on cards (provisional size)."
+      },
+      "price": {
+        "displayName": "Price",
+        "purpose": "CLP prices with tabular figures."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Product descriptions."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Header links."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Brand · model line, uppercase and tracked."
+      }
+    },
+    "shadows": [
+      {
+        "name": "brass-bevel",
+        "value": "inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -2px 0 rgba(26,23,20,0.25)",
+        "purpose": "Machined relief on brass buttons only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "press-lift",
+        "value": "translateY(-1px) + brightness(1.1), 150ms ease-out",
+        "purpose": "Hover feedback on brass buttons; none under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "360px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "desktop",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Brass pill for the main action on a card or page (Agregar).",
+      "html": "<button class=\"ds-btn-primary\">Agregar</button>",
+      "css": ".ds-btn-primary{background:var(--color-laton-500,#c9a227);color:var(--color-laca-900,#1a1714);font-family:'Work Sans',system-ui,sans-serif;font-size:14px;font-weight:600;height:44px;padding:0 18px;border:0;border-radius:9999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(26,23,20,.25);cursor:pointer;transition:filter .15s ease-out,transform .15s ease-out}.ds-btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}.ds-btn-primary:focus-visible{outline:2px solid #7a5a16;outline-offset:2px}.ds-btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}@media (prefers-reduced-motion:reduce){.ds-btn-primary{transition:none}.ds-btn-primary:hover{transform:none}}"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "card-product",
+      "description": "Flat ivory card: photo well, brand·model, name, description, stock, price + button.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-media\"><span>[foto]</span></div><div class=\"ds-card-body\"><p class=\"ds-card-label\">Yamaha · F310</p><h2 class=\"ds-card-title\">Guitarra Acústica Folk</h2><p class=\"ds-card-desc\">Tapa de abeto, aros y fondo de meranti.</p><p class=\"ds-stock ds-stock-in\"><span class=\"ds-dot\"></span>En stock · 8 disponibles</p><div class=\"ds-card-foot\"><span class=\"ds-price\">$129.990</span><button class=\"ds-btn-primary\">Agregar</button></div></div></article>",
+      "css": ".ds-card{width:280px;display:flex;flex-direction:column;overflow:hidden;border:1px solid #d9cfbc;border-radius:16px;background:#fbf7ee;color:#1a1714;font-family:'Work Sans',system-ui,sans-serif}.ds-card-media{aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#ede4d0;border-bottom:1px solid #d9cfbc;color:#5c5247;font-size:12px}.ds-card-body{display:flex;flex-direction:column;gap:8px;padding:20px}.ds-card-label{margin:0;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#7a5a16}.ds-card-title{margin:0;font-size:20px;font-weight:600;line-height:1.25}.ds-card-desc{margin:0;font-size:14px;line-height:1.625;color:#5c5247}.ds-stock{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}.ds-stock-in{color:#356b5e}.ds-dot{width:8px;height:8px;border-radius:9999px;background:currentColor}.ds-card-foot{display:flex;align-items:center;gap:12px;margin-top:4px;padding-top:12px;border-top:1px solid #d9cfbc}.ds-price{flex:1;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}.ds-btn-primary{background:var(--color-laton-500,#c9a227);color:var(--color-laca-900,#1a1714);font-family:'Work Sans',system-ui,sans-serif;font-size:14px;font-weight:600;height:44px;padding:0 18px;border:0;border-radius:9999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(26,23,20,.25);cursor:pointer;transition:filter .15s ease-out,transform .15s ease-out}.ds-btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}.ds-btn-primary:focus-visible{outline:2px solid #7a5a16;outline-offset:2px}.ds-btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}@media (prefers-reduced-motion:reduce){.ds-btn-primary{transition:none}.ds-btn-primary:hover{transform:none}}"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "header",
+      "description": "Laca bar with brass serif logo and Work Sans links; active link in brass with underline.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-logo\" href=\"#\">Sonido Vivo</a><nav class=\"ds-nav\"><a href=\"#\">Inicio</a><a href=\"#\" aria-current=\"page\">Catálogo</a><a href=\"#\">Nosotros</a><a href=\"#\">Contacto</a></nav></header>",
+      "css": ".ds-header{height:80px;display:flex;align-items:center;gap:48px;padding:0 24px;background:#1a1714}.ds-logo{font-family:'DM Serif Display',Georgia,serif;font-size:28px;letter-spacing:-.025em;color:#c9a227;text-decoration:none}.ds-nav{display:flex;gap:32px}.ds-nav a{font-family:'Work Sans',system-ui,sans-serif;font-size:15px;font-weight:500;color:#f5efe0;text-decoration:none;padding:12px 0;transition:color .15s ease-out}.ds-nav a:hover,.ds-nav a[aria-current=page]{color:#c9a227}.ds-nav a[aria-current=page]{text-decoration:underline;text-underline-offset:6px}.ds-nav a:focus-visible,.ds-logo:focus-visible{outline:2px solid #c9a227;outline-offset:4px}"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "chip-category",
+      "description": "Proposed filter pill (not yet implemented).",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">Todas</button><button class=\"ds-chip\" aria-pressed=\"false\">Guitarras Eléctricas</button><button class=\"ds-chip\" aria-pressed=\"false\">Baterías</button></div>",
+      "css": ".ds-chips{display:flex;gap:8px;flex-wrap:wrap}.ds-chip{height:44px;padding:0 16px;border-radius:9999px;border:1px solid #d9cfbc;background:#fbf7ee;color:#1a1714;font-family:'Work Sans',system-ui,sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s ease-out}.ds-chip:hover{background:#ede4d0}.ds-chip[aria-pressed=true]{background:#1a1714;border-color:#1a1714;color:#fbf7ee}.ds-chip:focus-visible{outline:2px solid #7a5a16;outline-offset:2px}"
+    },
+    {
+      "name": "Stock Indicator",
+      "kind": "custom",
+      "refersTo": "stock-in",
+      "description": "Dot plus words; patina / copper / ink.",
+      "html": "<div class=\"ds-stocks\"><p class=\"ds-stock ds-in\"><span class=\"ds-dot\"></span>En stock · 8 disponibles</p><p class=\"ds-stock ds-low\"><span class=\"ds-dot\"></span>Últimas 2 unidades</p><p class=\"ds-stock ds-out\"><span class=\"ds-dot\"></span>Agotado</p></div>",
+      "css": ".ds-stocks{display:flex;flex-direction:column;gap:8px;padding:16px;background:#fbf7ee;font-family:'Work Sans',system-ui,sans-serif}.ds-stock{margin:0;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}.ds-dot{width:8px;height:8px;border-radius:9999px;background:currentColor}.ds-in{color:#356b5e}.ds-low{color:#9a5424}.ds-out{color:#5c5247}"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Taller de Bronces",
+    "overview": "The brass workshop behind a neighbourhood music shop: lacquered black benches, ivory cloth, brass fittings worn smooth by use. The system borrows brass as a *material*, not a theme. Instruments of every kind (guitars, drums, keys, pedals) sit on calm ivory surfaces, framed by a black lacquer bar, with brass appearing only where a hand would touch it: the logo, the active link, the button you press.\n\nDensity is moderate and honest: a product shows its brand and model, name, a short plain description, real stock and a CLP price, nothing promotional. Warmth comes from the materials and the serif; trust comes from clear numbers and stillness. The rejected worlds are explicit: no big-box marketplace clutter, no generic white Shopify template, no shiny gold-luxury coating, no neon \"gamer\" gear store.",
+    "keyCharacteristics": [
+      "Two-tone frame: laca (black) chrome, marfil (ivory) content.",
+      "Brass as a fitting, never a coating: accents and controls only.",
+      "Flat, tonally layered surfaces; the only relief is on brass controls.",
+      "Serif for titles and the logo, Work Sans for everything a shopper reads to decide.",
+      "Status spoken in words first, colour second."
+    ],
+    "rules": [
+      {
+        "name": "The Fitting Rule",
+        "body": "Brass (laton-500) marks what you can touch or where you are: buttons, the active link, the logo. It is never a background wash, a gradient, or body text on ivory.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dark-Brass Rule",
+        "body": "Brass text on a light surface is always laton-800, never laton-500 (which fails contrast on ivory).",
+        "section": "colors"
+      },
+      {
+        "name": "The Sign-and-Tag Rule",
+        "body": "The serif is the shop sign: page titles, category headings and the logo. Anything a shopper scans to decide (product names, prices, stock, buttons, nav) is Work Sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Bench Rule",
+        "body": "Surfaces sit flat on the bench. Nothing floats; cards do not cast shadows. Relief belongs only to brass you can press.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep chrome in laca and content on the ivory ramp (marfil-50/100/200/300).",
+      "**Do** use laton-500 only for touchable or current-location elements, and laton-800 when brass must be text on ivory.",
+      "**Do** state stock in words next to its coloured dot.",
+      "**Do** format prices as CLP with `toLocaleString(\"es-CL\")` and tabular figures.",
+      "**Do** keep every interactive target at least 44px tall."
+    ],
+    "donts": [
+      "**Don't** use brass gradients, gold washes or shiny metallic backgrounds (the gold-luxury anti-reference).",
+      "**Don't** put laton-500 text on any ivory surface.",
+      "**Don't** cast shadows on cards or containers; only brass controls get the bevel.",
+      "**Don't** set product names, prices or buttons in DM Serif Display.",
+      "**Don't** add discount badges, countdowns or promo banners."
+    ]
+  }
+}
