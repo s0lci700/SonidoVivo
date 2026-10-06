@@ -1,0 +1,21 @@
+VERSIÓN 02 · REACT ROUTER + LAYOUT
+
+PROVIENE DE:
+Versión 01.
+
+QUÉ CAMBIA:
+- Se elimina paginaActual y el switch de App.jsx.
+- Cada página obtiene una URL real dentro de la SPA.
+- Navbar usa NavLink.
+- LayoutPrincipal contiene Header + Navbar + <Outlet /> + Footer.
+- <Outlet /> representa la parte central que cambia.
+
+QUÉ SE PRETENDE APRENDER:
+- BrowserRouter.
+- Routes y Route.
+- NavLink.
+- Layout y Outlet.
+- Separación entre estructura común y contenido variable.
+
+LIMITACIÓN INTENCIONAL:
+Login y Admin todavía no están conectados ni protegidos.

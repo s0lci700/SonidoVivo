@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Mini Tienda DSY1104</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <!-- Versión 00: estructura repetida intencionalmente para luego convertirla en componentes React. -->
+  <header class="site-header">
+  <div class="header-inner">
+    <h1>Mini Tienda DSY1104</h1>
+    <p>Ejemplo integrador HTML → React</p>
+  </div>
+</header>
+  <nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html">Inicio</a>
+    <a href="productos.html">Productos</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="login.html">Login</a>
+    <a href="admin.html">Admin</a>
+  </div>
+</nav>
+
+  <main class="main-container">
+    <section class="panel">
+      <h2>Panel administrador</h2>
+      <p id="bienvenida-admin">Comprobando sesión...</p>
+
+      <div class="admin-grid">
+        <article class="kpi"><strong>4</strong><span>Productos</span></article>
+        <article class="kpi"><strong>1</strong><span>Administrador</span></article>
+        <article class="kpi"><strong>0</strong><span>Pedidos pendientes</span></article>
+      </div>
+
+      <p><button id="btn-cerrar-sesion" class="primary" type="button">Cerrar sesión</button></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 DSY1104 · Ejemplo académico</p>
+  </div>
+</footer>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

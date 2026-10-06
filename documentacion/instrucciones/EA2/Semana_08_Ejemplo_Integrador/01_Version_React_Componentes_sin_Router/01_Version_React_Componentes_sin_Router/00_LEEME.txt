@@ -1,0 +1,20 @@
+VERSIÓN 01 · REACT + COMPONENTES, TODAVÍA SIN REACT ROUTER
+
+PROVIENE DE:
+Versión 00, que tenía cinco páginas HTML físicas.
+
+QUÉ CAMBIA:
+- Header, Navbar y Footer dejan de repetirse.
+- Cada contenido central se convierte en un componente de página.
+- Producto se convierte en ProductoCard y recibe datos mediante props.
+- App.jsx usa un state "paginaActual" para simular navegación.
+
+QUÉ SE PRETENDE APRENDER:
+- JSX.
+- Componentes reutilizables.
+- Props.
+- useState.
+- Diferencia entre componente común y componente de página.
+
+LIMITACIÓN INTENCIONAL:
+Todavía NO usamos React Router. Al recargar la aplicación no existe una URL distinta para cada página.

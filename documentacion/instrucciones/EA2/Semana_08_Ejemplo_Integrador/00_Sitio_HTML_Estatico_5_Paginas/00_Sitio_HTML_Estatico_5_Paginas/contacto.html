@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto · Mini Tienda DSY1104</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <!-- Versión 00: estructura repetida intencionalmente para luego convertirla en componentes React. -->
+  <header class="site-header">
+  <div class="header-inner">
+    <h1>Mini Tienda DSY1104</h1>
+    <p>Ejemplo integrador HTML → React</p>
+  </div>
+</header>
+  <nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html">Inicio</a>
+    <a href="productos.html">Productos</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="login.html">Login</a>
+    <a href="admin.html">Admin</a>
+  </div>
+</nav>
+
+  <main class="main-container">
+    <section class="form-card">
+      <h2>Contacto</h2>
+      <p>Formulario con validaciones JavaScript tradicionales.</p>
+
+      <form id="form-contacto" novalidate>
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" name="nombre" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label for="correo">Correo</label>
+          <input id="correo" name="correo" type="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5"></textarea>
+        </div>
+
+        <button class="primary" type="submit">Enviar</button>
+        <div id="resultado-contacto" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 DSY1104 · Ejemplo académico</p>
+  </div>
+</footer>
+
+  <script src="js/contacto.js"></script>
+</body>
+</html>

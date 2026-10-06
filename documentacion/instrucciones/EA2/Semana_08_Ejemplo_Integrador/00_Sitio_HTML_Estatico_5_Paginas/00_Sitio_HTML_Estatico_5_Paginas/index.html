@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio · Mini Tienda DSY1104</title>
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+<body>
+  <!-- Versión 00: estructura repetida intencionalmente para luego convertirla en componentes React. -->
+  <header class="site-header">
+  <div class="header-inner">
+    <h1>Mini Tienda DSY1104</h1>
+    <p>Ejemplo integrador HTML → React</p>
+  </div>
+</header>
+  <nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html">Inicio</a>
+    <a href="productos.html">Productos</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="login.html">Login</a>
+    <a href="admin.html">Admin</a>
+  </div>
+</nav>
+
+  <main class="main-container">
+    <section class="hero">
+      <h2>Bienvenido</h2>
+      <p>Este sitio tiene cinco páginas HTML tradicionales. La meta será migrarlo paso a paso a React.</p>
+    </section>
+
+    <section class="panel">
+      <h2>¿Qué vamos a transformar?</h2>
+      <ul>
+        <li>Header, navegación y footer repetidos → componentes reutilizables.</li>
+        <li>Cinco archivos HTML → páginas React.</li>
+        <li>Links entre archivos → React Router.</li>
+        <li>Login tradicional → estado, localStorage y ruta protegida.</li>
+        <li>Validaciones → funciones reutilizables y pruebas con Vitest.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 DSY1104 · Ejemplo académico</p>
+  </div>
+</footer>
+
+</body>
+</html>

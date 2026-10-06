@@ -1,0 +1,19 @@
+VERSIÓN 00 · SITIO HTML/CSS/JS TRADICIONAL
+
+ORIGEN:
+Este sitio representa el punto de partida antes de migrar a React.
+Tiene 5 páginas HTML físicas: Inicio, Productos, Contacto, Login y Admin.
+
+QUÉ SE PRETENDE OBSERVAR:
+1. Header, navegación y footer están repetidos en varias páginas.
+2. Cada página tiene su propio <main>.
+3. Productos se construye con JavaScript tradicional.
+4. Login usa localStorage para simular una sesión y redirigir a admin.html.
+5. admin.html comprueba la sesión y devuelve al login cuando no existe.
+
+IMPORTANTE:
+La autenticación es SOLO DIDÁCTICA. No es seguridad real.
+
+EJECUCIÓN RECOMENDADA:
+Abrir la carpeta con VS Code y ejecutar con Live Server.
+Credenciales de prueba: admin / admin123
