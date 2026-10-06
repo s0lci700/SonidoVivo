@@ -1,0 +1,12 @@
+# Documentos y archivos binarios: sin conversión de fin de línea. Algunos PDF del curso no tienen
+# bytes nulos y Git los tomaba por texto, lo que los rompe al convertir CRLF.
+*.pdf  binary
+*.docx binary
+*.xlsx binary
+*.pptx binary
+*.zip  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.ico  binary
