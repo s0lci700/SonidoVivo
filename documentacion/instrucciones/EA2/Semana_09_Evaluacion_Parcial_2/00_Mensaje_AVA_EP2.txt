@@ -1,0 +1,22 @@
+EXPERIENCIA 2 – EVALUACIÓN PARCIAL 2 · DSY1104
+
+Desde la Semana 09 comenzamos el cierre del desarrollo correspondiente a la Evaluación Parcial 2.
+
+Durante esta etapa cada equipo debe concentrarse en:
+- completar la migración y organización del frontend en React + Vite;
+- verificar componentes, navegación, formularios, validaciones y diseño responsivo;
+- completar y ejecutar las pruebas unitarias con Vitest + React Testing Library;
+- actualizar el repositorio GitHub y dejar identificable la participación de cada integrante;
+- actualizar el documento ERS a versión 2;
+- preparar el documento de cobertura del testing;
+- preparar la demostración en video de la versión que será entregada.
+
+ORGANIZACIÓN
+Semana 09: desarrollo, correcciones y checkpoint del proyecto.
+Semana 10: cierre y entrega de artefactos. La versión entregada queda identificada para evaluación.
+Semana 11: presentación/defensa técnica individual basada en la versión entregada.
+
+IMPORTANTE
+La documentación oficial utiliza Bootstrap y Jasmine/Karma. Para esta ejecución de la asignatura se autoriza Bootstrap o Tailwind CSS y se utilizará Vitest + React Testing Library como actualización técnica del entorno de pruebas.
+
+Revisen los documentos de esta carpeta antes de continuar el desarrollo.
