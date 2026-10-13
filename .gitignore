@@ -33,3 +33,7 @@ __pycache__/
 
 # Material de estudio personal
 documentacion/estudio/
+ruta.json
+
+# Archivos de bloqueo de LibreOffice
+.~lock.*#
