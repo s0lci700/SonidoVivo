@@ -3,7 +3,7 @@
     "id": 1,
     "nombre": "Administrador Sonido Vivo",
     "correo": "admin@sonidovivo.cl",
-    "password": "admin123",
+    "password": "Admin123",
     "rol": "ADMINISTRADOR",
     "activo": true
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "nombre": "Vendedor Sonido Vivo",
     "correo": "vendedor@sonidovivo.cl",
-    "password": "vendedor123",
+    "password": "Vendedor123",
     "rol": "VENDEDOR",
     "activo": true
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "nombre": "Cliente de Prueba",
     "correo": "cliente@correo.cl",
-    "password": "cliente123",
+    "password": "Cliente123",
     "rol": "CLIENTE",
     "activo": true
   }
