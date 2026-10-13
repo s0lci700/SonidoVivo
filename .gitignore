@@ -30,3 +30,6 @@ __pycache__/
 
 # Herramientas locales
 .serena/
+
+# Material de estudio personal
+documentacion/estudio/
