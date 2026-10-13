@@ -22,9 +22,29 @@
 }
 
 @layer base {
+  :root {
+    accent-color: var(--color-laton-700);
+    caret-color: var(--color-laton-800);
+    scrollbar-color: var(--color-marfil-300) var(--color-marfil-100);
+  }
+
   body {
     background-color: var(--color-marfil-100);
     color: var(--color-laca-900);
     font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-laton-500);
+    color: var(--color-laca-900);
+  }
+}
+
+/* Fila desplazable sin barra visible (filtros del catálogo). */
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
