@@ -1,9 +1,26 @@
+import usuarios from "../data/usuarios.json";
+
 // Parcial 2: sesión simulada en localStorage. En el Parcial 3 este archivo
 // delega el login a la API REST (JWT), manteniendo los mismos nombres y firmas.
 const CLAVE_SESION = "usuarioActual";
 
-// TODO: iniciarSesion(correo, password) -> true/false.
-//   Valida contra los usuarios simulados y guarda { correo, nombre, rol } en CLAVE_SESION.
+export function iniciarSesion(correo, password) {
+  const usuario = usuarios.find(
+    (usu) => usu.correo === correo && usu.password === password && usu.activo,
+  );
+  if (!usuario) {
+    return false;
+  }
+  localStorage.setItem(
+    CLAVE_SESION,
+    JSON.stringify({
+      correo: usuario.correo,
+      nombre: usuario.nombre,
+      rol: usuario.rol,
+    }),
+  );
+  return true;
+}
 // TODO: registrarUsuario(datos) -> agrega un Cliente a los usuarios simulados.
 
 export function obtenerSesion() {
