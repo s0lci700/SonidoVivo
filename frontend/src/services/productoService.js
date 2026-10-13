@@ -11,3 +11,11 @@ export async function obtenerProductos(categoriaId) {
 export async function obtenerCategorias() {
   return [...categorias];
 }
+
+// TODO (CRUD simulado que pide el Anexo 1): hoy el catálogo es de solo lectura.
+//   Para crear/editar/eliminar hay que trabajar sobre una copia mutable de
+//   productos.json guardada en localStorage, y que las funciones de arriba lean de ahí.
+// TODO: obtenerProductoPorCodigo(codigo)        -> lo usa DetalleProducto y AdminProductoForm
+// TODO: crearProducto(producto)                 -> AdminProductoForm (nuevo)
+// TODO: actualizarProducto(codigo, cambios)     -> AdminProductoForm (editar)
+// TODO: eliminarProducto(codigo)                -> AdminProductos

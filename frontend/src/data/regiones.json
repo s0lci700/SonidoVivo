@@ -1,0 +1,18 @@
+[
+  { "id": "AP", "nombre": "Arica y Parinacota", "comunas": ["Arica", "Putre"] },
+  { "id": "TA", "nombre": "Tarapacá", "comunas": ["Iquique", "Alto Hospicio", "Pozo Almonte"] },
+  { "id": "AN", "nombre": "Antofagasta", "comunas": ["Antofagasta", "Calama", "Tocopilla", "Mejillones"] },
+  { "id": "AT", "nombre": "Atacama", "comunas": ["Copiapó", "Vallenar", "Caldera", "Chañaral"] },
+  { "id": "CO", "nombre": "Coquimbo", "comunas": ["La Serena", "Coquimbo", "Ovalle", "Illapel"] },
+  { "id": "VA", "nombre": "Valparaíso", "comunas": ["Viña del Mar", "Valparaíso", "Concón", "Quilpué", "Villa Alemana", "Quillota", "San Antonio", "Los Andes", "San Felipe"] },
+  { "id": "RM", "nombre": "Metropolitana de Santiago", "comunas": ["Santiago", "Providencia", "Las Condes", "Ñuñoa", "Maipú", "La Florida", "Puente Alto", "San Bernardo", "Estación Central", "Recoleta"] },
+  { "id": "LI", "nombre": "Libertador General Bernardo O'Higgins", "comunas": ["Rancagua", "San Fernando", "Rengo", "Pichilemu"] },
+  { "id": "ML", "nombre": "Maule", "comunas": ["Talca", "Curicó", "Linares", "Constitución"] },
+  { "id": "NB", "nombre": "Ñuble", "comunas": ["Chillán", "Chillán Viejo", "San Carlos"] },
+  { "id": "BI", "nombre": "Biobío", "comunas": ["Concepción", "Talcahuano", "San Pedro de la Paz", "Coronel", "Los Ángeles"] },
+  { "id": "AR", "nombre": "La Araucanía", "comunas": ["Temuco", "Padre Las Casas", "Villarrica", "Pucón", "Angol"] },
+  { "id": "LR", "nombre": "Los Ríos", "comunas": ["Valdivia", "La Unión", "Panguipulli"] },
+  { "id": "LL", "nombre": "Los Lagos", "comunas": ["Puerto Montt", "Puerto Varas", "Osorno", "Castro", "Ancud"] },
+  { "id": "AI", "nombre": "Aysén del General Carlos Ibáñez del Campo", "comunas": ["Coyhaique", "Puerto Aysén"] },
+  { "id": "MA", "nombre": "Magallanes y de la Antártica Chilena", "comunas": ["Punta Arenas", "Puerto Natales", "Porvenir"] }
+]
