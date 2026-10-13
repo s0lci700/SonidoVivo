@@ -1,0 +1,26 @@
+VERSIÓN 03 · FORMULARIOS + LOGIN + RUTA PROTEGIDA
+
+PROVIENE DE:
+Versión 02.
+
+QUÉ CAMBIA:
+- Contacto usa useState y funciones de validación reutilizables.
+- Login captura usuario y contraseña.
+- auth.js centraliza la sesión simulada.
+- RutaProtegida evita entrar a /admin sin sesión.
+- Admin lee la sesión y permite cerrar sesión.
+
+CREDENCIALES:
+admin / admin123
+
+IMPORTANTE:
+Esto NO es seguridad real. localStorage puede modificarse manualmente.
+En Parcial 3 debe reemplazarse por autenticación del Backend y JWT.
+
+QUÉ SE PRETENDE APRENDER:
+- Formularios controlados.
+- useState.
+- Validaciones reutilizables.
+- useNavigate.
+- localStorage.
+- Composición de una ruta protegida.

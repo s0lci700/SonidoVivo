@@ -1,0 +1,21 @@
+VERSIÓN 04 · VITEST + REACT TESTING LIBRARY
+
+PROVIENE DE:
+Versión 03.
+
+QUÉ CAMBIA:
+- La aplicación funcional se mantiene.
+- Se agregan Vitest, jsdom, React Testing Library y jest-dom.
+- Se agregan 10 pruebas orientadas a comportamiento.
+
+QUÉ SE PRETENDE APRENDER:
+- No crear tests aislados sin contexto.
+- Probar funciones puras de validación.
+- Probar renderizado y props.
+- Probar formulario de login y navegación.
+- Mantener separada la lógica para facilitar testing y P3.
+
+COMANDOS:
+npm test
+npm run test:watch
+npm run test:coverage

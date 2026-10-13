@@ -1,0 +1,18 @@
+SEMANA 09 · INTEGRACIÓN Y CIERRE PROGRESIVO DE EP2
+
+Durante esta semana trabajaremos directamente sobre el proyecto semestral.
+
+Objetivo:
+dejar el frontend en una versión estable y cercana a la entrega de la Evaluación Parcial 2.
+
+Prioridades:
+1. Verificar que el proyecto ejecute correctamente.
+2. Completar funcionalidades pendientes.
+3. Revisar componentes, Router, Layout, formularios y validaciones.
+4. Completar el diseño responsivo.
+5. Avanzar hasta las 10 pruebas con Vitest + React Testing Library.
+6. Actualizar GitHub y la documentación de entrega.
+
+Esta semana NO corresponde comenzar otra aplicación ni agregar funcionalidades fuera del alcance si aún existen problemas en los flujos principales.
+
+Utilicen los documentos de esta carpeta como guía de trabajo y consulten la carpeta «Experiencia 2 – Evaluación Parcial 2» para las instrucciones completas de la entrega y la rúbrica.
