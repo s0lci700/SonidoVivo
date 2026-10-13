@@ -7,7 +7,7 @@ export function Campo(props) {
   return (
     <div className="flex flex-col gap-1.5">
       <label htmlFor={props.nombre} className="text-sm font-medium">
-        {props.etiqueta}:
+        {props.etiqueta}
       </label>
       {props.multilinea ? (
         <textarea
