@@ -9,6 +9,7 @@
 //     "categoriaId": "GA"
  
 import { estadoStock } from "../utils/estadoStock.js";
+import { Boton } from "./Boton";
 
 const imagenes = import.meta.glob("../assets/productos/*.webp", {
   eager: true,
@@ -43,14 +44,9 @@ export function Item(props) {
             ${props.precio.toLocaleString("es-CL")}
           </span>
           {props.onAgregar && (
-            <button
-              type="button"
-              onClick={() => props.onAgregar(props)}
-              disabled={props.stock <= 0}
-              className="h-11 cursor-pointer rounded-full bg-laton-500 px-4.5 text-sm font-semibold text-laca-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_0_rgba(26,23,20,0.25)] transition hover:-translate-y-px hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-            >
+            <Boton onClick={() => props.onAgregar(props)} deshabilitado={props.stock <= 0}>
               Agregar
-            </button>
+            </Boton>
           )}
         </div>
       </div>
