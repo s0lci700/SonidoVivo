@@ -79,4 +79,8 @@ describe("validarStock", () => {
   it("rechaza un stock menor a 0", () => {
     expect(validarStock(-1)).toBe(false);
   });
+
+  it("rechaza un stock que no sea numero entero", () => {
+    expect(validarStock(0.5)).toBe(false);
+  })
 })
