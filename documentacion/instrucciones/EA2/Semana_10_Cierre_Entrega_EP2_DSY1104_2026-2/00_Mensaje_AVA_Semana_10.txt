@@ -1,0 +1,15 @@
+SEMANA 10 · CIERRE Y ENTREGA DE LA EVALUACIÓN PARCIAL 2
+
+Durante esta semana cada grupo debe finalizar, verificar y entregar la versión correspondiente a la Evaluación Parcial 2.
+
+El foco es resolver pendientes, comprobar la ejecución, finalizar testing y cobertura, actualizar GitHub y documentación, completar el video y realizar la entrega individual en AVA.
+
+ORGANIZACIÓN POSTERIOR A LA ENTREGA
+
+PRIMERA SESIÓN DE LA SEMANA SIGUIENTE:
+El docente descargará los artefactos, revisará los proyectos y generará las preguntas personalizadas de la defensa técnica. La asistencia se registrará PRESENTE para el estudiante que haya subido correctamente los artefactos de EP2 dentro del plazo.
+
+SEGUNDA SESIÓN:
+Cada estudiante deberá asistir PRESENCIALMENTE para responder su defensa técnica individual sobre la versión efectivamente entregada.
+
+La versión entregada será la utilizada para la revisión y la generación de preguntas. Los cambios posteriores en GitHub no reemplazan la evidencia de EP2.
