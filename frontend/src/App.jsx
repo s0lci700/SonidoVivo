@@ -16,24 +16,37 @@ import { Admin } from "./pages/Admin";
 import { AdminProductos } from "./pages/AdminProductos";
 import { AdminProductoForm } from "./pages/AdminProductoForm";
 import { NoEncontrado } from "./pages/NoEncontrado";
+import { agregarProducto, quitarProducto, cambiarCantidad } from "./utils/carrito";
 
 function App() {
-  // TODO: sacar setCarrito y escribir agregarAlCarrito / quitarDelCarrito / vaciarCarrito.
   // El estado vive aquí porque lo comparten Header (contador), Catálogo, Carrito y Checkout.
-  const [carrito] = useState([]);
+  const [carrito, setCarrito] = useState([]);
+  
+  function agregarAlCarrito(producto) {
+    setCarrito((prev) => agregarProducto(prev, producto));
+  }
+  function quitarDelCarrito(codigo) {
+    setCarrito((prev) => quitarProducto(prev, codigo));
+  }
+  function cambiarCantidadCarrito(codigo, cantidad) {
+    setCarrito((prev) => cambiarCantidad(prev, codigo,cantidad))
+  }
+  function vaciarCarrito() {
+    setCarrito([]);
+  }
 
   return (
     <Routes>
       <Route element={<LayoutPrincipal cantidadCarrito={carrito.length} />}>
         {/* Tienda */}
         <Route index element={<Inicio />} />
-        <Route path="catalogo" element={<Catalogo />} />
+        <Route path="catalogo" element={<Catalogo onAgregar={agregarAlCarrito}/>} />
         <Route path="producto/:codigo" element={<DetalleProducto />} />
         <Route path="nosotros" element={<Nosotros />} />
         <Route path="contacto" element={<Contacto />} />
 
         {/* Compra */}
-        <Route path="carrito" element={<Carrito carrito={carrito} />} />
+        <Route path="carrito" element={<Carrito carrito={carrito} onQuitar={quitarDelCarrito} onCambiarCantidad={cambiarCantidadCarrito} onVaciar={vaciarCarrito}/>} />
         <Route path="checkout" element={<Checkout carrito={carrito} />} />
         <Route path="compra/exito" element={<ResultadoCompra exito />} />
         <Route path="compra/error" element={<ResultadoCompra />} />
@@ -43,10 +56,38 @@ function App() {
         <Route path="registro" element={<Registro />} />
 
         {/* Administración */}
-        <Route path="admin" element={<RutaProtegida><Admin /></RutaProtegida>} />
-        <Route path="admin/productos" element={<RutaProtegida><AdminProductos /></RutaProtegida>} />
-        <Route path="admin/productos/nuevo" element={<RutaProtegida><AdminProductoForm /></RutaProtegida>} />
-        <Route path="admin/productos/:codigo" element={<RutaProtegida><AdminProductoForm /></RutaProtegida>} />
+        <Route
+          path="admin"
+          element={
+            <RutaProtegida>
+              <Admin />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="admin/productos"
+          element={
+            <RutaProtegida>
+              <AdminProductos />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="admin/productos/nuevo"
+          element={
+            <RutaProtegida>
+              <AdminProductoForm />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="admin/productos/:codigo"
+          element={
+            <RutaProtegida>
+              <AdminProductoForm />
+            </RutaProtegida>
+          }
+        />
 
         <Route path="*" element={<NoEncontrado />} />
       </Route>

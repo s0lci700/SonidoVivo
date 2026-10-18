@@ -47,5 +47,6 @@ describe("Item", () => {
     );
     fireEvent.click(screen.getByRole("button", { name: "Agregar" }));
     expect(alAgregar).toHaveBeenCalledTimes(1);
+    expect(alAgregar).toHaveBeenCalledWith({ codigo: producto.codigo, nombre: producto.nombre, precio: producto.precio, stock: producto.stock })
   });
 });

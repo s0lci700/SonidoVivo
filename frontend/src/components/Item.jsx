@@ -7,7 +7,7 @@
 //     "precio": 129990,
 //     "descripcion": "Tapa de abeto, aros y fondo de meranti. Ideal para iniciantes.",
 //     "categoriaId": "GA"
- 
+
 import { estadoStock } from "../utils/estadoStock.js";
 import { Boton } from "./Boton";
 
@@ -24,17 +24,27 @@ export function Item(props) {
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-marfil-300 bg-marfil-50 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(26,23,20,0.12)]">
       <div className="flex aspect-square items-center justify-center border-b border-marfil-300 bg-marfil-200">
-        <img src={imagen} alt={props.nombre} className="h-full w-full object-contain p-4" />
+        <img
+          src={imagen}
+          alt={props.nombre}
+          className="h-full w-full object-contain p-4"
+        />
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-5">
         <p className="text-xs font-semibold tracking-[0.12em] text-laton-800 uppercase">
           {props.marca} · {props.modelo}
         </p>
-        <h2 className="font-display text-[22px] leading-tight">{props.nombre}</h2>
-        <p className="flex-1 text-sm leading-relaxed text-pretty text-tinta-600">{props.descripcion}</p>
+        <h2 className="font-display text-[22px] leading-tight">
+          {props.nombre}
+        </h2>
+        <p className="flex-1 text-sm leading-relaxed text-pretty text-tinta-600">
+          {props.descripcion}
+        </p>
 
-        <p className={`flex items-center gap-2 text-[13px] font-medium ${stock.color}`}>
+        <p
+          className={`flex items-center gap-2 text-[13px] font-medium ${stock.color}`}
+        >
           <span className={`size-2 rounded-full ${stock.punto}`} />
           {stock.texto}
         </p>
@@ -44,7 +54,17 @@ export function Item(props) {
             ${props.precio.toLocaleString("es-CL")}
           </span>
           {props.onAgregar && (
-            <Boton onClick={() => props.onAgregar(props)} deshabilitado={props.stock <= 0}>
+            <Boton
+              onClick={() =>
+                props.onAgregar({
+                  codigo: props.codigo,
+                  nombre: props.nombre,
+                  precio: props.precio,
+                  stock: props.stock,
+                })
+              }
+              deshabilitado={props.stock <= 0}
+            >
               Agregar
             </Boton>
           )}

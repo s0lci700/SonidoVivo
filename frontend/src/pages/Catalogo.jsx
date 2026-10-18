@@ -4,7 +4,7 @@ import { obtenerCategorias } from "../services/productoService";
 import { useSearchParams } from "react-router-dom";
 import { Chip } from "../components/Chip";
 
-export function Catalogo() {
+export function Catalogo(props) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [categorias, setCategorias] = useState([]);
     useEffect(() => {
@@ -14,7 +14,7 @@ export function Catalogo() {
         <section>
             <h1 className="mb-4 font-display text-4xl">Catálogo</h1>
             <Filtros  categorias={categorias} setSearchParams={setSearchParams} seleccionada={searchParams.get("categoria")}/>
-            <ItemList categoriaId={searchParams.get("categoria")}/>
+            <ItemList categoriaId={searchParams.get("categoria")} onAgregar={props.onAgregar} />
         </section>
     )
 }
