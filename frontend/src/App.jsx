@@ -41,13 +41,13 @@ function App() {
         {/* Tienda */}
         <Route index element={<Inicio />} />
         <Route path="catalogo" element={<Catalogo onAgregar={agregarAlCarrito}/>} />
-        <Route path="producto/:codigo" element={<DetalleProducto />} />
+        <Route path="producto/:codigo" element={<DetalleProducto onAgregar={agregarAlCarrito} />} />
         <Route path="nosotros" element={<Nosotros />} />
         <Route path="contacto" element={<Contacto />} />
 
         {/* Compra */}
         <Route path="carrito" element={<Carrito carrito={carrito} onQuitar={quitarDelCarrito} onCambiarCantidad={cambiarCantidadCarrito} onVaciar={vaciarCarrito}/>} />
-        <Route path="checkout" element={<Checkout carrito={carrito} />} />
+        <Route path="checkout" element={<Checkout carrito={carrito} onVaciar={vaciarCarrito} />} />
         <Route path="compra/exito" element={<ResultadoCompra exito />} />
         <Route path="compra/error" element={<ResultadoCompra />} />
 

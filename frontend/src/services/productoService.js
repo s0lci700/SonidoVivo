@@ -12,10 +12,16 @@ export async function obtenerCategorias() {
   return [...categorias];
 }
 
+// Devuelve null si el código no existe. Lee a través de obtenerProductos para
+// seguir funcionando cuando el CRUD cambie de dónde salen los productos.
+export async function obtenerProductoPorCodigo(codigo) {
+  const lista = await obtenerProductos();
+  return lista.find((producto) => producto.codigo === codigo) ?? null;
+}
+
 // TODO (CRUD simulado que pide el Anexo 1): hoy el catálogo es de solo lectura.
 //   Para crear/editar/eliminar hay que trabajar sobre una copia mutable de
 //   productos.json guardada en localStorage, y que las funciones de arriba lean de ahí.
-// TODO: obtenerProductoPorCodigo(codigo)        -> lo usa DetalleProducto y AdminProductoForm
 // TODO: crearProducto(producto)                 -> AdminProductoForm (nuevo)
 // TODO: actualizarProducto(codigo, cambios)     -> AdminProductoForm (editar)
 // TODO: eliminarProducto(codigo)                -> AdminProductos
