@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { cerrarSesion, obtenerSesion } from "../services/authService";
 
 const enlaces = [
   { ruta: "/", texto: "Inicio" },
@@ -22,7 +23,9 @@ function Enlaces(props) {
       onClick={props.onNavegar}
       className={({ isActive }) =>
         `${props.className} ${foco} text-[15px] font-medium decoration-2 underline-offset-8 transition-colors ${
-          isActive ? "text-laton-500 underline" : "text-marfil-100 hover:text-laton-500"
+          isActive
+            ? "text-laton-500 underline"
+            : "text-marfil-100 hover:text-laton-500"
         }`
       }
     >
@@ -35,6 +38,17 @@ export function Header(props) {
   // Estado local: si el menú móvil está abierto solo le importa al Header.
   const [menuAbierto, setMenuAbierto] = useState(false);
   const cantidad = props.cantidadCarrito ?? 0;
+  const navigate = useNavigate();
+  // useLocation hace que el Header se vuelva a dibujar en cada navegación: así lee
+  // la sesión de nuevo justo después de iniciarla (Login) o cerrarla (Admin).
+  useLocation();
+  const sesion = obtenerSesion();
+
+  function salir() {
+    cerrarSesion();
+    setMenuAbierto(false);
+    navigate("/");
+  }
 
   return (
     <header className="bg-laca-900 text-marfil-100">
@@ -47,17 +61,38 @@ export function Header(props) {
         </Link>
 
         {/* Escritorio: oculto por defecto, visible desde md (768 px). */}
-        <nav aria-label="Principal" className="hidden flex-1 gap-8 pl-8 md:flex">
+        <nav
+          aria-label="Principal"
+          className="hidden flex-1 gap-8 pl-8 md:flex"
+        >
           <Enlaces className="" />
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
-          <Link
-            to="/login"
-            className={`${foco} hidden px-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500 md:block`}
-          >
-            Ingresar
-          </Link>
+          {sesion ? (
+            <div className="hidden items-center md:flex">
+              <Link
+                to="/admin"
+                className={`${foco} px-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500`}
+              >
+                Panel
+              </Link>
+              <button
+                type="button"
+                onClick={salir}
+                className={`${foco} cursor-pointer px-3 text-[15px] font-medium text-marfil-100/75 transition-colors hover:text-laton-500`}
+              >
+                Salir
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className={`${foco} hidden px-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500 md:block`}
+            >
+              Ingresar
+            </Link>
+          )}
 
           <Link
             to="/carrito"
@@ -135,13 +170,32 @@ export function Header(props) {
           className="flex flex-col border-t border-marfil-100/15 px-4 pb-4 pt-2 md:hidden"
         >
           <Enlaces className="py-3" onNavegar={() => setMenuAbierto(false)} />
-          <Link
-            to="/login"
-            onClick={() => setMenuAbierto(false)}
-            className={`${foco} py-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500`}
-          >
-            Ingresar
-          </Link>
+          {sesion ? (
+            <>
+              <Link
+                to="/admin"
+                onClick={() => setMenuAbierto(false)}
+                className={`${foco} py-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500`}
+              >
+                Panel
+              </Link>
+              <button
+                type="button"
+                onClick={salir}
+                className={`${foco} cursor-pointer py-3 text-left text-[15px] font-medium text-marfil-100/75 transition-colors hover:text-laton-500`}
+              >
+                Salir
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setMenuAbierto(false)}
+              className={`${foco} py-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500`}
+            >
+              Ingresar
+            </Link>
+          )}
         </nav>
       )}
     </header>
