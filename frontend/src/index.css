@@ -19,6 +19,35 @@
 
   --color-cobre-600: #9a5424;
   --color-patina-600: #356b5e;
+
+  /* Movimiento: deceleración firme, como una pieza de bronce que asienta. */
+  --ease-taller: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-resonar: resonar 700ms var(--ease-taller) both;
+  --animate-asomar: asomar 240ms var(--ease-taller) both;
+
+  /* Anillo que se abre desde el botón del carrito al agregar: la campana de un bronce. */
+  @keyframes resonar {
+    from {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    to {
+      transform: scale(1.65);
+      opacity: 0;
+    }
+  }
+
+  /* Un número o etiqueta nuevos entran desde abajo. */
+  @keyframes asomar {
+    from {
+      transform: translateY(45%);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
 }
 
 @layer base {

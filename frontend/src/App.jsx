@@ -21,9 +21,12 @@ import { agregarProducto, quitarProducto, cambiarCantidad } from "./utils/carrit
 function App() {
   // El estado vive aquí porque lo comparten Header (contador), Catálogo, Carrito y Checkout.
   const [carrito, setCarrito] = useState([]);
+  // Sube en cada «Agregar» (aunque el producto ya estuviera): el Header lo usa para su animación.
+  const [pulsoCarrito, setPulsoCarrito] = useState(0);
   
   function agregarAlCarrito(producto) {
     setCarrito((prev) => agregarProducto(prev, producto));
+    setPulsoCarrito((n) => n + 1);
   }
   function quitarDelCarrito(codigo) {
     setCarrito((prev) => quitarProducto(prev, codigo));
@@ -37,7 +40,7 @@ function App() {
 
   return (
     <Routes>
-      <Route element={<LayoutPrincipal cantidadCarrito={carrito.length} />}>
+      <Route element={<LayoutPrincipal cantidadCarrito={carrito.length} pulsoCarrito={pulsoCarrito} />}>
         {/* Tienda */}
         <Route index element={<Inicio />} />
         <Route path="catalogo" element={<Catalogo onAgregar={agregarAlCarrito}/>} />

@@ -6,7 +6,7 @@ import { Footer } from "../components/Footer";
 export function LayoutPrincipal(props) {
   return (
     <div className="flex min-h-svh flex-col">
-      <Header cantidadCarrito={props.cantidadCarrito} />
+      <Header cantidadCarrito={props.cantidadCarrito} pulsoCarrito={props.pulsoCarrito} />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         <Outlet />
       </main>

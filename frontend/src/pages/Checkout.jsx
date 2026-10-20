@@ -108,14 +108,28 @@ export function Checkout(props) {
             error={errores.correo}
           />
 
-          <fieldset className="flex flex-col gap-2">
-            <legend className="mb-1.5 text-sm font-medium">Entrega</legend>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="entrega" value="despacho" checked={esDespacho} onChange={handleChange} />
+          <fieldset className="mt-2 flex flex-col border-t border-marfil-300 pt-5">
+            <legend className="float-left mb-1 w-full text-sm font-medium">Entrega</legend>
+            <label className="flex min-h-11 cursor-pointer items-center gap-3">
+              <input
+                type="radio"
+                name="entrega"
+                value="despacho"
+                checked={esDespacho}
+                onChange={handleChange}
+                className="size-4"
+              />
               Despacho a domicilio
             </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="entrega" value="retiro" checked={!esDespacho} onChange={handleChange} />
+            <label className="flex min-h-11 cursor-pointer items-center gap-3">
+              <input
+                type="radio"
+                name="entrega"
+                value="retiro"
+                checked={!esDespacho}
+                onChange={handleChange}
+                className="size-4"
+              />
               Retiro en tienda (Viña del Mar)
             </label>
           </fieldset>
@@ -144,17 +158,24 @@ export function Checkout(props) {
             </>
           )}
 
-          <label className="flex items-center gap-2 text-sm text-tinta-600">
-            <input type="checkbox" checked={rechazarPago} onChange={(e) => setRechazarPago(e.target.checked)} />
-            Simular pago rechazado (demostración)
-          </label>
-
-          <div>
+          <div className="mt-2 flex flex-col items-start gap-3 border-t border-marfil-300 pt-5">
+            <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-tinta-600">
+              <input
+                type="checkbox"
+                checked={rechazarPago}
+                onChange={(e) => setRechazarPago(e.target.checked)}
+                className="size-4"
+              />
+              Simular pago rechazado (demostración)
+            </label>
             <Boton tipo="submit">Pagar ${calcularTotal(props.carrito).toLocaleString("es-CL")}</Boton>
           </div>
         </form>
 
-        <ResumenPedido lineas={props.carrito} />
+        {/* En móvil el resumen va primero, para ver qué se paga antes de llenar el formulario. */}
+        <div className="order-first self-start lg:sticky lg:top-6 lg:order-last">
+          <ResumenPedido lineas={props.carrito} />
+        </div>
       </div>
     </section>
   );

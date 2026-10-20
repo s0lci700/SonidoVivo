@@ -21,7 +21,8 @@ export function ResultadoCompra(props) {
   return (
     <section className="mx-auto flex max-w-xl flex-col gap-6">
       <div>
-        <h1 className="font-display text-4xl">
+        <MarcaEstado exito={props.exito} />
+        <h1 className="mt-5 font-display text-4xl">
           {props.exito ? "Compra realizada" : "No se pudo realizar el pago"}
         </h1>
         <p className={`mt-2 ${props.exito ? "text-patina-600" : "text-cobre-600"}`}>
@@ -44,5 +45,26 @@ export function ResultadoCompra(props) {
         {props.exito ? <Boton a="/catalogo">Seguir comprando</Boton> : <Boton a="/checkout">Volver a intentar</Boton>}
       </div>
     </section>
+  );
+}
+
+// Sello del resultado: dos anillos, como la campana de un instrumento de bronce,
+// con un visto (éxito) o un signo de exclamación (pago rechazado). El texto dice lo mismo;
+// el sello no es la única señal.
+function MarcaEstado(props) {
+  const color = props.exito ? "text-patina-600" : "text-cobre-600";
+  return (
+    <svg viewBox="0 0 56 56" className={`size-14 ${color}`} aria-hidden="true" fill="none" stroke="currentColor">
+      <circle cx="28" cy="28" r="26" strokeWidth="1.5" opacity="0.35" />
+      <circle cx="28" cy="28" r="20" strokeWidth="2" />
+      {props.exito ? (
+        <path d="M19.5 28.5l6 6 11-12" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      ) : (
+        <>
+          <path d="M28 18.5v12" strokeWidth="2.5" strokeLinecap="round" />
+          <circle cx="28" cy="36.5" r="1.6" fill="currentColor" stroke="none" />
+        </>
+      )}
+    </svg>
   );
 }

@@ -65,12 +65,12 @@ describe("Item", () => {
     ).toHaveAttribute("href", "/producto/GA001");
   });
 
-  it("muestra «Agregado ✓» por 1,5 segundos después de agregar", () => {
+  it("muestra «Agregado» por 1,5 segundos después de agregar", () => {
     // Relojes falsos: la prueba adelanta el tiempo en vez de esperarlo.
     vi.useFakeTimers();
     renderItem({ onAgregar: vi.fn() });
     fireEvent.click(screen.getByRole("button", { name: "Agregar" }));
-    expect(screen.getByRole("button", { name: "Agregado ✓" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Agregado" })).toBeInTheDocument();
     act(() => vi.advanceTimersByTime(1500));
     expect(screen.getByRole("button", { name: "Agregar" })).toBeInTheDocument();
     vi.useRealTimers();

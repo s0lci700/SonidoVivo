@@ -10,17 +10,13 @@
 
 import { useRef, useState } from "react";
 import { estadoStock } from "../utils/estadoStock.js";
+import { imagenProducto } from "../utils/imagenProducto";
 import { Link } from "react-router-dom";
 import { Boton } from "./Boton";
 
-const imagenes = import.meta.glob("../assets/productos/*.webp", {
-  eager: true,
-  import: "default",
-  query: "?url",
-});
 
 export function Item(props) {
-  const imagen = imagenes[`../assets/productos/${props.codigo}.webp`];
+  const imagen = imagenProducto(props.codigo);
   const stock = estadoStock(props.stock);
   // Aviso de 1,5 s en el botón después de agregar. Solo esta tarjeta lo necesita: estado local.
   const [agregado, setAgregado] = useState(false);
@@ -74,8 +70,17 @@ export function Item(props) {
             ${props.precio.toLocaleString("es-CL")}
           </span>
           {props.onAgregar && (
-            <Boton onClick={agregar} deshabilitado={props.stock <= 0}>
-              {agregado ? "Agregado ✓" : "Agregar"}
+            <Boton
+              onClick={agregar}
+              deshabilitado={props.stock <= 0}
+              variante={agregado ? "exito" : "primario"}
+              className="min-w-30"
+            >
+              {/* La key cambia con el estado: «Agregado» entra con la animación «asomar». */}
+              <span key={agregado ? "si" : "no"} className={`flex items-center gap-1.5 ${agregado ? "animate-asomar motion-reduce:animate-none" : ""}`}>
+                {agregado && <Visto />}
+                {agregado ? "Agregado" : "Agregar"}
+              </span>
             </Boton>
           )}
           {/* Lo anuncia el lector de pantalla; no se ve. */}
@@ -85,5 +90,14 @@ export function Item(props) {
         </div>
       </div>
     </article>
+  );
+}
+
+// Visto dibujado (no un carácter), del mismo trazo que los íconos del header.
+function Visto() {
+  return (
+    <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true" fill="none" stroke="currentColor">
+      <path d="M3.5 8.5l3 3 6-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }

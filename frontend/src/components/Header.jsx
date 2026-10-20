@@ -62,8 +62,17 @@ export function Header(props) {
           <Link
             to="/carrito"
             aria-label={`Carrito, ${cantidad} ${cantidad === 1 ? "producto" : "productos"}`}
-            className="flex h-11 items-center gap-2 rounded-full bg-laton-500 px-4 text-sm font-semibold text-laca-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_0_rgba(26,23,20,0.25)] transition hover:-translate-y-px hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marfil-50 motion-reduce:hover:translate-y-0"
+            className="relative flex h-11 items-center gap-2 rounded-full bg-laton-500 px-4 text-sm font-semibold text-laca-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-2px_0_rgba(26,23,20,0.25)] transition-[translate,scale,filter,box-shadow] duration-150 ease-taller hover:-translate-y-px hover:brightness-110 active:translate-y-0 active:scale-[0.97] active:shadow-[inset_0_2px_3px_rgba(26,23,20,0.28)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marfil-50 motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100"
           >
+            {/* Al agregar, un anillo de latón se abre desde el botón, como la campana de un bronce.
+                La key nueva vuelve a montar el anillo y repite la animación. */}
+            {props.pulsoCarrito > 0 && (
+              <span
+                key={props.pulsoCarrito}
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 animate-resonar rounded-full border-2 border-laton-500 motion-reduce:hidden"
+              />
+            )}
             <svg
               aria-hidden="true"
               viewBox="0 0 24 24"
@@ -78,7 +87,14 @@ export function Header(props) {
               <circle cx="9.5" cy="19.5" r="1.25" />
               <circle cx="17" cy="19.5" r="1.25" />
             </svg>
-            <span className="tabular-nums">{cantidad}</span>
+            <span className="overflow-hidden">
+              <span
+                key={cantidad}
+                className={`block tabular-nums ${cantidad > 0 ? "animate-asomar motion-reduce:animate-none" : ""}`}
+              >
+                {cantidad}
+              </span>
+            </span>
           </Link>
 
           {/* Móvil: el botón desaparece desde md. aria-expanded informa a los

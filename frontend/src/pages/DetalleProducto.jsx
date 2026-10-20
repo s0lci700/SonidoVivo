@@ -3,12 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Boton } from "../components/Boton";
 import { obtenerProductoPorCodigo } from "../services/productoService";
 import { estadoStock } from "../utils/estadoStock";
-
-const imagenes = import.meta.glob("../assets/productos/*.webp", {
-  eager: true,
-  import: "default",
-  query: "?url",
-});
+import { imagenProducto } from "../utils/imagenProducto";
 
 // Ficha de un producto: /producto/:codigo. props.onAgregar viene de App.
 export function DetalleProducto(props) {
@@ -49,20 +44,23 @@ export function DetalleProducto(props) {
 
   return (
     <section>
-      <Link to="/catalogo" className="text-sm text-laton-800 underline underline-offset-4">
+      <Link
+        to="/catalogo"
+        className="inline-flex min-h-11 items-center text-sm text-laton-800 underline underline-offset-4 hover:text-laca-900"
+      >
         ← Catálogo
       </Link>
 
-      <div className="mt-4 grid gap-8 md:grid-cols-2">
+      <div className="mt-2 grid gap-8 md:grid-cols-2 md:gap-12">
         <div className="flex aspect-square items-center justify-center rounded-2xl border border-marfil-300 bg-marfil-200">
           <img
-            src={imagenes[`../assets/productos/${producto.codigo}.webp`]}
+            src={imagenProducto(producto.codigo)}
             alt={producto.nombre}
             className="h-full w-full object-contain p-6"
           />
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 md:pt-4">
           <p className="text-xs font-semibold tracking-[0.12em] text-laton-800 uppercase">
             {producto.marca} · {producto.modelo}
           </p>
@@ -72,9 +70,9 @@ export function DetalleProducto(props) {
             <span className={`size-2 rounded-full ${stock.punto}`} />
             {stock.texto}
           </p>
-          <p className="text-3xl font-semibold tabular-nums">${producto.precio.toLocaleString("es-CL")}</p>
+          <p className="mt-2 text-3xl font-semibold tabular-nums">${producto.precio.toLocaleString("es-CL")}</p>
 
-          <div className="mt-2 flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <Boton onClick={agregar} deshabilitado={producto.stock <= 0}>
               Agregar al carrito
             </Boton>
@@ -84,6 +82,21 @@ export function DetalleProducto(props) {
               </p>
             )}
           </div>
+
+          {/* Ficha técnica: lo que un músico revisa antes de ir a la tienda. */}
+          <dl className="mt-6 grid grid-cols-[auto_1fr] border-t border-marfil-300 text-sm">
+            {[
+              ["Marca", producto.marca],
+              ["Modelo", producto.modelo],
+              ["Categoría", producto.categoria],
+              ["Código", producto.codigo],
+            ].map(([dato, valor]) => (
+              <div key={dato} className="col-span-2 grid grid-cols-subgrid border-b border-marfil-300 py-2.5">
+                <dt className="pr-8 text-tinta-600">{dato}</dt>
+                <dd className="font-medium">{valor}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>
