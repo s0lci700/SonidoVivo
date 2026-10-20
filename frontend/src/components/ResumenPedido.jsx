@@ -1,4 +1,5 @@
 import { calcularTotal } from "../utils/carrito";
+import { formatearPrecio } from "../utils/formatearPrecio";
 
 // Lista de líneas (nombre × cantidad, subtotal) y total. La usan Checkout y ResultadoCompra.
 // Props: lineas (arreglo del carrito).
@@ -10,15 +11,20 @@ export function ResumenPedido(props) {
         {props.lineas.map((linea) => (
           <li key={linea.codigo} className="flex justify-between gap-4">
             <span>
-              {linea.nombre} <span className="text-tinta-600">× {linea.cantidad}</span>
+              {linea.nombre}{" "}
+              <span className="text-tinta-600">× {linea.cantidad}</span>
             </span>
-            <span className="tabular-nums">${(linea.precio * linea.cantidad).toLocaleString("es-CL")}</span>
+            <span className="tabular-nums">
+              {formatearPrecio(linea.precio * linea.cantidad)}
+            </span>
           </li>
         ))}
       </ul>
       <p className="mt-4 flex justify-between border-t border-marfil-300 pt-3 font-semibold">
         <span>Total</span>
-        <span className="tabular-nums">${calcularTotal(props.lineas).toLocaleString("es-CL")}</span>
+        <span className="tabular-nums">
+          {formatearPrecio(calcularTotal(props.lineas))}
+        </span>
       </p>
     </div>
   );

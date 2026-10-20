@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Boton } from "../components/Boton";
 import { calcularTotal } from "../utils/carrito";
 import { imagenProducto } from "../utils/imagenProducto";
+import { formatearPrecio } from "../utils/formatearPrecio";
 
 // Props desde App: carrito, onQuitar, onCambiarCantidad, onVaciar.
 // No tiene estado propio: muestra el carrito y avisa hacia arriba.
@@ -23,7 +24,10 @@ export function Carrito(props) {
       <ul className="flex flex-col border-t border-marfil-300">
         {props.carrito.map((linea) => {
           return (
-            <li key={linea.codigo} className="flex gap-4 border-b border-marfil-300 py-4">
+            <li
+              key={linea.codigo}
+              className="flex gap-4 border-b border-marfil-300 py-4"
+            >
               <img
                 src={imagenProducto(linea.codigo)}
                 alt=""
@@ -39,7 +43,7 @@ export function Carrito(props) {
                     {linea.nombre}
                   </Link>
                   <p className="text-sm text-tinta-600 tabular-nums">
-                    ${linea.precio.toLocaleString("es-CL")} c/u
+                    {formatearPrecio(linea.precio)} c/u
                   </p>
                   <button
                     type="button"
@@ -51,9 +55,12 @@ export function Carrito(props) {
                 </div>
 
                 <div className="flex items-center justify-between gap-6">
-                  <ControlCantidad linea={linea} onCambiarCantidad={props.onCambiarCantidad} />
+                  <ControlCantidad
+                    linea={linea}
+                    onCambiarCantidad={props.onCambiarCantidad}
+                  />
                   <p className="w-28 text-right text-lg font-semibold tabular-nums">
-                    ${(linea.precio * linea.cantidad).toLocaleString("es-CL")}
+                    {formatearPrecio(linea.precio * linea.cantidad)}
                   </p>
                 </div>
               </div>
@@ -64,7 +71,7 @@ export function Carrito(props) {
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-2xl font-semibold tabular-nums">
-          Total ${calcularTotal(props.carrito).toLocaleString("es-CL")}
+          Total {formatearPrecio(calcularTotal(props.carrito))}
         </p>
         <div className="flex flex-wrap gap-3">
           <Boton variante="secundario" onClick={props.onVaciar}>
@@ -90,14 +97,22 @@ function ControlCantidad(props) {
         type="button"
         aria-label={`Disminuir cantidad de ${linea.nombre}`}
         disabled={linea.cantidad <= 1}
-        onClick={() => props.onCambiarCantidad(linea.codigo, linea.cantidad - 1)}
+        onClick={() =>
+          props.onCambiarCantidad(linea.codigo, linea.cantidad - 1)
+        }
         className={boton}
       >
         −
       </button>
-      <span aria-live="polite" className="w-8 overflow-hidden text-center font-semibold tabular-nums">
+      <span
+        aria-live="polite"
+        className="w-8 overflow-hidden text-center font-semibold tabular-nums"
+      >
         {/* key nueva en cada cambio: el número entra con «asomar». */}
-        <span key={linea.cantidad} className="block animate-asomar motion-reduce:animate-none">
+        <span
+          key={linea.cantidad}
+          className="block animate-asomar motion-reduce:animate-none"
+        >
           {linea.cantidad}
         </span>
       </span>
@@ -105,7 +120,9 @@ function ControlCantidad(props) {
         type="button"
         aria-label={`Aumentar cantidad de ${linea.nombre}`}
         disabled={linea.cantidad >= linea.stock}
-        onClick={() => props.onCambiarCantidad(linea.codigo, linea.cantidad + 1)}
+        onClick={() =>
+          props.onCambiarCantidad(linea.codigo, linea.cantidad + 1)
+        }
         className={boton}
       >
         +

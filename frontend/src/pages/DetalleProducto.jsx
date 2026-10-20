@@ -4,6 +4,7 @@ import { Boton } from "../components/Boton";
 import { obtenerProductoPorCodigo } from "../services/productoService";
 import { estadoStock } from "../utils/estadoStock";
 import { imagenProducto } from "../utils/imagenProducto";
+import { formatearPrecio } from "../utils/formatearPrecio";
 
 // Ficha de un producto: /producto/:codigo. props.onAgregar viene de App.
 export function DetalleProducto(props) {
@@ -24,7 +25,9 @@ export function DetalleProducto(props) {
     return (
       <section className="flex flex-col items-start gap-4">
         <h1 className="font-display text-4xl">Producto no encontrado</h1>
-        <p className="text-tinta-600">No existe un producto con el código {codigo}.</p>
+        <p className="text-tinta-600">
+          No existe un producto con el código {codigo}.
+        </p>
         <Boton a="/catalogo">Volver al catálogo</Boton>
       </section>
     );
@@ -64,13 +67,21 @@ export function DetalleProducto(props) {
           <p className="text-xs font-semibold tracking-[0.12em] text-laton-800 uppercase">
             {producto.marca} · {producto.modelo}
           </p>
-          <h1 className="font-display text-4xl leading-tight">{producto.nombre}</h1>
-          <p className="leading-relaxed text-pretty text-tinta-600">{producto.descripcion}</p>
-          <p className={`flex items-center gap-2 text-sm font-medium ${stock.color}`}>
+          <h1 className="font-display text-4xl leading-tight">
+            {producto.nombre}
+          </h1>
+          <p className="leading-relaxed text-pretty text-tinta-600">
+            {producto.descripcion}
+          </p>
+          <p
+            className={`flex items-center gap-2 text-sm font-medium ${stock.color}`}
+          >
             <span className={`size-2 rounded-full ${stock.punto}`} />
             {stock.texto}
           </p>
-          <p className="mt-2 text-3xl font-semibold tabular-nums">${producto.precio.toLocaleString("es-CL")}</p>
+          <p className="mt-2 text-3xl font-semibold tabular-nums">
+            {formatearPrecio(producto.precio)}
+          </p>
 
           <div className="flex flex-wrap items-center gap-4">
             <Boton onClick={agregar} deshabilitado={producto.stock <= 0}>
@@ -78,7 +89,10 @@ export function DetalleProducto(props) {
             </Boton>
             {agregado && (
               <p role="status" className="text-sm font-medium text-patina-600">
-                Agregado. <Link to="/carrito" className="underline">Ver carrito</Link>
+                Agregado.{" "}
+                <Link to="/carrito" className="underline">
+                  Ver carrito
+                </Link>
               </p>
             )}
           </div>
@@ -91,7 +105,10 @@ export function DetalleProducto(props) {
               ["Categoría", producto.categoria],
               ["Código", producto.codigo],
             ].map(([dato, valor]) => (
-              <div key={dato} className="col-span-2 grid grid-cols-subgrid border-b border-marfil-300 py-2.5">
+              <div
+                key={dato}
+                className="col-span-2 grid grid-cols-subgrid border-b border-marfil-300 py-2.5"
+              >
                 <dt className="pr-8 text-tinta-600">{dato}</dt>
                 <dd className="font-medium">{valor}</dd>
               </div>

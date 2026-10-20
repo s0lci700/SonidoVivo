@@ -7,6 +7,7 @@ import {
 } from "../services/productoService";
 import { estadoStock } from "../utils/estadoStock";
 import { imagenProducto } from "../utils/imagenProducto";
+import { formatearPrecio } from "../utils/formatearPrecio";
 
 const accion =
   "inline-flex min-h-11 items-center rounded-full px-3 font-semibold underline-offset-4 transition-colors duration-150 ease-taller hover:bg-marfil-200 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-laton-800";
@@ -133,7 +134,7 @@ export function AdminProductos() {
                   </td>
                   <td className="px-4 py-2 text-tinta-600">{p.categoria}</td>
                   <td className="px-4 py-2 text-right font-medium">
-                    ${p.precio.toLocaleString("es-CL")}
+                    {formatearPrecio(p.precio)}
                   </td>
                   <td className="px-4 py-2">
                     {/* El número y la palabra dicen el estado; el punto solo lo refuerza. */}

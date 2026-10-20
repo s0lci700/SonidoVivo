@@ -13,7 +13,7 @@ import { estadoStock } from "../utils/estadoStock.js";
 import { imagenProducto } from "../utils/imagenProducto";
 import { Link } from "react-router-dom";
 import { Boton } from "./Boton";
-
+import { formatearPrecio } from "../utils/formatearPrecio";
 
 export function Item(props) {
   const imagen = imagenProducto(props.codigo);
@@ -50,9 +50,7 @@ export function Item(props) {
           {props.marca} · {props.modelo}
         </p>
         <h2 className="font-display text-[22px] leading-tight">
-          <Link to={`/producto/${props.codigo}`}>
-          {props.nombre}
-          </Link>
+          <Link to={`/producto/${props.codigo}`}>{props.nombre}</Link>
         </h2>
         <p className="flex-1 text-sm leading-relaxed text-pretty text-tinta-600">
           {props.descripcion}
@@ -67,7 +65,7 @@ export function Item(props) {
 
         <div className="mt-1 flex items-center gap-3 border-t border-marfil-300 pt-3">
           <span className="flex-1 text-[22px] font-semibold tabular-nums">
-            ${props.precio.toLocaleString("es-CL")}
+            {formatearPrecio(props.precio)}
           </span>
           {props.onAgregar && (
             <Boton
@@ -77,7 +75,10 @@ export function Item(props) {
               className="min-w-30"
             >
               {/* La key cambia con el estado: «Agregado» entra con la animación «asomar». */}
-              <span key={agregado ? "si" : "no"} className={`flex items-center gap-1.5 ${agregado ? "animate-asomar motion-reduce:animate-none" : ""}`}>
+              <span
+                key={agregado ? "si" : "no"}
+                className={`flex items-center gap-1.5 ${agregado ? "animate-asomar motion-reduce:animate-none" : ""}`}
+              >
                 {agregado && <Visto />}
                 {agregado ? "Agregado" : "Agregar"}
               </span>
@@ -96,8 +97,19 @@ export function Item(props) {
 // Visto dibujado (no un carácter), del mismo trazo que los íconos del header.
 function Visto() {
   return (
-    <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true" fill="none" stroke="currentColor">
-      <path d="M3.5 8.5l3 3 6-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      viewBox="0 0 16 16"
+      className="size-4"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+    >
+      <path
+        d="M3.5 8.5l3 3 6-7"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }

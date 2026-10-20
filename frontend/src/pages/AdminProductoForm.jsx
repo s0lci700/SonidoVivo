@@ -12,6 +12,7 @@ import {
   obtenerProductoPorCodigo,
 } from "../services/productoService";
 import { Campo } from "../components/Campo";
+import { Selector } from "../components/Selector";
 import { Boton } from "../components/Boton";
 
 const vacio = {
@@ -54,7 +55,7 @@ export function AdminProductoForm() {
       nuevosErrores.categoriaId = "Elige una categoría.";
     if (!validarPrecio(Number(formData.precio)))
       nuevosErrores.precio = "Ingresa un precio entero mayor a 0.";
-    if (!validarStock(Number(formData.stock)) || formData.stock==="")
+    if (!validarStock(Number(formData.stock)) || formData.stock === "")
       nuevosErrores.stock = "El stock debe ser un entero de 0 o más.";
     if (!validarTexto(formData.descripcion, 10))
       nuevosErrores.descripcion =
@@ -145,38 +146,14 @@ export function AdminProductoForm() {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-[1fr_10rem_8rem]">
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="categoriaId" className="text-sm font-medium">
-              Categoría
-            </label>
-            <select
-              id="categoriaId"
-              name="categoriaId"
-              value={formData.categoriaId}
-              onChange={handleChange}
-              aria-invalid={Boolean(errores.categoriaId)}
-              aria-describedby={
-                errores.categoriaId ? "categoriaId-error" : undefined
-              }
-              className={`h-11 w-full rounded-lg border bg-marfil-50 px-3 text-laca-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-laton-800 ${errores.categoriaId ? "border-cobre-600" : "border-marfil-300"}`}
-            >
-              <option value="">Selecciona…</option>
-              {categorias.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.nombre}
-                </option>
-              ))}
-            </select>
-            {errores.categoriaId && (
-              <p
-                id="categoriaId-error"
-                role="alert"
-                className="text-sm text-cobre-600"
-              >
-                {errores.categoriaId}
-              </p>
-            )}
-          </div>
+          <Selector
+            etiqueta="Categoría"
+            nombre="categoriaId"
+            value={formData.categoriaId}
+            onChange={handleChange}
+            error={errores.categoriaId}
+            opciones={categorias.map((c) => ({ valor: c.id, texto: c.nombre }))}
+          />
           <Campo
             tipo="number"
             etiqueta="Precio (CLP)"

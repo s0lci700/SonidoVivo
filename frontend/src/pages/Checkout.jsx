@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Boton } from "../components/Boton";
 import { Campo } from "../components/Campo";
+import { Selector } from "../components/Selector";
 import { ResumenPedido } from "../components/ResumenPedido";
 import { obtenerRegiones } from "../services/regionService";
 import { calcularTotal } from "../utils/carrito";
 import { validarCorreo, validarTexto } from "../utils/validaciones";
+import { formatearPrecio } from "../utils/formatearPrecio";
 
 const formularioVacio = {
   nombre: "",
@@ -30,23 +32,32 @@ export function Checkout(props) {
     obtenerRegiones().then(setRegiones);
   }, []);
 
-  const comunas = regiones.find((region) => region.id === formData.region)?.comunas ?? [];
+  const comunas =
+    regiones.find((region) => region.id === formData.region)?.comunas ?? [];
   const esDespacho = formData.entrega === "despacho";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     // Al cambiar de región, la comuna elegida ya no corresponde.
-    setFormData((prev) => ({ ...prev, [name]: value, ...(name === "region" ? { comuna: "" } : {}) }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+      ...(name === "region" ? { comuna: "" } : {}),
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const nuevosErrores = {};
-    if (!validarTexto(formData.nombre, 2)) nuevosErrores.nombre = "Ingresa tu nombre.";
-    if (!validarTexto(formData.apellidos, 2)) nuevosErrores.apellidos = "Ingresa tus apellidos.";
-    if (!validarCorreo(formData.correo)) nuevosErrores.correo = "Ingresa un correo válido.";
+    if (!validarTexto(formData.nombre, 2))
+      nuevosErrores.nombre = "Ingresa tu nombre.";
+    if (!validarTexto(formData.apellidos, 2))
+      nuevosErrores.apellidos = "Ingresa tus apellidos.";
+    if (!validarCorreo(formData.correo))
+      nuevosErrores.correo = "Ingresa un correo válido.";
     if (esDespacho) {
-      if (!validarTexto(formData.calle, 5)) nuevosErrores.calle = "Ingresa calle y número.";
+      if (!validarTexto(formData.calle, 5))
+        nuevosErrores.calle = "Ingresa calle y número.";
       if (!formData.region) nuevosErrores.region = "Elige una región.";
       if (!formData.comuna) nuevosErrores.comuna = "Elige una comuna.";
     }
@@ -88,9 +99,19 @@ export function Checkout(props) {
     <section>
       <h1 className="mb-6 font-display text-4xl">Finalizar compra</h1>
       <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">
-        <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className="flex flex-col gap-5"
+        >
           <div className="grid gap-5 sm:grid-cols-2">
-            <Campo etiqueta="Nombre" nombre="nombre" value={formData.nombre} onChange={handleChange} error={errores.nombre} />
+            <Campo
+              etiqueta="Nombre"
+              nombre="nombre"
+              value={formData.nombre}
+              onChange={handleChange}
+              error={errores.nombre}
+            />
             <Campo
               etiqueta="Apellidos"
               nombre="apellidos"
@@ -109,7 +130,9 @@ export function Checkout(props) {
           />
 
           <fieldset className="mt-2 flex flex-col border-t border-marfil-300 pt-5">
-            <legend className="float-left mb-1 w-full text-sm font-medium">Entrega</legend>
+            <legend className="float-left mb-1 w-full text-sm font-medium">
+              Entrega
+            </legend>
             <label className="flex min-h-11 cursor-pointer items-center gap-3">
               <input
                 type="radio"
@@ -136,7 +159,13 @@ export function Checkout(props) {
 
           {esDespacho && (
             <>
-              <Campo etiqueta="Calle y número" nombre="calle" value={formData.calle} onChange={handleChange} error={errores.calle} />
+              <Campo
+                etiqueta="Calle y número"
+                nombre="calle"
+                value={formData.calle}
+                onChange={handleChange}
+                error={errores.calle}
+              />
               <div className="grid gap-5 sm:grid-cols-2">
                 <Selector
                   etiqueta="Región"
@@ -144,7 +173,10 @@ export function Checkout(props) {
                   value={formData.region}
                   onChange={handleChange}
                   error={errores.region}
-                  opciones={regiones.map((r) => ({ valor: r.id, texto: r.nombre }))}
+                  opciones={regiones.map((r) => ({
+                    valor: r.id,
+                    texto: r.nombre,
+                  }))}
                 />
                 <Selector
                   etiqueta="Comuna"
@@ -168,7 +200,9 @@ export function Checkout(props) {
               />
               Simular pago rechazado (demostración)
             </label>
-            <Boton tipo="submit">Pagar ${calcularTotal(props.carrito).toLocaleString("es-CL")}</Boton>
+            <Boton tipo="submit">
+              Pagar {formatearPrecio(calcularTotal(props.carrito))}
+            </Boton>
           </div>
         </form>
 
@@ -178,40 +212,5 @@ export function Checkout(props) {
         </div>
       </div>
     </section>
-  );
-}
-
-// Lista desplegable con el mismo aspecto que Campo. Solo la usa este formulario.
-function Selector(props) {
-  const idError = `${props.nombre}-error`;
-  return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={props.nombre} className="text-sm font-medium">
-        {props.etiqueta}
-      </label>
-      <select
-        id={props.nombre}
-        name={props.nombre}
-        value={props.value}
-        onChange={props.onChange}
-        aria-invalid={Boolean(props.error)}
-        aria-describedby={props.error ? idError : undefined}
-        className={`h-11 w-full rounded-lg border bg-marfil-50 px-3 text-laca-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-laton-800 ${
-          props.error ? "border-cobre-600" : "border-marfil-300"
-        }`}
-      >
-        <option value="">Selecciona…</option>
-        {props.opciones.map((opcion) => (
-          <option key={opcion.valor} value={opcion.valor}>
-            {opcion.texto}
-          </option>
-        ))}
-      </select>
-      {props.error && (
-        <p id={idError} role="alert" className="text-sm text-cobre-600">
-          {props.error}
-        </p>
-      )}
-    </div>
   );
 }
