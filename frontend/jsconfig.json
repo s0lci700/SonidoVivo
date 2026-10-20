@@ -1,0 +1,14 @@
+{
+  // Solo para el editor (VS Code): no cambia cómo compila Vite ni cómo corre Vitest.
+  // Al incluir src/, el editor ve src/test/setup.js, que importa
+  // @testing-library/jest-dom/vitest: así autocompleta toBeInTheDocument, toBeDisabled, etc.
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "checkJs": false,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
