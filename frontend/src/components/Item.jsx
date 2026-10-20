@@ -9,6 +9,7 @@
 //     "categoriaId": "GA"
 
 import { estadoStock } from "../utils/estadoStock.js";
+import { Link } from "react-router-dom";
 import { Boton } from "./Boton";
 
 const imagenes = import.meta.glob("../assets/productos/*.webp", {
@@ -36,7 +37,9 @@ export function Item(props) {
           {props.marca} · {props.modelo}
         </p>
         <h2 className="font-display text-[22px] leading-tight">
+          <Link to={`/producto/${props.codigo}`}>
           {props.nombre}
+          </Link>
         </h2>
         <p className="flex-1 text-sm leading-relaxed text-pretty text-tinta-600">
           {props.descripcion}
