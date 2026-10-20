@@ -1,6 +1,6 @@
 export function Campo(props) {
   const idError = `${props.nombre}-error`;
-  const clases = `w-full rounded-lg border bg-marfil-50 px-3 text-laca-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-laton-800 ${
+  const clases = `w-full rounded-lg border bg-marfil-50 px-3 text-laca-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-laton-800 disabled:cursor-not-allowed disabled:bg-marfil-200 disabled:text-tinta-600 ${
     props.error ? "border-cobre-600" : "border-marfil-300"
   }`;
 
@@ -11,6 +11,7 @@ export function Campo(props) {
       </label>
       {props.multilinea ? (
         <textarea
+          disabled={props.deshabilitado}
           name={props.nombre}
           id={props.nombre}
           value={props.value}
@@ -22,6 +23,7 @@ export function Campo(props) {
         />
       ) : (
         <input
+          disabled={props.deshabilitado}
           type={props.tipo ?? "text"}
           name={props.nombre}
           id={props.nombre}
