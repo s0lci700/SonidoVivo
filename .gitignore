@@ -38,3 +38,6 @@ ruta.json
 
 # Archivos de bloqueo de LibreOffice
 .~lock.*#
+
+# Reporte de cobertura (se genera con npm run test:coverage)
+frontend/coverage/
