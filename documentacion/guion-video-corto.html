@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Guion de grabación Sonido Vivo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Tarjetas apiladas, una por bloque de grabación; pensado para leerse en el celular junto al PC. */
+:root {
+  --fondo: #f5efe0;
+  --superficie: #fbf7ee;
+  --borde: #d9cfbc;
+  --texto: #1a1714;
+  --suave: #5c5247;
+  --laton: #7a5a16;
+  --laton-vivo: #c9a227;
+  --cobre: #9a5424;
+  --patina: #356b5e;
+  --frase: #f2e7c6;
+  --fuente-titulo: "DM Serif Display", Georgia, serif;
+  --fuente: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fondo: #151311; --superficie: #1f1c18; --borde: #3a342c; --texto: #f3ecdc; --suave: #c2b8a5;
+    --laton: #d9b545; --laton-vivo: #c9a227; --cobre: #e0915c; --patina: #7cc2ae; --frase: #2a2519;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fondo: #151311; --superficie: #1f1c18; --borde: #3a342c; --texto: #f3ecdc; --suave: #c2b8a5;
+  --laton: #d9b545; --laton-vivo: #c9a227; --cobre: #e0915c; --patina: #7cc2ae; --frase: #2a2519;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--fondo); color: var(--texto); font: 17px/1.55 var(--fuente);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.columna { max-width: 40rem; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+header h1 { font: 400 2rem/1.1 var(--fuente-titulo); margin: 0; text-wrap: balance; }
+header p { margin: 6px 0 0; color: var(--suave); font-size: 0.95rem; }
+.tiempos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tiempos span { font-size: 0.8rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--borde); color: var(--suave); font-variant-numeric: tabular-nums; }
+section { background: var(--superficie); border: 1px solid var(--borde); border-radius: 16px; padding: 16px 16px 6px; }
+section h2 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 4px; font: 600 1.25rem/1.25 var(--fuente); }
+section h2 small { font-weight: 500; font-size: 0.85rem; color: var(--suave); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pantallas { margin: 0 0 10px; color: var(--laton); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; }
+ol { list-style: none; margin: 0; padding: 0; }
+li { border-top: 1px solid var(--borde); padding: 12px 0; }
+label { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; cursor: pointer; }
+input[type="checkbox"] { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--patina); }
+.accion { font-weight: 600; }
+.frase { margin-top: 6px; padding: 8px 12px; background: var(--frase); border-radius: 10px; font-size: 0.98rem; }
+.ojo { color: var(--cobre); font-weight: 600; }
+code { font: 0.86em var(--mono); background: var(--frase); padding: 1px 5px; border-radius: 5px; font-variant-ligatures: none; }
+li:has(input:checked) .accion, li:has(input:checked) .frase { opacity: 0.45; }
+.pausa { text-align: center; font-size: 0.85rem; color: var(--suave); margin: -6px 0; }
+.pausa strong { color: var(--laton); }
+.pie { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--suave); font-size: 0.85rem; }
+button { font: 600 0.9rem var(--fuente); color: var(--texto); background: transparent; border: 1px solid var(--borde); border-radius: 999px; padding: 10px 16px; min-height: 44px; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--laton-vivo); outline-offset: 2px; }
+</style>
+
+<div class="columna">
+  <header>
+    <h1>Guion de grabación</h1>
+    <p>Sonido Vivo · EP2 · versión corta. El guion completo está en <code>documentacion/guion-video-EP2.html</code>.</p>
+    <div class="tiempos"><span>A · 2 min</span><span>B · 2 min</span><span>C · 2 min</span><span>D · 2 min</span><span>Total 7–8 min</span></div>
+  </header>
+
+  <section>
+    <h2>Antes de grabar</h2>
+    <ol>
+      <li><label><input type="checkbox" id="p1"><span><span class="accion">localStorage limpio</span> y <code>npm run dev</code> corriendo</span></label></li>
+      <li><label><input type="checkbox" id="p2"><span><span class="accion">Chrome</span>: la app + pestaña de GitHub (commits). Zoom 110 %</span></label></li>
+      <li><label><input type="checkbox" id="p3"><span><span class="accion">VS Code</span> al 150 %, terminal integrada abierta, pestañas en orden: <code>App.jsx</code>, <code>Item.jsx</code>, <code>carrito.js</code>, <code>productoService.js</code>, <code>validaciones.js</code>, <code>carrito.test.js</code>, <code>Item.test.jsx</code>, <code>Login.test.jsx</code></span></label></li>
+      <li><label><input type="checkbox" id="p4"><span><span class="accion">No molestar</span> en Windows, barra de tareas oculta</span></label></li>
+      <li><label><input type="checkbox" id="p5"><span><span class="accion">Prueba de audio</span> de 15 s en OBS y escucharla</span></label></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>A · La tienda <small>0:00–2:05</small></h2>
+    <p class="pantallas">Chrome → VS Code</p>
+    <ol>
+      <li><label><input type="checkbox" id="a1"><span><span class="accion">Portada de la tienda.</span>
+        <div class="frase">«Soy Sol León, sección 005D de Desarrollo Full Stack II. Este es Sonido Vivo, la Forma B: una tienda de instrumentos de Viña del Mar. Es un proyecto individual y esta es la versión entregada para la Evaluación Parcial 2.»</div></span></label></li>
+      <li><label><input type="checkbox" id="a2"><span><span class="accion">Inicio → Catálogo → un producto → Nosotros → Contacto → escribir <code>/no-existe</code>.</span>
+        <div class="frase">«Es una SPA en React con Vite. React Router cambia la página sin recargar; encabezado y pie son los mismos en todas las vistas, y una ruta comodín muestra la 404.»</div></span></label></li>
+      <li><label><input type="checkbox" id="a3"><span><span class="accion">VS Code: árbol de <code>src</code>, luego <code>App.jsx</code> (rutas y <code>useState</code>), luego <code>Item.jsx</code>.</span>
+        <div class="frase">«<code>pages</code> es una vista por ruta, <code>components</code> lo reutilizable, <code>services</code> el acceso a datos y <code>utils</code> las funciones puras. El carrito vive en <code>App</code> porque lo comparten el encabezado, el catálogo, el carrito y el checkout. <code>Item</code> recibe el producto y <code>onAgregar</code> por props, y se reutiliza en el catálogo y la portada.»</div></span></label></li>
+    </ol>
+  </section>
+  <p class="pausa"><strong>F9</strong> pausa · deja Chrome en el catálogo · <strong>F9</strong></p>
+
+  <section>
+    <h2>B · Compra <small>2:05–4:15</small></h2>
+    <p class="pantallas">Chrome · 5 s de validaciones.js</p>
+    <ol>
+      <li><label><input type="checkbox" id="b1"><span><span class="accion">Filtrar dos categorías (mostrar la URL). Agregar dos productos: «Agregado» y el contador.</span>
+        <div class="frase">«El filtro vive en la URL, por eso sobrevive a recargar. Al agregar, el contador sube porque todos leen el mismo estado de <code>App</code>.»</div></span></label></li>
+      <li><label><input type="checkbox" id="b2"><span><span class="accion">Carrito: subir una cantidad hasta el tope de stock, bajar, quitar uno.</span>
+        <div class="frase">«La cantidad no pasa del stock ni baja de uno: esa regla es <code>limitarCantidad</code>, en <code>utils/carrito.js</code>, con sus propias pruebas.»</div></span></label></li>
+      <li><label><input type="checkbox" id="b3"><span><span class="accion"><span class="ojo">Checkout: Pagar vacío</span> → errores. Elegir región → cambian las comunas.</span>
+        <div class="frase">«Lo envío vacío: cada campo muestra su error y el carrito no se toca. Al elegir región se cargan sus comunas.»</div></span></label></li>
+      <li><label><input type="checkbox" id="b4"><span><span class="accion">Llenar bien + <span class="ojo">«Simular pago rechazado»</span> → vista de error. Volver, desmarcar, pagar → éxito.</span>
+        <div class="frase">«Con pago rechazado el carrito se conserva para reintentar. Con datos válidos: compra realizada y carrito vacío. Las reglas están en <code>validaciones.js</code>.»</div></span></label></li>
+    </ol>
+  </section>
+  <p class="pausa"><strong>F9</strong> pausa · localStorage sin sesión · abrir <code>/admin</code> · <strong>F9</strong></p>
+
+  <section>
+    <h2>C · Administración <small>4:15–5:55</small></h2>
+    <p class="pantallas">Chrome → VS Code → DevTools</p>
+    <ol>
+      <li><label><input type="checkbox" id="c1"><span><span class="accion"><code>/admin</code> sin sesión → login. <span class="ojo">Credenciales malas</span> → error. Admin → panel.</span>
+        <div class="frase">«Las rutas de administración están dentro de <code>RutaProtegida</code>: sin sesión van al login. La sesión es simulada en localStorage; en el Parcial 3 se cambia por JWT.»</div></span></label></li>
+      <li><label><input type="checkbox" id="c2"><span><span class="accion">Productos → Nuevo: <span class="ojo">guardar vacío (8 errores)</span>, luego código <code>GA001</code> → «Ya existe».</span>
+        <div class="frase">«El mismo formulario crea y edita: con <code>useParams</code> sabe si hay código en la URL. Vacío valida cada campo; con un código repetido el servicio lanza un error y el formulario lo muestra.»</div></span></label></li>
+      <li><label><input type="checkbox" id="c3"><span><span class="accion">Crear uno válido, editar su precio (código bloqueado), eliminarlo. 10 s de <code>productoService.js</code>.</span>
+        <div class="frase">«El CRUD trabaja sobre una copia del catálogo en localStorage, y las páginas solo hablan con <code>productoService</code>: en el Parcial 3 ese archivo usa <code>fetch</code> y las páginas no cambian.»</div></span></label></li>
+      <li><label><input type="checkbox" id="c4"><span><span class="accion">DevTools: 1280 → 768 → 360. Menú hamburguesa. Tabla de admin hacia el lado.</span>
+        <div class="frase">«Uso Tailwind, que el curso adoptó en lugar de Bootstrap. La grilla pasa de cuatro columnas a tres, dos y una con <code>sm</code>, <code>md</code> y <code>lg</code>; en móvil el menú se colapsa.»</div></span></label></li>
+    </ol>
+  </section>
+  <p class="pausa"><strong>F9</strong> pausa · cerrar DevTools · VS Code con la terminal · <strong>F9</strong></p>
+
+  <section>
+    <h2>D · Calidad <small>5:55–8:00</small></h2>
+    <p class="pantallas">Terminal de VS Code → GitHub → Chrome</p>
+    <ol>
+      <li><label><input type="checkbox" id="d1"><span><span class="accion"><code>npm test</code> → 78 en verde.</span>
+        <div class="frase">«Las pruebas usan Vitest con React Testing Library y jsdom, que reemplazan a Jasmine y Karma. La configuración está en <code>vite.config.js</code> y <code>src/test/setup.js</code>.»</div></span></label></li>
+      <li><label><input type="checkbox" id="d2"><span><span class="accion">Abrir <code>carrito.test.js</code> → <code>Item.test.jsx</code> → <code>Login.test.jsx</code>.</span>
+        <div class="frase">«De lógica: <code>agregarProducto</code> no pasa del stock. De componente: hago clic en Agregar y un mock, <code>vi.fn</code>, confirma que se llamó a <code>onAgregar</code> con el producto. Y con <code>vi.mock</code> reemplazo el servicio de login para forzar "credenciales incorrectas".»</div></span></label></li>
+      <li><label><input type="checkbox" id="d3"><span><span class="accion"><code>npm run test:coverage</code> → resumen.</span>
+        <div class="frase">«La cobertura es de 75 % de las líneas; la lógica de <code>utils</code> está al 100 % y <code>services</code> sobre 90 %.»</div></span></label></li>
+      <li><label><input type="checkbox" id="d4"><span><span class="accion">GitHub: repositorio e historial de commits.</span>
+        <div class="frase">«El repositorio es público y el historial muestra cómo avanzó: estructura y rutas, validaciones y pruebas, carrito, checkout y el CRUD de administración.»</div></span></label></li>
+      <li><label><input type="checkbox" id="d5"><span><span class="accion">Volver a la portada.</span>
+        <div class="frase">«Esta demostración corresponde a la versión entregada para la Evaluación Parcial 2. Gracias.»</div></span></label></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Después</h2>
+    <ol>
+      <li><label><input type="checkbox" id="z1"><span>OBS → Archivo → <span class="accion">Remuxear</span> a MP4 y verlo entero</span></label></li>
+      <li><label><input type="checkbox" id="z2"><span>Drive: <span class="accion">«cualquier persona con el enlace»</span>, probar en incógnito</span></label></li>
+      <li><label><input type="checkbox" id="z3"><span>GitHub → Code → <span class="accion">Download ZIP</span> → <code>DSY1104-005D-SolLeon-EP2.zip</code></span></label></li>
+      <li><label><input type="checkbox" id="z4"><span>AVA: grupo, caso, GitHub, video, ZIP, cobertura y ERS (PDF). <span class="ojo">Antes del mié 08:30</span></span></label></li>
+    </ol>
+  </section>
+
+  <div class="pie"><span>Las casillas se guardan en este dispositivo.</span><button type="button" id="limpiar">Desmarcar todo</button></div>
+</div>
+
+<script>
+  // Recuerda las casillas marcadas en este dispositivo (si el navegador lo permite).
+  const CLAVE = "guion-sonido-vivo";
+  const casillas = [...document.querySelectorAll('input[type="checkbox"]')];
+  let marcadas = {};
+  try { marcadas = JSON.parse(localStorage.getItem(CLAVE)) || {}; } catch (e) { marcadas = {}; }
+  casillas.forEach((c) => {
+    c.checked = Boolean(marcadas[c.id]);
+    c.addEventListener("change", () => {
+      marcadas[c.id] = c.checked;
+      try { localStorage.setItem(CLAVE, JSON.stringify(marcadas)); } catch (e) {}
+    });
+  });
+  document.getElementById("limpiar").addEventListener("click", () => {
+    casillas.forEach((c) => { c.checked = false; });
+    marcadas = {};
+    try { localStorage.removeItem(CLAVE); } catch (e) {}
+  });
+</script>
+
+</body>
+</html>

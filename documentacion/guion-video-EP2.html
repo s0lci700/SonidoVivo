@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Defensa EP2 · Sonido Vivo</title>
+<style>
+:root {
+  --laca: #1a1714; --tinta: #5c5247; --marfil-50: #fbf7ee; --marfil-100: #f5efe0;
+  --marfil-200: #ede4d0; --marfil-300: #d9cfbc; --laton-500: #c9a227; --laton-800: #7a5a16;
+  --cobre: #9a5424; --patina: #356b5e;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+body { margin: 0; background: var(--marfil-100); color: var(--laca);
+  font: 16px/1.6 "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.marco { display: grid; grid-template-columns: 19rem minmax(0, 1fr); min-height: 100vh; }
+nav { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 24px 20px;
+  background: var(--laca); color: var(--marfil-100); }
+nav .marca { font: 400 26px/1.1 "DM Serif Display", Georgia, serif; color: var(--laton-500); margin: 0 0 4px; }
+nav .sub { margin: 0 0 20px; font-size: 13px; color: #cfc6b4; }
+nav ul { list-style: none; margin: 0; padding: 0; }
+nav ul ul { margin: 4px 0 12px 10px; border-left: 1px solid #3b352e; }
+nav a { display: block; padding: 3px 10px; color: #e9e1cf; text-decoration: none; font-size: 14px; border-radius: 6px; }
+nav a:hover { background: #2c2722; color: var(--laton-500); }
+nav .doc-enlace { font-weight: 600; color: var(--marfil-50); margin-top: 8px; }
+nav ul ul a { font-size: 13px; color: #cfc6b4; }
+main { padding: 40px clamp(16px, 4vw, 56px) 80px; max-width: 72rem; }
+.doc { background: var(--marfil-50); border: 1px solid var(--marfil-300); border-radius: 18px;
+  padding: 28px clamp(16px, 3vw, 40px); margin-bottom: 32px; }
+h2 { font: 400 36px/1.15 "DM Serif Display", Georgia, serif; margin: 0 0 12px; }
+h3 { font-size: 22px; margin: 32px 0 8px; padding-top: 8px; border-top: 1px solid var(--marfil-300); }
+h4 { font-size: 17px; margin: 22px 0 6px; color: var(--laton-800); }
+h5 { font-size: 15px; margin: 16px 0 4px; }
+p, li { max-width: 75ch; }
+a { color: var(--laton-800); }
+code { font: 0.88em/1.4 ui-monospace, "Cascadia Code", Consolas, monospace; background: var(--marfil-200);
+  padding: 1px 5px; border-radius: 5px; font-variant-ligatures: none; }
+pre { background: var(--laca); color: var(--marfil-100); padding: 14px 16px; border-radius: 12px; overflow-x: auto; }
+pre code { background: none; padding: 0; color: inherit; }
+blockquote { margin: 16px 0; padding: 10px 16px; background: #f7efd6; border-radius: 10px;
+  border: 1px solid #e6d39a; }
+hr { border: 0; border-top: 1px solid var(--marfil-300); margin: 28px 0; }
+.tabla { overflow-x: auto; margin: 12px 0 18px; border: 1px solid var(--marfil-300); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th { background: var(--marfil-200); text-align: left; font-size: 13px; color: var(--tinta); }
+th, td { padding: 8px 12px; vertical-align: top; border-top: 1px solid var(--marfil-300); }
+thead th { border-top: 0; }
+tbody tr:hover { background: var(--marfil-100); }
+strong { color: #000; }
+.fuente { margin-top: 24px; font-size: 12px; color: var(--tinta); }
+::selection { background: var(--laton-500); color: var(--laca); }
+@media (max-width: 860px) {
+  .marco { grid-template-columns: 1fr; }
+  nav { position: static; height: auto; }
+}
+@media print {
+  nav { display: none; } .marco { display: block; } .doc { break-inside: auto; border: 0; }
+  body { background: #fff; }
+}
+.solo { display: block; } .solo nav { display: none; } .solo main { max-width: none; padding: 0; } .solo .doc { border: 0; padding: 0; background: #fff; } body { background: #fff; } @page { size: A4; margin: 16mm 14mm; } table { font-size: 12px; } th, td { padding: 5px 8px; } h2 { font-size: 28px; } h3 { break-after: avoid; } tr { break-inside: avoid; } td:first-child { white-space: nowrap; }</style>
+</head>
+<body>
+<div class="marco solo">
+<nav aria-label="Índice">
+  <p class="marca">Sonido Vivo</p>
+  <p class="sub">Guía técnica · Defensa EP2 · DSY1104 005D</p>
+  <ul></ul>
+</nav>
+<main><section class="doc"><h2 id="d-0">Guion del video de demostración — Sonido Vivo · EP2</h2>
+<p>Basado en <code>10_Guia_Video_Demostracion_EP2_DSY1104_2026-2.docx</code> y en la rúbrica oficial EP2. Duración objetivo: <strong>7 a 8 minutos</strong>. Se graba la pantalla con narración por voz; no hace falta aparecer en cámara.</p>
+<blockquote><strong>Tecnología:</strong> el docente indicó en clase que la pauta impresa es antigua: <strong>Tailwind CSS reemplaza a Bootstrap</strong> y <strong>Vitest + React Testing Library reemplazan a Jasmine/Karma</strong>. El video lo dice una vez, en la etapa 6.</blockquote>
+<blockquote><strong>Lección de EV1 (80/100):</strong> se perdieron 15 puntos en «Demuestra el desarrollo de validaciones» porque no se <em>mostraron</em> funcionando. Aquí cada validación se provoca en pantalla: primero el dato inválido y su mensaje, después el válido.</blockquote>
+<h3 id="d-1">Antes de grabar</h3>
+<ul><li>☐ Commit final hecho y subido. Anotar el hash: <code>________</code>.</li><li>☐ VS Code en la carpeta del proyecto, con <code>frontend/src</code> desplegado.</li><li>☐ Terminal 1 en <code>frontend/</code> con <code>npm run dev</code> corriendo.</li><li>☐ Terminal 2 en <code>frontend/</code>, libre, para las pruebas.</li><li>☐ Navegador en <code>http://localhost:5173/</code> con <code>localStorage</code> vacío (DevTools → Application → Local Storage → Clear). Así el catálogo parte de <code>productos.json</code>, el carrito está vacío y no hay sesión.</li><li>☐ Otra pestaña: <a href="https://github.com/s0lci700/SonidoVivo/commits/main">https://github.com/s0lci700/SonidoVivo/commits/main</a></li><li>☐ DevTools con el modo dispositivo listo (360 px).</li><li>☐ Pestañas abiertas en VS Code, en este orden: <code>App.jsx</code>, <code>Item.jsx</code>, <code>utils/carrito.js</code>, <code>services/productoService.js</code>, <code>pages/AdminProductoForm.jsx</code>, <code>utils/validaciones.js</code>, <code>utils/carrito.test.js</code>, <code>components/Item.test.jsx</code>, <code>pages/Login.test.jsx</code>.</li><li>☐ Notificaciones silenciadas y el cargador conectado (por si se corta la luz, grabar por etapas: si se interrumpe, se retoma desde la última etapa).</li></ul>
+<h3 id="d-2">Guion</h3>
+<p>Cada fila indica el indicador de la rúbrica que cubre.</p>
+<div class='tabla'><table><thead><tr><th>#</th><th>Etapa · tiempo</th><th>Dónde</th><th>Qué hacer</th><th>Qué decir</th><th>Rúbrica</th></tr></thead><tbody><tr><td>1</td><td>Presentación · 0:00–0:25</td><td>Navegador, Inicio</td><td>Mostrar la portada</td><td>«Soy Sol León, de la sección 005D de Desarrollo Full Stack II. Este es Sonido Vivo, la Forma B: una tienda de instrumentos de Viña del Mar. Es un proyecto individual y esta es la versión entregada para la Evaluación Parcial 2.»</td><td>—</td></tr><tr><td>2</td><td>Navegación · 0:25–1:05</td><td>Navegador</td><td>Inicio → Catálogo → un producto → Nosotros → Contacto. Escribir <code>/no-existe</code> para ver la página 404</td><td>«Es una SPA en React 19 con Vite. La navegación la hace React Router: la página no se recarga, solo cambia lo que va dentro del layout. Encabezado y pie son los mismos en todas las vistas, y una ruta comodín muestra la página 404.»</td><td>IE2.1.1, IE2.1.3</td></tr><tr><td>3</td><td>Estructura · 1:05–2:05</td><td>VS Code</td><td>Árbol de <code>src</code>. <code>App.jsx</code>: la tabla de rutas y el <code>useState</code> del carrito. <code>Item.jsx</code>: sus props</td><td>«El código está separado por responsabilidad: <code>pages</code> es una vista por ruta, <code>components</code> las piezas reutilizables, <code>services</code> el acceso a datos y <code>utils</code> las funciones puras. En <code>App</code> están las rutas, todas dentro de <code>LayoutPrincipal</code>, que dibuja la página activa con <code>&lt;Outlet /&gt;</code>. El carrito vive en <code>App</code> con <code>useState</code>, porque lo comparten el encabezado, el catálogo, el carrito y el checkout: es el ancestro común. <code>Item</code> es la tarjeta de producto: recibe el producto y <code>onAgregar</code> por props, y se reutiliza en el catálogo y en la portada.»</td><td>IE2.1.2, IE2.1.4</td></tr><tr><td>4</td><td>Catálogo y carrito · 2:05–3:15</td><td>Navegador</td><td>Filtrar por dos categorías (la URL cambia a <code>?categoria=…</code>). Agregar dos productos: ver «Agregado» y el contador del encabezado. Abrir el carrito: subir y bajar una cantidad hasta el tope de stock, quitar uno</td><td>«El filtro vive en la URL con <code>useSearchParams</code>, por eso sobrevive a recargar. Al agregar, el botón confirma con "Agregado" y el contador sube, porque todos leen el mismo estado de <code>App</code>. En el carrito la cantidad no pasa del stock ni baja de uno: esa regla está en <code>utils/carrito.js</code>, en <code>limitarCantidad</code>, una función pura con sus propias pruebas.»</td><td>IE2.1.4</td></tr><tr><td>5</td><td>Checkout y validaciones · 3:15–4:15</td><td>Navegador y VS Code</td><td><strong>Pagar con el formulario vacío</strong> → aparecen los errores. Elegir región y ver que cambian las comunas. Llenar bien y marcar «Simular pago rechazado» → vista de error. Volver, desmarcar y pagar → compra realizada y carrito vacío. Abrir <code>validaciones.js</code> 5 s</td><td>«Primero lo envío vacío: cada campo muestra su error y el carrito no se toca. Al elegir región se cargan sus comunas. Con "pago rechazado" se ve la vista de error y el carrito se conserva para reintentar. Ahora con datos válidos: compra realizada y carrito vacío. Las reglas son funciones puras en <code>utils/validaciones.js</code>; las usan Contacto, Checkout y el formulario de productos.»</td><td>IE2.1.4, validaciones</td></tr><tr><td>6</td><td>Administración (CRUD) · 4:15–5:20</td><td>Navegador y VS Code</td><td>Entrar a <code>/admin</code> sin sesión → redirige al login. Login con datos malos → «Credenciales incorrectas». Login con el administrador de <code>usuarios.json</code> → panel. En Productos: <strong>Nuevo producto vacío → 8 errores</strong>; código repetido <code>GA001</code> → «Ya existe…». Crear uno válido, editar su precio (el código queda bloqueado), ver la miniatura «Sin foto», eliminarlo con confirmación. Abrir <code>productoService.js</code> 10 s</td><td>«Las rutas de administración están dentro de <code>RutaProtegida</code>: sin sesión redirigen al login. La sesión es simulada en <code>localStorage</code>; en el Parcial 3 se cambia por JWT. El formulario sirve para crear y editar: con <code>useParams</code> sabe si hay un código en la URL. Si lo guardo vacío, valida cada campo; si repito un código, el servicio lanza un error y el formulario lo muestra. El CRUD trabaja sobre una copia del catálogo en <code>localStorage</code>, y las páginas solo hablan con <code>productoService</code>: en el Parcial 3 ese archivo pasa a usar <code>fetch</code> y las páginas no cambian.»</td><td>IE2.1.1, IE2.1.4, validaciones</td></tr><tr><td>7</td><td>Responsivo · 5:20–5:55</td><td>Navegador con DevTools</td><td>1280 → 768 → 360 px. Abrir el menú hamburguesa. En 360, la tabla de admin se desplaza hacia el lado con la columna Código fija</td><td>«Uso Tailwind CSS, que el curso adoptó en reemplazo de Bootstrap. La grilla pasa de cuatro columnas a tres, dos y una con los prefijos <code>sm</code>, <code>md</code> y <code>lg</code>; en móvil la navegación se colapsa en un menú hamburguesa y la tabla de administración se desplaza hacia el lado.»</td><td>IE2.1.2, IE2.1.4</td></tr><tr><td>8</td><td>Pruebas · 5:55–7:20</td><td>Terminal 2 y VS Code</td><td><code>npm test</code> → 78 pruebas en 15 archivos, todas en verde. Abrir <code>carrito.test.js</code> (lógica), <code>Item.test.jsx</code> (componente con <code>vi.fn</code> y relojes falsos) y <code>Login.test.jsx</code> (<code>vi.mock</code>). <code>npm run test:coverage</code> y mostrar el resumen</td><td>«Las pruebas usan Vitest con React Testing Library y jsdom, que reemplazan a Jasmine y Karma. La configuración está en <code>vite.config.js</code> y en <code>src/test/setup.js</code>, que limpia <code>localStorage</code> antes de cada prueba. Hay tres tipos. De lógica: esta comprueba que <code>agregarProducto</code> no pasa del stock. De componente: esta renderiza la tarjeta, hace clic en Agregar y verifica con un mock, <code>vi.fn</code>, que se llamó a <code>onAgregar</code> con los datos del producto. Y con <code>vi.mock</code>: aquí reemplazo el servicio de login para forzar "credenciales incorrectas" sin depender de los datos reales. La cobertura es de 75 % de las líneas; la lógica de <code>utils</code> y <code>services</code> está sobre 90 %.»</td><td>IE2.2.1, IE2.2.2, IE2.3.1, IE2.3.2</td></tr><tr><td>9</td><td>GitHub · 7:20–7:45</td><td>Pestaña de GitHub</td><td>Repositorio público y el historial de commits</td><td>«El repositorio es público y este historial muestra cómo avanzó el proyecto: primero la estructura y las rutas, luego validaciones y pruebas, el carrito, el checkout y el CRUD de administración.»</td><td>—</td></tr><tr><td>10</td><td>Cierre · 7:45–8:00</td><td>Navegador, Inicio</td><td>La portada</td><td>«Esta demostración corresponde a la versión entregada para la Evaluación Parcial 2. Gracias.»</td><td>—</td></tr></tbody></table></div>
+<h3 id="d-3">Las 10 pruebas que se nombran</h3>
+<p>La rúbrica pide demostrar 10 pruebas. El proyecto tiene 78; estas son las que conviene saber explicar (están en el orden en que aparecen en la terminal):</p>
+<div class='tabla'><table><thead><tr><th>#</th><th>Archivo</th><th>Prueba</th><th>Tipo</th></tr></thead><tbody><tr><td>1</td><td><code>utils/carrito.test.js</code></td><td>«no pasa del stock del producto»</td><td>Lógica</td></tr><tr><td>2</td><td><code>utils/carrito.test.js</code></td><td>«calcula el precio total»</td><td>Lógica</td></tr><tr><td>3</td><td><code>utils/validaciones.test.js</code></td><td>«rechaza un correo sin arroba»</td><td>Lógica / validación</td></tr><tr><td>4</td><td><code>services/productoService.test.js</code></td><td>«rechaza un código que ya existe»</td><td>Servicio, async</td></tr><tr><td>5</td><td><code>services/authService.test.js</code></td><td>«guarda el usuario en localStorage»</td><td><strong>Spy</strong> (<code>vi.spyOn</code>)</td></tr><tr><td>6</td><td><code>components/Item.test.jsx</code></td><td>«llama a onAgregar (vi.fn) al hacer clic en Agregar»</td><td>Componente, <strong>mock</strong></td></tr><tr><td>7</td><td><code>components/Item.test.jsx</code></td><td>«muestra «Agregado» por 1,5 segundos»</td><td>Componente, relojes falsos</td></tr><tr><td>8</td><td><code>pages/Login.test.jsx</code></td><td>«muestra "Credenciales incorrectas" cuando iniciarSesion (vi.mock) devuelve false»</td><td><strong>Mock de módulo</strong></td></tr><tr><td>9</td><td><code>pages/Checkout.test.jsx</code></td><td>«con el formulario vacío muestra errores y no vacía el carrito»</td><td>Formulario</td></tr><tr><td>10</td><td><code>pages/AdminProductos.test.jsx</code></td><td>«Eliminar quita el producto de la tabla»</td><td>Async + spy de <code>confirm</code></td></tr></tbody></table></div>
+<h3 id="d-4">Si hay que acortar (para quedar en ~6 min)</h3>
+<ul><li>Etapa 2: saltar Nosotros.</li><li>Etapa 4: un solo filtro.</li><li>Etapa 6: mostrar solo el formulario vacío y eliminar.</li><li>Etapa 8: no correr la cobertura en vivo; mostrar el resumen ya generado.</li></ul>
+<h3 id="d-5">Después de grabar</h3>
+<ul><li>☐ Ver el video completo: que se escuche la voz y se lea el código (zoom de VS Code ≥ 150 %).</li><li>☐ Confirmar que el commit de GitHub es el mismo que se entrega.</li><li>☐ Subir a Drive con acceso «Cualquier persona con el enlace» y probar en una ventana de incógnito.</li></ul></section></main>
+</div>
+</body>
+</html>
