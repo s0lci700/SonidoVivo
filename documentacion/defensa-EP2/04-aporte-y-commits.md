@@ -1,13 +1,13 @@
 # Desarrollo del proyecto y aporte personal
 
 Proyecto **individual**: Sol León (sección 005D). Repositorio:
-https://github.com/s0lci700/SonidoVivo — 45 commits entre el 25/09 y el 20/10/2026.
+https://github.com/s0lci700/SonidoVivo — más de 45 commits entre el 25/09 y el 20/10/2026 (el historial completo está en GitHub).
 
 ## Identidades en el historial
 
 | Autor en git | Commits | Qué es |
 |---|---|---|
-| Sol León | 41 | Equipo personal |
+| Sol León | 41+ | Equipo personal |
 | AO-Alumno | 3 | Equipo de la sala de clases (25/09 y 02/10: creación del repo, plantilla Vite, instalación de Vitest) |
 | s0lci700 | 1 | Cuenta de GitHub, reorganización inicial del repo |
 

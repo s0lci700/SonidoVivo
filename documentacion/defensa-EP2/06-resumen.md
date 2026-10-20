@@ -54,7 +54,7 @@ Library + jsdom · ESLint. JavaScript (no TypeScript). Datos simulados en JSON +
 - **78 pruebas**, 15 archivos, todas pasando.
 - Cobertura: **75 % líneas** · utils 100 % · services ≈ 92 %.
 - **51 productos**, 10 categorías, 16 regiones.
-- 45 commits.
+- Más de 45 commits.
 
 ## Tres frases para empezar cualquier respuesta
 1. «Está en `<archivo>`, en `<función>`: …» (y abrirlo).
