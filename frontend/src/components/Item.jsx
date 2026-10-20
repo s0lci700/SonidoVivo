@@ -8,6 +8,7 @@
 //     "descripcion": "Tapa de abeto, aros y fondo de meranti. Ideal para iniciantes.",
 //     "categoriaId": "GA"
 
+import { useRef, useState } from "react";
 import { estadoStock } from "../utils/estadoStock.js";
 import { Link } from "react-router-dom";
 import { Boton } from "./Boton";
@@ -21,6 +22,22 @@ const imagenes = import.meta.glob("../assets/productos/*.webp", {
 export function Item(props) {
   const imagen = imagenes[`../assets/productos/${props.codigo}.webp`];
   const stock = estadoStock(props.stock);
+  // Aviso de 1,5 s en el botón después de agregar. Solo esta tarjeta lo necesita: estado local.
+  const [agregado, setAgregado] = useState(false);
+  const temporizador = useRef(null);
+
+  function agregar() {
+    props.onAgregar({
+      codigo: props.codigo,
+      nombre: props.nombre,
+      precio: props.precio,
+      stock: props.stock,
+    });
+    setAgregado(true);
+    // Si se hace clic de nuevo antes de que termine, el aviso vuelve a contar desde cero.
+    clearTimeout(temporizador.current);
+    temporizador.current = setTimeout(() => setAgregado(false), 1500);
+  }
 
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-marfil-300 bg-marfil-50 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(26,23,20,0.12)]">
@@ -57,20 +74,14 @@ export function Item(props) {
             ${props.precio.toLocaleString("es-CL")}
           </span>
           {props.onAgregar && (
-            <Boton
-              onClick={() =>
-                props.onAgregar({
-                  codigo: props.codigo,
-                  nombre: props.nombre,
-                  precio: props.precio,
-                  stock: props.stock,
-                })
-              }
-              deshabilitado={props.stock <= 0}
-            >
-              Agregar
+            <Boton onClick={agregar} deshabilitado={props.stock <= 0}>
+              {agregado ? "Agregado ✓" : "Agregar"}
             </Boton>
           )}
+          {/* Lo anuncia el lector de pantalla; no se ve. */}
+          <span role="status" className="sr-only">
+            {agregado ? `${props.nombre} agregado al carrito` : ""}
+          </span>
         </div>
       </div>
     </article>

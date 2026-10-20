@@ -6,7 +6,8 @@ const variantes = {
   secundario: "border border-marfil-300 bg-marfil-50 text-laca-900 hover:bg-marfil-200",
 };
 
-// Props: children, variante ("primario" por defecto), y una de dos formas de uso:
+// Props: children, variante ("primario" por defecto), ariaLabel (nombre para lectores de
+// pantalla cuando el texto visible es solo un símbolo, como "−" o "+"), y una de dos formas de uso:
 //   - botón: tipo ("button" por defecto), onClick, deshabilitado
 //   - enlace: a="/ruta" (navega con React Router y se ve igual que el botón)
 export function Boton(props) {
@@ -27,6 +28,7 @@ export function Boton(props) {
       type={props.tipo ?? "button"}
       onClick={props.onClick}
       disabled={props.deshabilitado}
+      aria-label={props.ariaLabel}
       className={clases}
     >
       {props.children}

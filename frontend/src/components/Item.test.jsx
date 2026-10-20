@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { act, render, screen, fireEvent } from "@testing-library/react";
 import { Item } from "./Item";
 import { MemoryRouter } from "react-router-dom";
 
@@ -63,5 +63,16 @@ describe("Item", () => {
     expect(
       screen.getByRole("link", { name: "Guitarra Acústica Folk" }),
     ).toHaveAttribute("href", "/producto/GA001");
+  });
+
+  it("muestra «Agregado ✓» por 1,5 segundos después de agregar", () => {
+    // Relojes falsos: la prueba adelanta el tiempo en vez de esperarlo.
+    vi.useFakeTimers();
+    renderItem({ onAgregar: vi.fn() });
+    fireEvent.click(screen.getByRole("button", { name: "Agregar" }));
+    expect(screen.getByRole("button", { name: "Agregado ✓" })).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(1500));
+    expect(screen.getByRole("button", { name: "Agregar" })).toBeInTheDocument();
+    vi.useRealTimers();
   });
 });
