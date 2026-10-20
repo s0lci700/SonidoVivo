@@ -221,6 +221,25 @@ strong { color: #000; }
 </html>
 """
 
-salida = PLANTILLA.replace("__INDICE__", "".join(indice)).replace("__SECCIONES__", "\n".join(secciones))
-(CARPETA / "index.html").write_text(salida, encoding="utf-8")
-print(f"index.html generado con {len(FUENTES)} documentos")
+import sys
+
+if len(sys.argv) == 3:
+    # Modo documento suelto, para imprimir a PDF:  generar-html.py entrada.md salida.html
+    cuerpo, _ = convertir(Path(sys.argv[1]).read_text(encoding="utf-8"), "d")
+    salida = PLANTILLA.replace('<div class="marco">', '<div class="marco solo">').replace(
+        "__INDICE__", ""
+    ).replace("__SECCIONES__", f'<section class="doc">{cuerpo}</section>')
+    salida = salida.replace(
+        "</style>",
+        ".solo { display: block; } .solo nav { display: none; } .solo main { max-width: none; padding: 0; }"
+        " .solo .doc { border: 0; padding: 0; background: #fff; } body { background: #fff; }"
+        " @page { size: A4; margin: 16mm 14mm; } table { font-size: 12px; } th, td { padding: 5px 8px; }"
+        " h2 { font-size: 28px; } h3 { break-after: avoid; } tr { break-inside: avoid; }"
+        " td:first-child { white-space: nowrap; }</style>",
+    )
+    Path(sys.argv[2]).write_text(salida, encoding="utf-8")
+    print(f"{Path(sys.argv[2]).name} generado")
+else:
+    salida = PLANTILLA.replace("__INDICE__", "".join(indice)).replace("__SECCIONES__", "\n".join(secciones))
+    (CARPETA / "index.html").write_text(salida, encoding="utf-8")
+    print(f"index.html generado con {len(FUENTES)} documentos")
