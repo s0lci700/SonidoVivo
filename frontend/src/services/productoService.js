@@ -3,9 +3,25 @@
 import productos from "../data/productos.json";
 import categorias from "../data/categorias.json";
 
+const CLAVE = "productos";
+
+// Funciones locales
+
+function leerProductos() {
+  const guardado = localStorage.getItem(CLAVE);
+  return guardado ? JSON.parse(guardado) : [...productos];
+}
+
+function guardarProductos(lista) {
+  localStorage.setItem(CLAVE, JSON.stringify(lista));
+}
+
+
+// READ
 export async function obtenerProductos(categoriaId) {
-  if (!categoriaId) return [...productos];
-  return productos.filter((producto) => producto.categoriaId === categoriaId);
+  const lista = leerProductos();
+  if (!categoriaId) return [...lista];
+  return lista.filter((producto) => producto.categoriaId === categoriaId);
 }
 
 export async function obtenerCategorias() {
@@ -19,9 +35,37 @@ export async function obtenerProductoPorCodigo(codigo) {
   return lista.find((producto) => producto.codigo === codigo) ?? null;
 }
 
-// TODO (CRUD simulado que pide el Anexo 1): hoy el catálogo es de solo lectura.
-//   Para crear/editar/eliminar hay que trabajar sobre una copia mutable de
-//   productos.json guardada en localStorage, y que las funciones de arriba lean de ahí.
-// TODO: crearProducto(producto)                 -> AdminProductoForm (nuevo)
-// TODO: actualizarProducto(codigo, cambios)     -> AdminProductoForm (editar)
-// TODO: eliminarProducto(codigo)                -> AdminProductos
+// CRUD simulado: las funciones escriben sobre la copia del catálogo en localStorage.
+// CREATE
+export async function crearProducto(producto) {
+  const lista = leerProductos();
+  const existe = lista.some((p) => p.codigo === producto.codigo);
+  if (existe) {
+    throw new Error("Ya existe un producto con ese código");
+  } 
+  guardarProductos([...lista, producto]);
+  return producto;
+}
+
+// UPDATE
+export async function actualizarProducto(codigo, cambios) {
+  const lista = leerProductos();
+  const actual = lista.find((p) => p.codigo === codigo);
+  if (!actual) {
+    throw new Error("No existe un producto con ese código");
+  } 
+  const actualizado = { ...actual, ...cambios };
+  guardarProductos(lista.map((p) => (p.codigo === codigo ? actualizado : p)));
+  return actualizado;
+}
+
+// DELETE
+export async function eliminarProducto(codigo) {
+  const lista = leerProductos();
+  const prod = lista.find((p) => p.codigo === codigo);
+  if (!prod) {
+    throw new Error("No existe un producto con ese código");
+  } 
+  guardarProductos(lista.filter((p) => (p.codigo !== codigo)));
+  return prod;
+}
