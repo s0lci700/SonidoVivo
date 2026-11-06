@@ -39,7 +39,13 @@ Desde la carpeta del microservicio, en PowerShell:
 ```
 
 `settings-google.xml` usa el espejo de Maven Central de Google (material del curso, S13)
-para evitar el error HTTP 429 al descargar dependencias.
+para evitar el error HTTP 429 al descargar dependencias. Si en cambio aparece
+`Could not transfer artifact ... .tmp -> ... .jar` (el archivo ya está descargado y VS Code lo
+tiene abierto), ejecutar sin `-s ..\settings-google.xml`.
+
+Las entidades usan **Lombok** (`@Getter`, `@Setter`, `@NoArgsConstructor`, `@AllArgsConstructor`)
+para no escribir getters, setters ni constructores. No se usa `@Data` en entidades JPA porque
+genera `equals`, `hashCode` y `toString` con todos los campos, lo que falla con relaciones.
 
 Swagger queda en `http://localhost:<puerto>/swagger-ui.html`.
 
