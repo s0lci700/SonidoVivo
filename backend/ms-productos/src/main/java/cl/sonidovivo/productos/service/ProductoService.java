@@ -11,11 +11,12 @@ import cl.sonidovivo.productos.model.Categoria;
 import cl.sonidovivo.productos.model.Producto;
 import cl.sonidovivo.productos.repository.CategoriaRepository;
 import cl.sonidovivo.productos.repository.ProductoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service 
+@Service
 public class ProductoService {
-    
-    @Autowired 
+
+    @Autowired
     private ProductoRepository productoRepository;
 
     @Autowired
@@ -29,41 +30,64 @@ public class ProductoService {
     }
 
     public Producto buscar(Long id) {
-        return productoRepository.findById(id).orElseThrow(() ->
-            new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto " + id + " no existe"));
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto " + id + " no existe"));
     }
 
     public Producto crear(Producto nuevo) {
         if (productoRepository.existsByCodigo(nuevo.getCodigo())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe un registro con el codigo" + nuevo.getCodigo());
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Ya existe un registro con el codigo " + nuevo.getCodigo());
         }
-        // TODO: esta línea no hace nada; cambiar por resolverCategoria(nuevo.getCategoria())
-        nuevo.setCategoria(nuevo.getCategoria());
+        nuevo.setCategoria(resolverCategoria(nuevo.getCategoria()));
         nuevo.setId(null);
         return productoRepository.save(nuevo);
     }
 
     public Producto actualizar(Long id, Producto cambios) {
-        // TODO: buscar(id); si otro producto ya usa cambios.getCodigo() -> 409 (existsByCodigoAndIdNot);
-        //       copiar los campos de cambios a actual (categoría con resolverCategoria) y guardar.
-        throw new UnsupportedOperationException("Pendiente: actualizar");
+
+        Producto actual = buscar(id);
+        if (productoRepository.existsByCodigoAndIdNot(cambios.getCodigo(), id)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Ya existe otro registro con el codigo " + cambios.getCodigo());
+        }
+        actual.setCodigo(cambios.getCodigo());
+        actual.setCategoria(resolverCategoria(cambios.getCategoria()));
+        actual.setNombre(cambios.getNombre());
+        actual.setMarca(cambios.getMarca());
+        actual.setModelo(cambios.getModelo());
+        actual.setStock(cambios.getStock());
+        actual.setPrecio(cambios.getPrecio());
+        actual.setDescripcion(cambios.getDescripcion());
+        return productoRepository.save(actual);
     }
 
     public void eliminar(Long id) {
-        // TODO: buscar(id) (lanza 404 si no existe) y productoRepository.delete(...).
-        throw new UnsupportedOperationException("Pendiente: eliminar");
+        productoRepository.delete(buscar(id));
     }
 
-    // Lo usará ms-pedidos. Agregar @Transactional (org.springframework.transaction.annotation).
+    // Lo usará ms-pedidos.
+    @Transactional
     public Producto descontarStock(Long id, int cantidad) {
-        // TODO: cantidad <= 0 -> 400; stock < cantidad -> 409 "Stock insuficiente";
-        //       restar cantidad al stock y guardar.
-        throw new UnsupportedOperationException("Pendiente: descontarStock");
+        if (cantidad <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a 0.");
+        }
+        Producto actual = buscar(id);
+        if (actual.getStock() < cantidad) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Stock insuficiente: quedan " + actual.getStock() + " unidades.");
+        }
+        actual.setStock(actual.getStock() - cantidad);
+        return productoRepository.save(actual);
     }
 
     private Categoria resolverCategoria(Categoria enviada) {
-        // TODO: si enviada o enviada.getId() es null -> 400 "La categoría es obligatoria";
-        //       categoriaRepository.findById(enviada.getId()) o 400 "La categoría X no existe".
-        throw new UnsupportedOperationException("Pendiente: resolverCategoria");
+        if (enviada == null || enviada.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La categoría es obligatoria");
+        }
+        return categoriaRepository.findById(enviada.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "La categoría " + enviada.getId() + " no existe"));
+
     }
 }
