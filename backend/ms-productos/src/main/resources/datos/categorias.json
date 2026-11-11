@@ -1,0 +1,42 @@
+[
+  {
+    "id": "GA",
+    "nombre": "Guitarras Acústicas"
+  },
+  {
+    "id": "GE",
+    "nombre": "Guitarras Eléctricas"
+  },
+  {
+    "id": "BA",
+    "nombre": "Bajos Eléctricos"
+  },
+  {
+    "id": "BT",
+    "nombre": "Baterías"
+  },
+  {
+    "id": "TC",
+    "nombre": "Teclados y Pianos"
+  },
+  {
+    "id": "AM",
+    "nombre": "Amplificadores"
+  },
+  {
+    "id": "MI",
+    "nombre": "Micrófonos"
+  },
+  {
+    "id": "PE",
+    "nombre": "Pedales de Efectos"
+  },
+  {
+    "id": "AC",
+    "nombre": "Accesorios"
+  },
+  {
+    "id": "ES",
+    "nombre": "Estudio y Grabación"
+  }
+]

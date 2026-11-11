@@ -5,14 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import cl.sonidovivo.productos.dto.ProductoRequest;
+import cl.sonidovivo.productos.dto.ProductoResponse;
 import cl.sonidovivo.productos.model.Categoria;
 import cl.sonidovivo.productos.model.Producto;
 import cl.sonidovivo.productos.repository.CategoriaRepository;
 import cl.sonidovivo.productos.repository.ProductoRepository;
-import org.springframework.transaction.annotation.Transactional;
 
+// Recibe y devuelve DTOs; la entidad Producto solo se usa aquí adentro y en el repositorio.
 @Service
 public class ProductoService {
 
@@ -22,72 +25,83 @@ public class ProductoService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public List<Producto> listar(String categoriaId) {
-        if (categoriaId == null || categoriaId.isBlank()) {
-            return productoRepository.findAll();
-        }
-        return productoRepository.findByCategoriaId(categoriaId);
+    public List<ProductoResponse> listar(String categoriaId) {
+        List<Producto> productos = (categoriaId == null || categoriaId.isBlank())
+                ? productoRepository.findAll()
+                : productoRepository.findByCategoriaId(categoriaId);
+        return productos.stream().map(ProductoResponse::desde).toList();
     }
 
-    public Producto buscar(Long id) {
-        return productoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto " + id + " no existe"));
+    public ProductoResponse buscar(Long id) {
+        return ProductoResponse.desde(buscarEntidad(id));
     }
 
-    public Producto crear(Producto nuevo) {
-        if (productoRepository.existsByCodigo(nuevo.getCodigo())) {
+    public ProductoResponse buscarPorCodigo(String codigo) {
+        Producto producto = productoRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Producto con código " + codigo + " no existe"));
+        return ProductoResponse.desde(producto);
+    }
+
+    public ProductoResponse crear(ProductoRequest datos) {
+        if (productoRepository.existsByCodigo(datos.codigo())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya existe un registro con el codigo " + nuevo.getCodigo());
+                    "Ya existe un registro con el codigo " + datos.codigo());
         }
-        nuevo.setCategoria(resolverCategoria(nuevo.getCategoria()));
-        nuevo.setId(null);
-        return productoRepository.save(nuevo);
+        Producto nuevo = new Producto();
+        copiarDatos(datos, nuevo);
+        return ProductoResponse.desde(productoRepository.save(nuevo));
     }
 
-    public Producto actualizar(Long id, Producto cambios) {
-
-        Producto actual = buscar(id);
-        if (productoRepository.existsByCodigoAndIdNot(cambios.getCodigo(), id)) {
+    public ProductoResponse actualizar(Long id, ProductoRequest datos) {
+        Producto actual = buscarEntidad(id);
+        if (productoRepository.existsByCodigoAndIdNot(datos.codigo(), id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya existe otro registro con el codigo " + cambios.getCodigo());
+                    "Ya existe otro registro con el codigo " + datos.codigo());
         }
-        actual.setCodigo(cambios.getCodigo());
-        actual.setCategoria(resolverCategoria(cambios.getCategoria()));
-        actual.setNombre(cambios.getNombre());
-        actual.setMarca(cambios.getMarca());
-        actual.setModelo(cambios.getModelo());
-        actual.setStock(cambios.getStock());
-        actual.setPrecio(cambios.getPrecio());
-        actual.setDescripcion(cambios.getDescripcion());
-        return productoRepository.save(actual);
+        copiarDatos(datos, actual);
+        return ProductoResponse.desde(productoRepository.save(actual));
     }
 
     public void eliminar(Long id) {
-        productoRepository.delete(buscar(id));
+        productoRepository.delete(buscarEntidad(id));
     }
 
-    // Lo usará ms-pedidos.
+    // Regla de negocio: no se puede vender más de lo que hay. Lo usará ms-pedidos.
     @Transactional
-    public Producto descontarStock(Long id, int cantidad) {
+    public ProductoResponse descontarStock(Long id, int cantidad) {
         if (cantidad <= 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a 0.");
         }
-        Producto actual = buscar(id);
+        Producto actual = buscarEntidad(id);
         if (actual.getStock() < cantidad) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "Stock insuficiente: quedan " + actual.getStock() + " unidades.");
         }
         actual.setStock(actual.getStock() - cantidad);
-        return productoRepository.save(actual);
+        return ProductoResponse.desde(productoRepository.save(actual));
     }
 
-    private Categoria resolverCategoria(Categoria enviada) {
-        if (enviada == null || enviada.getId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La categoría es obligatoria");
-        }
-        return categoriaRepository.findById(enviada.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        "La categoría " + enviada.getId() + " no existe"));
+    private Producto buscarEntidad(Long id) {
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto " + id + " no existe"));
+    }
 
+    // Convierte el DTO de entrada en la entidad (sirve para crear y para editar).
+    private void copiarDatos(ProductoRequest datos, Producto producto) {
+        producto.setCodigo(datos.codigo());
+        producto.setCategoria(resolverCategoria(datos.categoriaId()));
+        producto.setNombre(datos.nombre());
+        producto.setMarca(datos.marca());
+        producto.setModelo(datos.modelo());
+        producto.setStock(datos.stock());
+        producto.setPrecio(datos.precio());
+        producto.setDescripcion(datos.descripcion());
+    }
+
+    private Categoria resolverCategoria(String categoriaId) {
+        return categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "La categoría " + categoriaId + " no existe"));
     }
 }
