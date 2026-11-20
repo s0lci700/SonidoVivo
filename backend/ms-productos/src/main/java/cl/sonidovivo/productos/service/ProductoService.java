@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import cl.sonidovivo.productos.model.Categoria;
 import cl.sonidovivo.productos.model.Producto;
 import cl.sonidovivo.productos.repository.CategoriaRepository;
 import cl.sonidovivo.productos.repository.ProductoRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductoService {
@@ -29,27 +29,31 @@ public class ProductoService {
         return productoRepository.findByCategoriaId(categoriaId);
     }
 
-    public Producto buscar(Long id) {
-        return productoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto " + id + " no existe"));
+    public List<Categoria> listarCategorias() {
+        return categoriaRepository.findAll();
+    }
+
+    public Producto buscar(String codigo) {
+        return productoRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "El producto " + codigo + " no existe"));
     }
 
     public Producto crear(Producto nuevo) {
         if (productoRepository.existsByCodigo(nuevo.getCodigo())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya existe un registro con el codigo " + nuevo.getCodigo());
+                    "Ya existe un producto con el código " + nuevo.getCodigo());
         }
         nuevo.setCategoria(resolverCategoria(nuevo.getCategoria()));
-        nuevo.setId(null);
+        nuevo.setId(null); // el id lo genera la base de datos
         return productoRepository.save(nuevo);
     }
 
-    public Producto actualizar(Long id, Producto cambios) {
-
-        Producto actual = buscar(id);
-        if (productoRepository.existsByCodigoAndIdNot(cambios.getCodigo(), id)) {
+    public Producto actualizar(String codigo, Producto cambios) {
+        Producto actual = buscar(codigo);
+        if (productoRepository.existsByCodigoAndIdNot(cambios.getCodigo(), actual.getId())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya existe otro registro con el codigo " + cambios.getCodigo());
+                    "Ya existe otro producto con el código " + cambios.getCodigo());
         }
         actual.setCodigo(cambios.getCodigo());
         actual.setCategoria(resolverCategoria(cambios.getCategoria()));
@@ -62,22 +66,43 @@ public class ProductoService {
         return productoRepository.save(actual);
     }
 
-    public void eliminar(Long id) {
-        productoRepository.delete(buscar(id));
+    public void eliminar(String codigo) {
+        productoRepository.delete(buscar(codigo));
     }
 
-    // Lo usará ms-pedidos.
-    @Transactional
-    public Producto descontarStock(Long id, int cantidad) {
-        if (cantidad <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a 0.");
+    // El Vendedor actualiza el stock tras contar el inventario (caso, §0.2).
+    public Producto cambiarStock(String codigo, int stock) {
+        if (stock < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El stock no puede ser negativo");
         }
-        Producto actual = buscar(id);
+        Producto actual = buscar(codigo);
+        actual.setStock(stock);
+        return productoRepository.save(actual);
+    }
+
+    // Lo llama ms-pedidos al confirmar un pedido.
+    @Transactional
+    public Producto descontarStock(String codigo, int cantidad) {
+        if (cantidad <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a 0");
+        }
+        Producto actual = buscar(codigo);
         if (actual.getStock() < cantidad) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Stock insuficiente: quedan " + actual.getStock() + " unidades.");
+                    "Stock insuficiente de " + codigo + ": quedan " + actual.getStock() + " unidades");
         }
         actual.setStock(actual.getStock() - cantidad);
+        return productoRepository.save(actual);
+    }
+
+    // Lo llama ms-pedidos al cancelar un pedido, o si falla a mitad de crearlo.
+    @Transactional
+    public Producto reponerStock(String codigo, int cantidad) {
+        if (cantidad <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a 0");
+        }
+        Producto actual = buscar(codigo);
+        actual.setStock(actual.getStock() + cantidad);
         return productoRepository.save(actual);
     }
 
@@ -88,6 +113,5 @@ public class ProductoService {
         return categoriaRepository.findById(enviada.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "La categoría " + enviada.getId() + " no existe"));
-
     }
 }
