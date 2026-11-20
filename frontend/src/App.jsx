@@ -17,6 +17,7 @@ import { AdminProductos } from "./pages/AdminProductos";
 import { AdminProductoForm } from "./pages/AdminProductoForm";
 import { AdminPedidos } from "./pages/AdminPedidos";
 import { AdminUsuarios } from "./pages/AdminUsuarios";
+import { AdminUsuarioForm } from "./pages/AdminUsuarioForm";
 import { MisPedidos } from "./pages/MisPedidos";
 import { SinPermiso } from "./pages/SinPermiso";
 import { NoEncontrado } from "./pages/NoEncontrado";
@@ -123,6 +124,14 @@ function App() {
           element={
             <RutaProtegida roles={SOLO_ADMIN}>
               <AdminUsuarios />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="admin/usuarios/nuevo"
+          element={
+            <RutaProtegida roles={SOLO_ADMIN}>
+              <AdminUsuarioForm />
             </RutaProtegida>
           }
         />

@@ -53,6 +53,16 @@ export function simularApi() {
       return respuesta(200, { correo: u.correo, nombre: u.nombre, rol: u.rol });
     }
 
+    if (pathname === "/api/usuarios" && metodo === "POST") {
+      if (!rol) return respuesta(401, { error: "No autenticado" });
+      if (rol !== "ADMINISTRADOR") return respuesta(403, { error: "Sin permisos" });
+      if (usuarios.some((u) => u.correo === cuerpo.correo)) {
+        return respuesta(409, { error: "Ya existe una cuenta con ese correo" });
+      }
+      // Como el backend real, la respuesta no incluye la contraseña.
+      return respuesta(201, { id: 99, nombre: cuerpo.nombre, correo: cuerpo.correo, rol: cuerpo.rol, activo: true });
+    }
+
     // ---- ms-productos ----
     if (pathname === "/api/categorias") return respuesta(200, categorias);
     if (partes[1] === "productos") {

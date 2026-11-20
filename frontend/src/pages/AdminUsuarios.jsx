@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Boton } from "../components/Boton";
 import { obtenerSesion } from "../services/authService";
 import {
   ROLES,
@@ -8,8 +9,7 @@ import {
 } from "../services/usuarioService";
 
 // Gestión de usuarios (RF-58, solo ADMINISTRADOR): asignar rol y desactivar/reactivar.
-// TODO: formulario para crear usuarios con crearUsuario() de usuarioService
-//       (nombre, correo, contraseña, rol), siguiendo el patrón de AdminProductoForm.
+// El alta está en AdminUsuarioForm (/admin/usuarios/nuevo).
 export function AdminUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState("");
@@ -39,7 +39,10 @@ export function AdminUsuarios() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="font-display text-4xl">Usuarios</h1>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <h1 className="font-display text-4xl">Usuarios</h1>
+        <Boton a="/admin/usuarios/nuevo">Nuevo usuario</Boton>
+      </div>
       {error && (
         <p role="alert" className="text-cobre-600">
           {error}
