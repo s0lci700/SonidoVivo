@@ -15,8 +15,16 @@ import { Registro } from "./pages/Registro";
 import { Admin } from "./pages/Admin";
 import { AdminProductos } from "./pages/AdminProductos";
 import { AdminProductoForm } from "./pages/AdminProductoForm";
+import { AdminPedidos } from "./pages/AdminPedidos";
+import { AdminUsuarios } from "./pages/AdminUsuarios";
+import { MisPedidos } from "./pages/MisPedidos";
+import { SinPermiso } from "./pages/SinPermiso";
 import { NoEncontrado } from "./pages/NoEncontrado";
 import { agregarProducto, quitarProducto, cambiarCantidad } from "./utils/carrito";
+
+// Roles del caso (§0.2) que pueden entrar a cada grupo de pantallas.
+const SOLO_ADMIN = ["ADMINISTRADOR"];
+const PERSONAL = ["ADMINISTRADOR", "VENDEDOR"];
 
 function App() {
   // El estado vive aquí porque lo comparten Header (contador), Catálogo, Carrito y Checkout.
@@ -58,11 +66,22 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="registro" element={<Registro />} />
 
-        {/* Administración */}
+        <Route path="sin-permiso" element={<SinPermiso />} />
+        <Route
+          path="mis-pedidos"
+          element={
+            <RutaProtegida>
+              <MisPedidos />
+            </RutaProtegida>
+          }
+        />
+
+        {/* Administración. roles = quién puede entrar (IE3.3.3).
+            El backend vuelve a comprobarlo en cada solicitud (401/403). */}
         <Route
           path="admin"
           element={
-            <RutaProtegida>
+            <RutaProtegida roles={SOLO_ADMIN}>
               <Admin />
             </RutaProtegida>
           }
@@ -70,7 +89,7 @@ function App() {
         <Route
           path="admin/productos"
           element={
-            <RutaProtegida>
+            <RutaProtegida roles={SOLO_ADMIN}>
               <AdminProductos />
             </RutaProtegida>
           }
@@ -78,7 +97,7 @@ function App() {
         <Route
           path="admin/productos/nuevo"
           element={
-            <RutaProtegida>
+            <RutaProtegida roles={SOLO_ADMIN}>
               <AdminProductoForm />
             </RutaProtegida>
           }
@@ -86,8 +105,24 @@ function App() {
         <Route
           path="admin/productos/:codigo"
           element={
-            <RutaProtegida>
+            <RutaProtegida roles={SOLO_ADMIN}>
               <AdminProductoForm />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="admin/pedidos"
+          element={
+            <RutaProtegida roles={PERSONAL}>
+              <AdminPedidos />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="admin/usuarios"
+          element={
+            <RutaProtegida roles={SOLO_ADMIN}>
+              <AdminUsuarios />
             </RutaProtegida>
           }
         />

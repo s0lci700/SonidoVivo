@@ -18,10 +18,7 @@ function renderAdmin() {
 
 // Tipo: componente (render con datos asíncronos) e integración con los servicios.
 describe("Admin", () => {
-  beforeEach(() => {
-    localStorage.clear();
-    iniciarSesion("admin@sonidovivo.cl", "Admin123");
-  });
+  beforeEach(() => iniciarSesion("admin@sonidovivo.cl", "Admin123"));
 
   it("saluda al usuario de la sesión", () => {
     renderAdmin();

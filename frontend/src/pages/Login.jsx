@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { iniciarSesion } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+import { iniciarSesion, obtenerSesion, rutaInicio } from "../services/authService";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Campo } from "../components/Campo";
 import { Boton } from "../components/Boton";
 
@@ -9,25 +9,37 @@ const usuarioVacio = { correo: "", password: "" };
 export function Login() {
   const [usuario, setUsuario] = useState(usuarioVacio);
   const [error, setError] = useState("");
+  const [enviando, setEnviando] = useState(false);
   const navigate = useNavigate();
+  // Si RutaProtegida lo mandó aquí, vuelve a esa página después de entrar.
+  const desde = useLocation().state?.desde;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUsuario((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // Evita recargar la página
     setError("");
     if (!usuario.correo || !usuario.password) {
       setError("Ingrese su correo y su contraseña");
       return;
     }
-    if (!iniciarSesion(usuario.correo, usuario.password)) {
-      setError("Credenciales incorrectas");
-      return;
+    setEnviando(true);
+    try {
+      const entro = await iniciarSesion(usuario.correo, usuario.password);
+      if (!entro) {
+        setError("Credenciales incorrectas");
+        return;
+      }
+      navigate(desde ?? rutaInicio(obtenerSesion()?.rol), { replace: true });
+    } catch (err) {
+      // Backend apagado u otro error: la contraseña nunca se guarda.
+      setError(err.message);
+    } finally {
+      setEnviando(false);
     }
-    navigate("/admin");
   };
 
   return (
@@ -50,13 +62,21 @@ export function Login() {
           onChange={handleChange}
         />
 
-        <Boton tipo="submit">Ingresar</Boton>
+        <Boton tipo="submit" deshabilitado={enviando}>
+          {enviando ? "Ingresando…" : "Ingresar"}
+        </Boton>
         {error && (
           <p role="alert" className="text-sm text-cobre-600">
             {error}
           </p>
         )}
       </form>
+      <p className="mt-6 text-sm text-tinta-600">
+        ¿No tienes cuenta?{" "}
+        <Link to="/registro" className="font-semibold text-laton-800 underline underline-offset-4">
+          Crear cuenta
+        </Link>
+      </p>
     </section>
   );
 }

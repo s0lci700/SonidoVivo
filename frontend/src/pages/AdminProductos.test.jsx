@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { iniciarSesion } from "../services/authService";
 import { AdminProductos } from "./AdminProductos";
 
 function renderAdmin() {
@@ -12,7 +13,7 @@ function renderAdmin() {
 }
 
 describe("AdminProductos", () => {
-  beforeEach(() => localStorage.clear());
+  beforeEach(() => iniciarSesion("admin@sonidovivo.cl", "Admin123"));
   afterEach(() => vi.restoreAllMocks());
 
   it("muestra los productos del catálogo", async () => {

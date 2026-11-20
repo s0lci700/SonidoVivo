@@ -1,71 +1,87 @@
-// Parcial 2: lee el catálogo local. En el Parcial 3 este archivo pasa a usar
-// fetch contra la API REST, manteniendo los mismos nombres y firmas.
-import productos from "../data/productos.json";
-import categorias from "../data/categorias.json";
+// Parcial 3: lee y modifica el catálogo en ms-productos (API REST).
+// Se mantienen los nombres y firmas del Parcial 2, así las páginas no cambian.
+import { API, pedirApi } from "./api";
 
-const CLAVE = "productos";
-
-// Funciones locales
-
-function leerProductos() {
-  const guardado = localStorage.getItem(CLAVE);
-  return guardado ? JSON.parse(guardado) : [...productos];
+// El backend devuelve la categoría como objeto { id, nombre }.
+// Las páginas usan la forma plana del Parcial 2: categoriaId + categoria (nombre).
+function aFrontend(p) {
+  return {
+    codigo: p.codigo,
+    nombre: p.nombre,
+    marca: p.marca,
+    modelo: p.modelo,
+    stock: p.stock,
+    precio: p.precio,
+    descripcion: p.descripcion,
+    categoriaId: p.categoria?.id,
+    categoria: p.categoria?.nombre,
+  };
 }
 
-function guardarProductos(lista) {
-  localStorage.setItem(CLAVE, JSON.stringify(lista));
+// Y al revés para POST/PUT: el backend espera "categoria": { "id": "GA" }.
+function aBackend(p) {
+  return {
+    codigo: p.codigo,
+    nombre: p.nombre,
+    marca: p.marca,
+    modelo: p.modelo,
+    stock: p.stock,
+    precio: p.precio,
+    descripcion: p.descripcion,
+    categoria: { id: p.categoriaId },
+  };
 }
 
+const url = (ruta) => `${API.productos}/api${ruta}`;
 
 // READ
 export async function obtenerProductos(categoriaId) {
-  const lista = leerProductos();
-  if (!categoriaId) return [...lista];
-  return lista.filter((producto) => producto.categoriaId === categoriaId);
+  const consulta = categoriaId ? `?categoria=${encodeURIComponent(categoriaId)}` : "";
+  const lista = await pedirApi(url(`/productos${consulta}`));
+  return lista.map(aFrontend);
 }
 
 export async function obtenerCategorias() {
-  return [...categorias];
+  return pedirApi(url("/categorias"));
 }
 
-// Devuelve null si el código no existe. Lee a través de obtenerProductos para
-// seguir funcionando cuando el CRUD cambie de dónde salen los productos.
+// Devuelve null si el código no existe (404).
 export async function obtenerProductoPorCodigo(codigo) {
-  const lista = await obtenerProductos();
-  return lista.find((producto) => producto.codigo === codigo) ?? null;
+  try {
+    return aFrontend(await pedirApi(url(`/productos/${encodeURIComponent(codigo)}`)));
+  } catch (error) {
+    if (error.estado === 404) return null;
+    throw error;
+  }
 }
 
-// CRUD simulado: las funciones escriben sobre la copia del catálogo en localStorage.
-// CREATE
+// CREATE (solo ADMINISTRADOR)
 export async function crearProducto(producto) {
-  const lista = leerProductos();
-  const existe = lista.some((p) => p.codigo === producto.codigo);
-  if (existe) {
-    throw new Error("Ya existe un producto con ese código");
-  } 
-  guardarProductos([...lista, producto]);
-  return producto;
+  return aFrontend(await pedirApi(url("/productos"), { metodo: "POST", cuerpo: aBackend(producto) }));
 }
 
-// UPDATE
+// UPDATE (solo ADMINISTRADOR). "cambios" trae el producto completo, como en el formulario.
 export async function actualizarProducto(codigo, cambios) {
-  const lista = leerProductos();
-  const actual = lista.find((p) => p.codigo === codigo);
-  if (!actual) {
-    throw new Error("No existe un producto con ese código");
-  } 
-  const actualizado = { ...actual, ...cambios };
-  guardarProductos(lista.map((p) => (p.codigo === codigo ? actualizado : p)));
-  return actualizado;
+  const actual = await obtenerProductoPorCodigo(codigo);
+  if (!actual) throw new Error("No existe un producto con ese código");
+  const cuerpo = aBackend({ ...actual, ...cambios });
+  return aFrontend(
+    await pedirApi(url(`/productos/${encodeURIComponent(codigo)}`), { metodo: "PUT", cuerpo }),
+  );
 }
 
-// DELETE
+// DELETE (solo ADMINISTRADOR)
 export async function eliminarProducto(codigo) {
-  const lista = leerProductos();
-  const prod = lista.find((p) => p.codigo === codigo);
-  if (!prod) {
-    throw new Error("No existe un producto con ese código");
-  } 
-  guardarProductos(lista.filter((p) => (p.codigo !== codigo)));
-  return prod;
+  await pedirApi(url(`/productos/${encodeURIComponent(codigo)}`), { metodo: "DELETE" });
+  return { codigo };
+}
+
+// Stock (ADMINISTRADOR o VENDEDOR)
+export async function cambiarStock(codigo, stock) {
+  return aFrontend(
+    await pedirApi(url(`/productos/${encodeURIComponent(codigo)}/stock`), {
+      metodo: "PATCH",
+      cuerpo: { cantidad: stock },
+    }),
+  );
 }
