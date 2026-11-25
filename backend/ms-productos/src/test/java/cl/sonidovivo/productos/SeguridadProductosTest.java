@@ -43,7 +43,7 @@ class SeguridadProductosTest {
     }
 
     private static final String NUEVO = """
-            {"codigo":"TS001","categoria":{"id":"GA"},"nombre":"Producto de prueba","marca":"Marca",
+            {"codigo":"TS001","categoriaId":"GA","nombre":"Producto de prueba","marca":"Marca",
              "modelo":"M1","stock":5,"precio":10000,"descripcion":"Creado por la prueba"}
             """;
 
@@ -52,7 +52,7 @@ class SeguridadProductosTest {
         mvc.perform(get("/api/productos")).andExpect(status().isOk());
         mvc.perform(get("/api/productos/GA001")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.codigo").value("GA001"))
-                .andExpect(jsonPath("$.categoria.id").value("GA"));
+                .andExpect(jsonPath("$.categoriaId").value("GA"));
         mvc.perform(get("/api/categorias")).andExpect(status().isOk());
     }
 
@@ -110,7 +110,7 @@ class SeguridadProductosTest {
     void datosInvalidosDa400ConMensajePorCampo() throws Exception {
         mvc.perform(post("/api/productos").header("Authorization", token("ADMINISTRADOR"))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"codigo\":\"\",\"categoria\":{\"id\":\"GA\"},\"precio\":-1}"))
+                .content("{\"codigo\":\"\",\"categoriaId\":\"GA\",\"precio\":-1}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.campos.precio").exists());
     }

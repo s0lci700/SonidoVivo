@@ -11,50 +11,46 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
-// Todas las respuestas de error tienen la misma forma JSON:
-// { "estado": 400, "mensaje": "...", "errores": { "campo": "motivo" } }
-// El frontend muestra "mensaje" y, si viene, el detalle por campo.
+// Todas las respuestas de error tienen la misma forma JSON, igual en los tres microservicios:
+// { "error": "mensaje", "campos": { "precio": "motivo" } }   ("campos" solo en errores de @Valid)
+// El frontend (services/api.js) muestra "error" y, si viene, el detalle por campo.
 @RestControllerAdvice
 public class ManejadorErrores {
 
-    // 400: falló alguna anotación de validación (@NotBlank, @Positive, ...) de la
-    // entidad.
+    // 400: falló alguna anotación de validación (@NotBlank, @Positive, ...) del DTO.
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> validacion(MethodArgumentNotValidException ex) {
-        Map<String, String> errores = new LinkedHashMap<>();
+        Map<String, String> campos = new LinkedHashMap<>();
         ex.getBindingResult().getFieldErrors()
-                .forEach(error -> errores.putIfAbsent(error.getField(), error.getDefaultMessage()));
-        Map<String, Object> cuerpo = cuerpo(HttpStatus.BAD_REQUEST, "Hay datos inválidos en el producto");
-        cuerpo.put("errores", errores);
+                .forEach(error -> campos.putIfAbsent(error.getField(), error.getDefaultMessage()));
+        Map<String, Object> cuerpo = cuerpo("Hay datos inválidos en el producto");
+        cuerpo.put("campos", campos);
         return ResponseEntity.badRequest().body(cuerpo);
     }
 
-    // 400: el cuerpo no es JSON o un campo tiene el tipo equivocado (p. ej.
-    // "precio": "abc").
+    // 400: el cuerpo no es JSON o un campo tiene el tipo equivocado (p. ej. "precio": "abc").
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, Object>> jsonInvalido(HttpMessageNotReadableException ex) {
-        return ResponseEntity.badRequest()
-                .body(cuerpo(HttpStatus.BAD_REQUEST, "El cuerpo de la petición no es un JSON válido"));
+        return ResponseEntity.badRequest().body(cuerpo("El cuerpo de la petición no es un JSON válido"));
     }
 
     // 404: el recurso pedido no existe.
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, Object>> noEncontrado(NotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(cuerpo(HttpStatus.NOT_FOUND, ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(cuerpo(ex.getMessage()));
     }
 
     // 404, 409, 400... lanzados desde el servicio con ResponseStatusException.
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, Object>> negocio(ResponseStatusException ex) {
         HttpStatus estado = HttpStatus.valueOf(ex.getStatusCode().value());
-        return ResponseEntity.status(estado).body(cuerpo(estado, ex.getReason()));
+        String mensaje = ex.getReason() != null ? ex.getReason() : estado.getReasonPhrase();
+        return ResponseEntity.status(estado).body(cuerpo(mensaje));
     }
 
-    private Map<String, Object> cuerpo(HttpStatus estado, String mensaje) {
+    private Map<String, Object> cuerpo(String mensaje) {
         Map<String, Object> cuerpo = new LinkedHashMap<>();
-        cuerpo.put("estado", estado.value());
-        cuerpo.put("mensaje", mensaje);
+        cuerpo.put("error", mensaje);
         return cuerpo;
     }
 }

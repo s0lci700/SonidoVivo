@@ -99,7 +99,7 @@ primera vez (`src/main/resources/datos/`). Si la base ya tiene datos, no toca na
 | GET | `/api/productos?categoria=GA` | público | |
 | GET | `/api/productos/{codigo}` | público | |
 | GET | `/api/categorias` | público | |
-| POST | `/api/productos` | ADMINISTRADOR | `"categoria": {"id": "GA"}` |
+| POST | `/api/productos` | ADMINISTRADOR | `ProductoRequest`: `"categoriaId": "GA"` |
 | PUT/DELETE | `/api/productos/{codigo}` | ADMINISTRADOR | |
 | PATCH | `/api/productos/{codigo}/stock` | ADMINISTRADOR, VENDEDOR | `{cantidad}` = stock nuevo |
 | POST | `/api/productos/{codigo}/descontar` · `/reponer` | SERVICIO | Solo ms-pedidos |

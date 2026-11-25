@@ -8,10 +8,9 @@ import usuarios from "../data/usuarios.json";
 
 const categoriaPorId = Object.fromEntries(categorias.map((c) => [c.id, c]));
 
-// Producto en la forma del backend: categoria como objeto.
+// Producto en la forma de ProductoResponse: categoriaId ("GA") + categoria (nombre).
 function aBackend(p) {
-  const { categoriaId, ...resto } = p;
-  return { ...resto, categoria: categoriaPorId[categoriaId] };
+  return { ...p, categoria: categoriaPorId[p.categoriaId]?.nombre };
 }
 
 function respuesta(estado, cuerpo) {
@@ -70,7 +69,7 @@ export function simularApi() {
       const i = productos.findIndex((p) => p.codigo === codigo);
       if (metodo === "GET" && !codigo) {
         const cat = searchParams.get("categoria");
-        return respuesta(200, cat ? productos.filter((p) => p.categoria.id === cat) : productos);
+        return respuesta(200, cat ? productos.filter((p) => p.categoriaId === cat) : productos);
       }
       if (metodo === "GET") return i < 0 ? respuesta(404, { error: "No existe" }) : respuesta(200, productos[i]);
       if (!rol) return respuesta(401, { error: "No autenticado" });
@@ -79,7 +78,7 @@ export function simularApi() {
         return respuesta(200, productos[i]);
       }
       if (rol !== "ADMINISTRADOR") return respuesta(403, { error: "Sin permisos" });
-      const nuevo = { ...cuerpo, categoria: categoriaPorId[cuerpo?.categoria?.id] };
+      const nuevo = cuerpo && aBackend(cuerpo); // DELETE no trae cuerpo
       if (metodo === "POST") {
         if (productos.some((p) => p.codigo === cuerpo.codigo)) {
           return respuesta(409, { error: `Ya existe un producto con el código ${cuerpo.codigo}` });

@@ -2,8 +2,8 @@
 // Se mantienen los nombres y firmas del Parcial 2, así las páginas no cambian.
 import { API, pedirApi } from "./api";
 
-// El backend devuelve la categoría como objeto { id, nombre }.
-// Las páginas usan la forma plana del Parcial 2: categoriaId + categoria (nombre).
+// ms-productos responde con ProductoResponse, que ya viene en la forma plana del
+// Parcial 2: categoriaId ("GA") + categoria (nombre). Se copian solo los campos que usan las páginas.
 function aFrontend(p) {
   return {
     codigo: p.codigo,
@@ -13,22 +13,22 @@ function aFrontend(p) {
     stock: p.stock,
     precio: p.precio,
     descripcion: p.descripcion,
-    categoriaId: p.categoria?.id,
-    categoria: p.categoria?.nombre,
+    categoriaId: p.categoriaId,
+    categoria: p.categoria,
   };
 }
 
-// Y al revés para POST/PUT: el backend espera "categoria": { "id": "GA" }.
+// Para POST/PUT se envía la forma de ProductoRequest: la categoría va solo como su id.
 function aBackend(p) {
   return {
     codigo: p.codigo,
+    categoriaId: p.categoriaId,
     nombre: p.nombre,
     marca: p.marca,
     modelo: p.modelo,
     stock: p.stock,
     precio: p.precio,
     descripcion: p.descripcion,
-    categoria: { id: p.categoriaId },
   };
 }
 

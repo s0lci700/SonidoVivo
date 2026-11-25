@@ -32,59 +32,76 @@ public class ProductoService {
         return productos.stream().map(ProductoResponse::desde).toList();
     }
 
-    public ProductoResponse buscar(Long id) {
-        return ProductoResponse.desde(buscarEntidad(id));
-    }
-
-    public ProductoResponse buscarPorCodigo(String codigo) {
-        Producto producto = productoRepository.findByCodigo(codigo)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Producto con código " + codigo + " no existe"));
-        return ProductoResponse.desde(producto);
+    public ProductoResponse buscar(String codigo) {
+        return ProductoResponse.desde(buscarEntidad(codigo));
     }
 
     public ProductoResponse crear(ProductoRequest datos) {
         if (productoRepository.existsByCodigo(datos.codigo())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya existe un registro con el codigo " + datos.codigo());
+                    "Ya existe un producto con el código " + datos.codigo());
         }
         Producto nuevo = new Producto();
         copiarDatos(datos, nuevo);
         return ProductoResponse.desde(productoRepository.save(nuevo));
     }
 
-    public ProductoResponse actualizar(Long id, ProductoRequest datos) {
-        Producto actual = buscarEntidad(id);
-        if (productoRepository.existsByCodigoAndIdNot(datos.codigo(), id)) {
+    public ProductoResponse actualizar(String codigo, ProductoRequest datos) {
+        Producto actual = buscarEntidad(codigo);
+        if (productoRepository.existsByCodigoAndIdNot(datos.codigo(), actual.getId())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya existe otro registro con el codigo " + datos.codigo());
+                    "Ya existe otro producto con el código " + datos.codigo());
         }
         copiarDatos(datos, actual);
         return ProductoResponse.desde(productoRepository.save(actual));
     }
 
-    public void eliminar(Long id) {
-        productoRepository.delete(buscarEntidad(id));
+    public void eliminar(String codigo) {
+        productoRepository.delete(buscarEntidad(codigo));
     }
 
-    // Regla de negocio: no se puede vender más de lo que hay. Lo usará ms-pedidos.
-    @Transactional
-    public ProductoResponse descontarStock(Long id, int cantidad) {
-        if (cantidad <= 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a 0.");
+    // El Vendedor fija el stock tras contar el inventario.
+    public ProductoResponse cambiarStock(String codigo, int stock) {
+        if (stock < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El stock no puede ser negativo.");
         }
-        Producto actual = buscarEntidad(id);
+        Producto actual = buscarEntidad(codigo);
+        actual.setStock(stock);
+        return ProductoResponse.desde(productoRepository.save(actual));
+    }
+
+    // Regla de negocio: no se puede vender más de lo que hay. Lo llama ms-pedidos al crear un pedido.
+    @Transactional
+    public ProductoResponse descontarStock(String codigo, int cantidad) {
+        validarCantidad(cantidad);
+        Producto actual = buscarEntidad(codigo);
         if (actual.getStock() < cantidad) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Stock insuficiente: quedan " + actual.getStock() + " unidades.");
+                    "Stock insuficiente de " + codigo + ": quedan " + actual.getStock() + " unidades.");
         }
         actual.setStock(actual.getStock() - cantidad);
         return ProductoResponse.desde(productoRepository.save(actual));
     }
 
-    private Producto buscarEntidad(Long id) {
-        return productoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto " + id + " no existe"));
+    // Lo llama ms-pedidos al cancelar un pedido, o si falla a mitad de crearlo.
+    @Transactional
+    public ProductoResponse reponerStock(String codigo, int cantidad) {
+        validarCantidad(cantidad);
+        Producto actual = buscarEntidad(codigo);
+        actual.setStock(actual.getStock() + cantidad);
+        return ProductoResponse.desde(productoRepository.save(actual));
+    }
+
+    private void validarCantidad(int cantidad) {
+        if (cantidad <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor a 0.");
+        }
+    }
+
+    private Producto buscarEntidad(String codigo) {
+        return productoRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "El producto " + codigo + " no existe"));
     }
 
     // Convierte el DTO de entrada en la entidad (sirve para crear y para editar).

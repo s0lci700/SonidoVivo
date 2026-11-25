@@ -27,7 +27,7 @@ describe("productoService (API REST)", () => {
       const lista = await obtenerProductos();
       expect(lista.length).toBeGreaterThan(0);
     });
-    it("convierte la categoría del backend a categoriaId + nombre", async () => {
+    it("entrega la categoría como categoriaId + nombre", async () => {
       const p = await obtenerProductoPorCodigo("GA001");
       expect(p.categoriaId).toBe("GA");
       expect(p.categoria).toBe("Guitarras Acústicas");
