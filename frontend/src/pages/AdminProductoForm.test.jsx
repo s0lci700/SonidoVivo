@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { iniciarSesion } from "../services/authService";
 import { AdminProductoForm } from "./AdminProductoForm";
 import { obtenerProductoPorCodigo } from "../services/productoService";
 
@@ -29,7 +30,7 @@ function escribir(etiqueta, valor) {
 }
 
 describe("AdminProductoForm", () => {
-  beforeEach(() => localStorage.clear());
+  beforeEach(() => iniciarSesion("admin@sonidovivo.cl", "Admin123"));
 
   it("precarga el producto al editar", async () => {
     renderForm("/admin/productos/GA001");

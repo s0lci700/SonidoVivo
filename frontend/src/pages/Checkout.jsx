@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Boton } from "../components/Boton";
 import { Campo } from "../components/Campo";
 import { Selector } from "../components/Selector";
 import { ResumenPedido } from "../components/ResumenPedido";
 import { obtenerRegiones } from "../services/regionService";
+import { obtenerSesion } from "../services/authService";
+import { crearPedido } from "../services/pedidoService";
 import { calcularTotal } from "../utils/carrito";
-import { validarCorreo, validarTexto } from "../utils/validaciones";
+import { validarTexto } from "../utils/validaciones";
 import { formatearPrecio } from "../utils/formatearPrecio";
 
 const formularioVacio = {
   nombre: "",
   apellidos: "",
-  correo: "",
   entrega: "despacho",
   calle: "",
   region: "",
@@ -27,6 +28,10 @@ export function Checkout(props) {
   const [errores, setErrores] = useState({});
   // Pago simulado: con esta casilla marcada el pago se rechaza, para mostrar la vista de error.
   const [rechazarPago, setRechazarPago] = useState(false);
+  const [errorEnvio, setErrorEnvio] = useState("");
+  const [enviando, setEnviando] = useState(false);
+  // El pedido queda a nombre del correo de la sesión (lo toma ms-pedidos del JWT).
+  const sesion = obtenerSesion();
 
   useEffect(() => {
     obtenerRegiones().then(setRegiones);
@@ -46,15 +51,13 @@ export function Checkout(props) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const nuevosErrores = {};
     if (!validarTexto(formData.nombre, 2))
       nuevosErrores.nombre = "Ingresa tu nombre.";
     if (!validarTexto(formData.apellidos, 2))
       nuevosErrores.apellidos = "Ingresa tus apellidos.";
-    if (!validarCorreo(formData.correo))
-      nuevosErrores.correo = "Ingresa un correo válido.";
     if (esDespacho) {
       if (!validarTexto(formData.calle, 5))
         nuevosErrores.calle = "Ingresa calle y número.";
@@ -65,23 +68,42 @@ export function Checkout(props) {
     if (Object.keys(nuevosErrores).length > 0) return;
 
     const region = regiones.find((r) => r.id === formData.region);
-    const pedido = {
-      numero: String(Date.now()).slice(-6),
-      cliente: `${formData.nombre} ${formData.apellidos}`,
-      correo: formData.correo,
-      entrega: esDespacho
-        ? `Despacho a ${formData.calle}, ${formData.comuna}, ${region?.nombre}`
-        : "Retiro en tienda, Viña del Mar",
+    const nombreCliente = `${formData.nombre} ${formData.apellidos}`;
+    const direccion = esDespacho
+      ? `${formData.calle}, ${formData.comuna}, ${region?.nombre}`
+      : null;
+    // Lo que muestra ResultadoCompra.
+    const resumen = {
+      cliente: nombreCliente,
+      correo: sesion.correo,
+      entrega: esDespacho ? `Despacho a ${direccion}` : "Retiro en tienda, Viña del Mar",
       lineas: props.carrito,
       total: calcularTotal(props.carrito),
     };
 
     if (rechazarPago) {
-      // El carrito se mantiene para poder reintentar.
-      navigate("/compra/error", { state: { pedido } });
-    } else {
+      // Pago simulado rechazado: no se crea el pedido y el carrito se mantiene.
+      navigate("/compra/error", { state: { pedido: resumen } });
+      return;
+    }
+
+    setErrorEnvio("");
+    setEnviando(true);
+    try {
+      const creado = await crearPedido({
+        nombreCliente,
+        entrega: esDespacho ? "DESPACHO" : "RETIRO",
+        direccion,
+        carrito: props.carrito,
+      });
       props.onVaciar();
-      navigate("/compra/exito", { state: { pedido } });
+      // El total que vale es el que calculó el servidor con sus precios.
+      navigate("/compra/exito", { state: { pedido: { ...resumen, numero: creado.id, total: creado.total } } });
+    } catch (error) {
+      // 409 sin stock, 401 sesión vencida, 0 sin conexión...
+      setErrorEnvio(error.message);
+    } finally {
+      setEnviando(false);
     }
   };
 
@@ -91,6 +113,29 @@ export function Checkout(props) {
         <h1 className="font-display text-4xl">Finalizar compra</h1>
         <p className="text-tinta-600">Tu carrito está vacío.</p>
         <Boton a="/catalogo">Ir al catálogo</Boton>
+      </section>
+    );
+  }
+
+  if (!sesion) {
+    return (
+      <section className="flex flex-col items-start gap-4">
+        <h1 className="font-display text-4xl">Finalizar compra</h1>
+        <p className="text-tinta-600">
+          Inicia sesión para confirmar tu pedido. Tu carrito se mantiene.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            to="/login"
+            state={{ desde: "/checkout" }}
+            className="inline-flex h-11 items-center rounded-full bg-laton-500 px-4.5 text-sm font-semibold text-laca-900"
+          >
+            Ingresar
+          </Link>
+          <Boton a="/registro" variante="secundario">
+            Crear cuenta
+          </Boton>
+        </div>
       </section>
     );
   }
@@ -120,14 +165,9 @@ export function Checkout(props) {
               error={errores.apellidos}
             />
           </div>
-          <Campo
-            etiqueta="Correo"
-            tipo="email"
-            nombre="correo"
-            value={formData.correo}
-            onChange={handleChange}
-            error={errores.correo}
-          />
+          <p className="text-sm text-tinta-600">
+            El pedido queda asociado a tu cuenta: <strong>{sesion.correo}</strong>
+          </p>
 
           <fieldset className="mt-2 flex flex-col border-t border-marfil-300 pt-5">
             <legend className="float-left mb-1 w-full text-sm font-medium">
@@ -200,9 +240,14 @@ export function Checkout(props) {
               />
               Simular pago rechazado (demostración)
             </label>
-            <Boton tipo="submit">
+            <Boton tipo="submit" deshabilitado={enviando}>
               Pagar {formatearPrecio(calcularTotal(props.carrito))}
             </Boton>
+            {errorEnvio && (
+              <p role="alert" className="text-sm text-cobre-600">
+                {errorEnvio}
+              </p>
+            )}
           </div>
         </form>
 

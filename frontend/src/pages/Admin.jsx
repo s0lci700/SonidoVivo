@@ -6,7 +6,7 @@ import { obtenerProductos } from "../services/productoService";
 
 // Panel de administración (Figura 9 del Anexo 1): saludo, cierre de sesión,
 // indicadores del catálogo y la lista de productos que hay que reponer.
-// Usuarios, pedidos y reportes llegan en el Parcial 3, con la API.
+// Productos, pedidos y usuarios vienen de los microservicios (Parcial 3).
 export function Admin() {
   const navigate = useNavigate();
   const sesion = obtenerSesion();
@@ -120,15 +120,25 @@ export function Admin() {
                 <Flecha />
               </Link>
             </li>
-            {["Usuarios", "Pedidos", "Reportes"].map((seccion) => (
-              <li
-                key={seccion}
-                className="flex min-h-11 items-center justify-between px-3 text-tinta-600"
-              >
-                {seccion}
-                <span className="text-xs">Parcial 3</span>
+            {[
+              { ruta: "/admin/pedidos", texto: "Pedidos" },
+              { ruta: "/admin/usuarios", texto: "Usuarios" },
+            ].map((seccion) => (
+              <li key={seccion.ruta}>
+                <Link
+                  to={seccion.ruta}
+                  className="flex min-h-11 items-center justify-between rounded-lg px-3 font-semibold hover:bg-marfil-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-laton-800"
+                >
+                  {seccion.texto}
+                  <Flecha />
+                </Link>
               </li>
             ))}
+            {/* TODO (EFT): reportes de ventas a partir de GET /api/pedidos */}
+            <li className="flex min-h-11 items-center justify-between px-3 text-tinta-600">
+              Reportes
+              <span className="text-xs">Pendiente</span>
+            </li>
           </ul>
         </nav>
       </div>

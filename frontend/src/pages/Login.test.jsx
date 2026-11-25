@@ -28,8 +28,8 @@ describe("Login", () => {
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
   });
 
-  it('muestra "Credenciales incorrectas" cuando iniciarSesion (vi.mock) devuelve false', () => {
-    iniciarSesion.mockReturnValue(false);
+  it('muestra "Credenciales incorrectas" cuando iniciarSesion (vi.mock) devuelve false', async () => {
+    iniciarSesion.mockResolvedValue(false);
     renderLogin();
 
     fireEvent.change(screen.getByLabelText("Correo"), {
@@ -41,7 +41,7 @@ describe("Login", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ingresar" }));
 
     expect(iniciarSesion).toHaveBeenCalledWith("otro@correo.cl", "ClaveMala1");
-    expect(screen.getByRole("alert")).toHaveTextContent(
+    expect(await screen.findByRole("alert")).toHaveTextContent(
       "Credenciales incorrectas",
     );
   });

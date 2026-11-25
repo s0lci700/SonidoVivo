@@ -18,11 +18,13 @@ SonidoVivo — semester project for DSY1104 (Desarrollo Full Stack II, 2026-2), 
 - `npm run build` — production build to `frontend/dist/`
 - `npm run lint` — ESLint
 
-No test runner yet — testing (Jasmine/Karma per the course) is covered in week 08.
+- `npm test` — Vitest + React Testing Library. `src/test/apiSimulada.js` replaces `fetch` with a fake backend, so tests don't need the microservices running.
+
+Backend (each microservice in `backend/ms-*`): `.\mvnw.cmd -s ..\settings-google.xml spring-boot:run` / `... test` (tests use H2, no XAMPP). See `backend/README.md` for ports, endpoints, roles and demo users.
 
 ## Frontend conventions
 
-- Structure follows the course's target: `src/components/` (reusable pieces), `src/pages/` (route views), `src/data/` (P2 simulated data), `src/services/` (data access; P2 reads local data, P3 swaps to `fetch` against the REST API — components must not read `data/` directly).
+- Structure follows the course's target: `src/components/` (reusable pieces), `src/pages/` (route views), `src/data/` (P2 simulated data), `src/services/` (data access via `fetch` against the three microservices through `services/api.js`; components must not call `fetch` or read `data/` directly — `data/` now only feeds the test fake backend).
 - Routing: `react-router-dom`, `BrowserRouter` in `main.jsx`, `<Routes>` in `App.jsx`.
 - Styling: Tailwind CSS v4 only (via `@tailwindcss/vite`; `src/index.css` is just `@import "tailwindcss"`). No Bootstrap, no per-component CSS files.
 - Spanish naming for components, props, state and handlers (`ProductoCard`, `onAgregar`, `agregarAlCarrito`), matching the course tutorials. Shared state is lifted to the nearest common parent and passed via props.

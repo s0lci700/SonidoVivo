@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { cerrarSesion, obtenerSesion } from "../services/authService";
+import { cerrarSesion, obtenerSesion, rutaInicio } from "../services/authService";
 
 const enlaces = [
   { ruta: "/", texto: "Inicio" },
@@ -72,10 +72,10 @@ export function Header(props) {
           {sesion ? (
             <div className="hidden items-center md:flex">
               <Link
-                to="/admin"
+                to={rutaInicio(sesion.rol)}
                 className={`${foco} px-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500`}
               >
-                Panel
+                {sesion.rol === "CLIENTE" ? "Mis pedidos" : "Panel"}
               </Link>
               <button
                 type="button"
@@ -173,11 +173,11 @@ export function Header(props) {
           {sesion ? (
             <>
               <Link
-                to="/admin"
+                to={rutaInicio(sesion.rol)}
                 onClick={() => setMenuAbierto(false)}
                 className={`${foco} py-3 text-[15px] font-medium text-marfil-100 transition-colors hover:text-laton-500`}
               >
-                Panel
+                {sesion.rol === "CLIENTE" ? "Mis pedidos" : "Panel"}
               </Link>
               <button
                 type="button"

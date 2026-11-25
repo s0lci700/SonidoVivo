@@ -41,3 +41,6 @@ ruta.json
 
 # Reporte de cobertura (se genera con npm run test:coverage)
 frontend/coverage/
+
+# Variables locales del frontend (se versiona solo .env.example)
+frontend/.env
