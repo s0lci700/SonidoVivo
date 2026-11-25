@@ -2,7 +2,7 @@
 
 Uso:  python documentacion/md-a-docx.py documentacion/cobertura-testing-EP2.md
 Crea el .docx junto al .md. Necesita python-docx (pip install python-docx).
-Entiende lo que usan estos documentos: títulos, párrafos, listas, tablas,
+Entiende lo que usan estos documentos: títulos, párrafos, listas, tablas, bloques de código,
 citas, negrita, cursiva y código en línea.
 """
 
@@ -100,6 +100,29 @@ def convertir(origen):
             p = doc.add_heading(level=min(len(m.group(1)), 3))
             agregar_texto(p, m.group(2))
             i += 1
+            continue
+        if l.startswith("```"):
+            # Bloque de código: se copia tal cual, en Consolas y con fondo, sin interpretar markdown.
+            i += 1
+            codigo = []
+            while i < len(lineas) and not lineas[i].startswith("```"):
+                codigo.append(lineas[i])
+                i += 1
+            i += 1  # cierre ```
+            tabla = doc.add_table(rows=1, cols=1)
+            # cantSplit: el bloque no se corta entre dos páginas (pasa entero a la siguiente).
+            trPr = tabla.rows[0]._tr.get_or_add_trPr()
+            trPr.append(OxmlElement("w:cantSplit"))
+            celda = tabla.rows[0].cells[0]
+            sombrear(celda, "F4EFE3")
+            p = celda.paragraphs[0]
+            for n, linea in enumerate(codigo):
+                run = p.add_run(linea)
+                run.font.name = "Consolas"
+                run.font.size = Pt(8.5)
+                if n < len(codigo) - 1:
+                    run.add_break()
+            doc.add_paragraph()
             continue
         if l.startswith("|") and i + 1 < len(lineas) and re.match(r"^\|[\s:|-]+\|?\s*$", lineas[i + 1]):
             cabecera = celdas(l)
