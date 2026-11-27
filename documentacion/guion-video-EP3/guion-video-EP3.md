@@ -1,6 +1,8 @@
 # Guion del video EP3 — Sonido Vivo
 
-Duración objetivo: **6–7 minutos**. Una sola toma por bloque; si te equivocas, corta y sigue
+Duración objetivo: **8–10 minutos** (la guía oficial `03_DSY1104_EP3_Guia_Video_AVA` sugiere 8 a 12).
+El orden sigue los bloques de esa guía: Inicio → Backend y BD → Swagger y CRUD → Integración
+React REST → JWT y roles → Sesiones y restricciones → Cierre. Una sola toma por bloque; si te equivocas, corta y sigue
 desde el bloque. Las capturas son del sistema real corriendo el 26/11 (React + 3
 microservicios + MariaDB de XAMPP).
 
@@ -41,6 +43,18 @@ login JWT, sesión, restricciones por rol**. Cada bloque dice qué indicador cub
 Mostrar en `backend/`: los tres `ms-*`, y en uno las capas `controller / service /
 repository / model / dto / security`.
 
+## 2b. Backend y base de datos — 60 s · *IE3.1.1 backend + BD*
+
+**Pantalla:** las tres terminales con `Started Ms...Application`, luego VS Code.
+
+> "Los tres microservicios están levantados contra MariaDB de XAMPP." Mostrar en VS Code:
+> `model/Producto.java` (entidad JPA, relación `@ManyToOne` con `Categoria`), su
+> `ProductoRepository`, y en `ProductoService` una regla de negocio: el código no se repite
+> (409) y el stock no puede quedar negativo. En `application.properties` mostrar solo la
+> URL de la base y que la clave JWT viene de una variable de entorno (no hacer zoom al valor).
+> En phpMyAdmin, las tres bases `sonidovivo_productos`, `sonidovivo_usuarios` y
+> `sonidovivo_pedidos`.
+
 ## 3. Catálogo público desde la API — 30 s · *integración*
 
 **Pantalla:** `/catalogo` con DevTools Network abierto.
@@ -65,8 +79,9 @@ Ingresar `cliente@correo.cl` / `Cliente123`.
 > con BCrypt y devuelve un JWT firmado con el correo, el rol y el vencimiento." → mostrar en
 > Network la respuesta con `token` y `rol`. Volvió solo a /mis-pedidos.
 
-> Opcional (suma mucho): DevTools → Application → Session Storage: mostrar la sesión
-> guardada. Copiar el token y pegarlo en jwt.io para mostrar `rol: CLIENTE` y `exp`.
+> DevTools → Application → Session Storage: mostrar que se guarda `token`, `rol`, `nombre` y
+> `expiraEn`, **nunca la contraseña**. La guía pide **no mostrar tokens completos**: no hacer
+> zoom al token ni pegarlo en sitios externos; basta con señalar que existe.
 
 ![Mis pedidos vacío](04-mis-pedidos-vacio.jpg)
 
@@ -100,6 +115,16 @@ Ingresar `cliente@correo.cl` / `Cliente123`.
 > alterado, me manda al login." → en Network se ve la llamada a `/auth/me`.
 
 ![Mis pedidos tras F5](09-mis-pedidos-f5.jpg)
+
+**Sesión inválida (la guía lo pide explícitamente):** DevTools → Application → Session
+Storage → clave `sesion` → en el valor, cambiar **una letra** del token → **F5**.
+
+> "Si el token fue alterado o venció, `/auth/me` responde 401: la app borra la sesión y me
+> manda al login. React no decide si el token es válido; lo decide el backend."
+
+(Probado el 26/11: con la firma alterada, `/mis-pedidos` vuelve a `/login` y la sesión
+queda en `null`.) Luego iniciar sesión de nuevo y presionar **Salir** para mostrar el cierre
+de sesión.
 
 ## 7. Restricción por rol: cliente — 30 s · *roles (frontend + backend)*
 
@@ -165,7 +190,18 @@ DESPACHADO) y `sonidovivo_productos.producto` (GA001 con stock 7).
 
 Opcional: `sonidovivo_usuarios.usuario` → la columna `password` es un hash BCrypt.
 
-## 11. Swagger — 20 s · *documentación de la API*
+## 11. Swagger con CRUD — 90 s · *IE3.2.1 CRUD documentado en Swagger*
+
+La guía pide "ejemplos de lectura, creación, actualización y eliminación" en Swagger:
+
+1. En `:8082/swagger-ui.html`, `POST /auth/login` con la cuenta admin → copiar el token
+   (sin hacer zoom) → en `:8081/swagger-ui.html` botón **Authorize**.
+2. `GET /api/productos/GA001` → 200.
+3. `POST /api/productos` con el ejemplo de la sección 5.2 del documento de integración
+   (`"categoriaId": "GA"`, código `GA010`) → **201**. Repetirlo → **409** código repetido.
+   Con `"precio": -5` → **400** con `campos`.
+4. `PUT /api/productos/GA010` cambiando el precio → 200.
+5. `DELETE /api/productos/GA010` → **204**. **Logout** en Authorize y repetir → **401**. · *documentación de la API*
 
 ![Swagger productos](18-swagger-productos.jpg)
 ![Swagger usuarios](19-swagger-usuarios.jpg)
@@ -177,7 +213,8 @@ Opcional: `sonidovivo_usuarios.usuario` → la columna `password` es un hash BCr
 
 > "En resumen: React consume tres microservicios Spring Boot por REST, con JWT, roles
 > validados en el backend y datos persistidos en MySQL. Los repositorios del frontend y
-> del backend tienen las instrucciones para ejecutarlo. Gracias."
+> del backend tienen las instrucciones para ejecutarlo, y la entrega incluye el manual de
+> usuario y el documento de integración. Gracias."
 
 ## Después de grabar
 

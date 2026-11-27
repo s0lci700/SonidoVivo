@@ -13,21 +13,24 @@ Instrucciones y rúbrica: `documentacion/EA3/Instrucciones EP3 (40%)/`.
 
 ## Pendiente (obligatorio)
 
-- [ ] **Actualizar `documentacion/integracion-EP3.md`** a lo que hay en `main` y regenerar
+- [x] **Actualizar `documentacion/integracion-EP3.md`** a lo que hay en `main` y regenerar
       `.docx` y `.pdf` (`documentacion/md-a-docx.py`). Hoy describe el modelo de `ccr`:
   - `ProductoRequest`/`ProductoResponse` con `categoriaId` + `categoria` plano
     (no `"categoria": {"id": "GA"}`, líneas ~221, ~354 y ~407).
   - `exception/ManejadorErrores` (no `controller/ApiErrores`, línea ~85), forma `{error, campos}`.
   - CORS dentro de `SecurityConfig` (ya no existe `CorsConfig`).
   - Endpoints de stock: `PATCH /{codigo}/stock`, `POST /{codigo}/descontar`, `POST /{codigo}/reponer`.
-- [ ] **Dos repos GitHub públicos**: uno para `frontend/` y otro para `backend/`
+- [x] **Dos repos GitHub públicos** (s0lci700/SonidoVivo-frontend y SonidoVivo-backend, 26/11): uno para `frontend/` y otro para `backend/`
       (p. ej. `git subtree split --prefix=frontend` / `--prefix=backend` para conservar historial),
       cada uno con su README de ejecución.
-- [ ] **ZIP de cada proyecto** (sin `node_modules/` ni `target/`).
+- [x] **ZIP de cada proyecto** (`EV3\ENTREGA\`, probados desde cero) (sin `node_modules/` ni `target/`).
 - [ ] **Video demostrativo** (sin video, la defensa queda limitada al 60% por indicador). Mostrar:
   integración React–Spring Boot, CRUD, persistencia en MySQL/XAMPP, login JWT,
   sesión que sobrevive a F5, restricciones por rol (cliente vs. vendedor vs. admin) y Swagger.
-- [ ] **Registrar en AVA** los 5 artefactos y los integrantes.
+- [x] **Manual de usuario con capturas** (`documentacion/manual-usuario-EP3/`): el documento oficial
+      `01_DSY1104_EP3_Instrucciones_Generales_AVA` lo exige además de los 5 de la imagen.
+- [ ] **Registrar en AVA**: 2 enlaces de repos, 2 ZIP, video, manual de usuario (PDF),
+      documento de integración (PDF) e integrantes (individual).
 
 ## Preparación de la defensa
 
