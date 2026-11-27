@@ -1,4 +1,8 @@
-# Backend Sonido Vivo
+# Sonido Vivo — Backend (Spring Boot)
+
+Proyecto semestral **DSY1104 · Desarrollo Full Stack II · 2026-2**, sección 005D.
+Caso Forma B: *Tienda Sonido Vivo*. Proyecto individual de Sol León.
+El frontend en React está en el repositorio `SonidoVivo-frontend`.
 
 Tres microservicios Spring Boot independientes. Cada uno tiene su propio `pom.xml`, su
 `application.properties` y su base de datos en MySQL.
@@ -56,8 +60,14 @@ src/main/java/cl/sonidovivo/<servicio>/
 ├── model/        entidades JPA
 ├── repository/   interfaces JpaRepository
 ├── service/      reglas de negocio
-└── controller/   endpoints REST (/api/...)
+├── controller/   endpoints REST (/api/...)
+├── dto/          records de entrada y salida (p. ej. ProductoRequest / ProductoResponse)
+├── security/     SecurityConfig (reglas por rol, CORS, 401/403), JwtFilter, JwtService
+└── config/       OpenApiConfig (Swagger) y DatosIniciales
 ```
+
+Los errores los arma un `@RestControllerAdvice` (`controller/ApiErrores` en usuarios y
+pedidos, `exception/ManejadorErrores` en productos), siempre con la forma `{error, campos}`.
 
 ## Seguridad: JWT y roles
 
@@ -123,4 +133,4 @@ necesitan XAMPP. Prueban 200/201/401/403/409 con tokens firmados de verdad. En `
 `ms-productos` se reemplaza por un simulacro (`@MockitoBean`).
 
 Orden para levantar todo: XAMPP (MySQL) → los tres microservicios (cualquier orden) →
-`npm run dev` en `frontend/`.
+`npm install` y `npm run dev` en el repositorio del frontend (http://localhost:5173).

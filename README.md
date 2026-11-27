@@ -7,7 +7,12 @@ Tienda de instrumentos y equipos musicales de Viña del Mar: catálogo en línea
 con stock, carrito, compra con despacho o retiro en tienda, y un panel de
 administración para mantener los productos.
 
-**Versión actual: Evaluación Parcial 2** (frontend en React con datos simulados).
+**Versión actual: Evaluación Parcial 3** — frontend React + tres microservicios Spring Boot
+con MySQL y JWT. Instrucciones de ejecución actualizadas en
+[`frontend/README.md`](frontend/README.md) y [`backend/README.md`](backend/README.md);
+arquitectura en [`documentacion/integracion-EP3.md`](documentacion/integracion-EP3.md).
+
+> Lo que sigue describe la versión del Parcial 2 y se conserva como registro.
 
 ## Ejecutar
 

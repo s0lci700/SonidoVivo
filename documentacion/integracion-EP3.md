@@ -82,8 +82,8 @@ Los tres microservicios siguen la misma organización en capas:
 | `repository/` | Interfaces `JpaRepository` con consultas derivadas del nombre |
 | `service/` | Reglas de negocio; lanza `ResponseStatusException` con el código HTTP |
 | `controller/` | Endpoints REST, validación con `@Valid` y documentación Swagger |
-| `controller/ApiErrores` | `@RestControllerAdvice`: todos los errores salen como `{"error": ...}` |
-| `dto/` | Objetos de entrada (records) separados de las entidades |
+| `controller/ApiErrores` (usuarios, pedidos) · `exception/ManejadorErrores` (productos) | `@RestControllerAdvice`: todos los errores salen como `{"error": ..., "campos": {...}}` |
+| `dto/` | Records de entrada y salida separados de las entidades (en productos: `ProductoRequest` / `ProductoResponse`) |
 | `security/` | `SecurityConfig` (reglas por rol, CORS, 401/403), `JwtFilter`, `JwtService` |
 | `config/` | `OpenApiConfig` (botón Authorize en Swagger) y `DatosIniciales` |
 
@@ -98,7 +98,7 @@ Los tres microservicios siguen la misma organización en capas:
 | | `JwtService` | Crea el token (correo, rol, nombre, vencimiento) y lo verifica |
 | ms-productos | `Producto`, `Categoria` | Catálogo de la planilla del caso (51 productos, 10 categorías) |
 | | `ProductoService` | CRUD por código, cambio de stock, descontar y reponer |
-| | `ProductoController` | `/api/productos`, `/api/categorias` |
+| | `ProductoController`, `CategoriaController` | `/api/productos`, `/api/categorias` |
 | ms-pedidos | `Pedido`, `DetallePedido` | Pedido con sus líneas, estado y tipo de entrega |
 | | `PedidoService` | Crear (con compensación), historial, cambio de estado |
 | | `ProductoClient` | Cliente REST hacia `ms-productos` con token de rol SERVICIO |
@@ -111,7 +111,7 @@ Los tres microservicios siguen la misma organización en capas:
 | `services/api.js` | **Único lugar que llama a `fetch`.** Agrega el token, convierte errores HTTP en `ErrorApi` y borra la sesión ante un 401 |
 | `services/sesion.js` | Guarda, lee y borra la sesión en `sessionStorage`; descarta la sesión vencida |
 | `services/authService.js` | Login, registro, cierre de sesión y validación con `/auth/me` tras F5 |
-| `services/productoService.js` | Catálogo y CRUD; traduce la categoría del backend a la forma que usan las páginas |
+| `services/productoService.js` | Catálogo y CRUD; envía y recibe la categoría como `categoriaId` + `categoria` (nombre), la misma forma del Parcial 2 |
 | `services/pedidoService.js` | Crear pedido, historial del cliente, listado y cambio de estado |
 | `services/usuarioService.js` | Gestión de usuarios para el administrador |
 | `components/RutaProtegida.jsx` | Protege rutas por sesión y por rol; verifica con el backend tras F5 |
@@ -211,14 +211,14 @@ Swagger de cada microservicio: `http://localhost:<puerto>/swagger-ui.html`.
 
 ### 5.2 Ejemplos
 
-Crear un producto (ADMINISTRADOR). La categoría se envía como objeto con su `id`:
+Crear un producto (ADMINISTRADOR). La categoría se envía como su `categoriaId` (`ProductoRequest`):
 
 ```
 POST http://localhost:8081/api/productos
 Authorization: Bearer <token>
 Content-Type: application/json
 
-{ "codigo": "GA010", "categoria": { "id": "GA" }, "nombre": "Guitarra Clásica",
+{ "codigo": "GA010", "categoriaId": "GA", "nombre": "Guitarra Clásica",
   "marca": "Yamaha", "modelo": "C40", "stock": 4, "precio": 99990,
   "descripcion": "Guitarra clásica de estudio con cuerdas de nylon." }
 ```
@@ -351,8 +351,8 @@ login, vuelve a la página que intentaba abrir.
 ```
 Catalogo.jsx -> productoService.obtenerProductos("GA")
   -> GET :8081/api/productos?categoria=GA          (sin token)
-  <- 200 [{codigo, nombre, ..., categoria: {id, nombre}}]
-productoService convierte categoria -> categoriaId + nombre de categoría
+  <- 200 [{id, codigo, categoriaId: "GA", categoria: "Guitarras Acústicas", nombre, ...}]
+     (ProductoResponse: la categoría viene plana, la forma que ya usaban las páginas)
 ```
 
 ### 8.2 Iniciar sesión y recargar la página
@@ -404,7 +404,7 @@ ENTREGADO y CANCELADO son finales: otro cambio responde 409
 ```
 AdminProductoForm.jsx -> crearProducto / actualizarProducto
   -> POST | PUT :8081/api/productos[/{codigo}]
-     cuerpo con "categoria": {"id": "GA"}
+     cuerpo ProductoRequest con "categoriaId": "GA"
   <- 201 | 200, o 400 con "campos", o 409 si el código ya existe
 AdminProductos.jsx -> eliminarProducto
   -> DELETE :8081/api/productos/{codigo}   <- 204
