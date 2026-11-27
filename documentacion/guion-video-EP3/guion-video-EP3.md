@@ -43,6 +43,8 @@ login JWT, sesión, restricciones por rol**. Cada bloque dice qué indicador cub
 Mostrar en `backend/`: los tres `ms-*`, y en uno las capas `controller / service /
 repository / model / dto / security`.
 
+![VS Code: api.js, único lugar con fetch; agrega Authorization: Bearer (línea 28)](vscode/01-api-js.png)
+
 ## 2b. Backend y base de datos — 60 s · *IE3.1.1 backend + BD*
 
 **Pantalla:** las tres terminales con `Started Ms...Application`, luego VS Code.
@@ -54,6 +56,12 @@ repository / model / dto / security`.
 > URL de la base y que la clave JWT viene de una variable de entorno (no hacer zoom al valor).
 > En phpMyAdmin, las tres bases `sonidovivo_productos`, `sonidovivo_usuarios` y
 > `sonidovivo_pedidos`.
+
+![VS Code: entidad Producto con @ManyToOne a Categoria y validaciones](vscode/02-producto-entidad.png)
+
+![VS Code: ProductoService.crear — 409 si el código ya existe](vscode/03-producto-service-409.png)
+
+![VS Code: ProductoController — POST con @Valid, documentado para Swagger](vscode/04-producto-controller.png)
 
 ## 3. Catálogo público desde la API — 30 s · *integración*
 
@@ -85,6 +93,14 @@ Ingresar `cliente@correo.cl` / `Cliente123`.
 
 ![Mis pedidos vacío](04-mis-pedidos-vacio.jpg)
 
+**Para explicar JWT y roles en el código** (bloque corto, 30 s):
+
+![VS Code: JwtService (ms-usuarios) — crea y firma el token con correo, rol y vencimiento](vscode/06-jwt-service-crea.png)
+
+![VS Code: JwtFilter — lee el Bearer, verifica la firma y carga el rol](vscode/07-jwt-filter-verifica.png)
+
+![VS Code: SecurityConfig — reglas por rol, 401 y 403 (líneas 38-51)](vscode/05-security-config-roles.png)
+
 ## 5. Compra que persiste y descuenta stock — 60 s · *CRUD + persistencia*
 
 1. Abrir la ficha de **Guitarra Acústica Folk** → mostrar **"8 disponibles"**.
@@ -106,6 +122,8 @@ Ingresar `cliente@correo.cl` / `Cliente123`.
 
 ![Stock 7](10-stock-7.png)
 
+![VS Code: PedidoService.crear — descuenta stock en ms-productos con token SERVICIO (línea 56)](vscode/08-pedido-service-descuenta.png)
+
 ## 6. La sesión sobrevive a F5 — 20 s · *sesiones*
 
 **Pantalla:** `/mis-pedidos` → apretar **F5**.
@@ -126,6 +144,10 @@ Storage → clave `sesion` → en el valor, cambiar **una letra** del token → 
 queda en `null`.) Luego iniciar sesión de nuevo y presionar **Salir** para mostrar el cierre
 de sesión.
 
+![VS Code: sesion.js — sessionStorage y descarte del token vencido](vscode/09-sesion-js.png)
+
+![VS Code: RutaProtegida.jsx — valida con /auth/me tras F5, Reintentar si no hay backend, roles](vscode/10-ruta-protegida.png)
+
 ## 7. Restricción por rol: cliente — 30 s · *roles (frontend + backend)*
 
 Escribir a mano `localhost:5173/admin/productos`.
@@ -133,6 +155,8 @@ Escribir a mano `localhost:5173/admin/productos`.
 > "Un cliente no puede entrar al panel: React muestra Acceso restringido."
 
 ![Cliente restringido](05-cliente-restringido.jpg)
+
+![VS Code: App.jsx — rutas envueltas en RutaProtegida con roles={SOLO_ADMIN} / {PERSONAL}](vscode/11-app-rutas-por-rol.png)
 
 > "Pero la protección real está en el backend." → en Swagger de ms-productos (8081),
 > *Authorize* con el token del cliente, `DELETE /api/productos/GA001` → **403
@@ -189,6 +213,10 @@ DESPACHADO) y `sonidovivo_productos.producto` (GA001 con stock 7).
 > se comunican por REST. Si reinicio los servicios, los datos siguen."
 
 Opcional: `sonidovivo_usuarios.usuario` → la columna `password` es un hash BCrypt.
+
+![phpMyAdmin: sonidovivo_productos.producto (51 filas)](20-phpmyadmin-productos.jpg)
+
+![phpMyAdmin: sonidovivo_usuarios.usuario — password guardada como hash BCrypt](21-phpmyadmin-usuarios-bcrypt.jpg)
 
 ## 11. Swagger con CRUD — 90 s · *IE3.2.1 CRUD documentado en Swagger*
 
