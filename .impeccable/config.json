@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "consolas",
+        "files": [
+          "documentacion/guion-video-EP3/estilo-guion.html"
+        ],
+        "createdAt": "2026-11-27T02:40:52.129Z",
+        "reason": "Claude: guion interno del video, no es UI de la tienda; monoespaciada solo para fragmentos de código"
+      }
+    ]
+  }
+}

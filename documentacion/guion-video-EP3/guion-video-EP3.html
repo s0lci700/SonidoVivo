@@ -1,12 +1,144 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc 3.14" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Guion video EP3</title>
+  <title>Guion video EP3 — Sonido Vivo</title>
   <style>
 
+html {
+color: #1a1a1a;
+color: light-dark(#1a1a1a, #fdfdfd);
+background-color: #fdfdfd;
+background-color: light-dark(#fdfdfd, #1a1a1a);
+color-scheme: light dark;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+p {
+margin: 1em 0;
+}
+a, a:visited {
+color: inherit;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid;
+border-color: #e6e6e6;
+border-color: light-dark(#e6e6e6, #4c4c4c);
+color: #606060;
+color: light-dark(#606060, #b6b6b6);
+}
+code {
+white-space: pre-wrap;
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid currentColor;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid currentColor;
+border-bottom: 1px solid currentColor;
+}
+th {
+border-top: 1px solid currentColor;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
 span.smallcaps{font-variant: small-caps;}
 em, em em em, em em em em em {
 font-style: italic;
@@ -49,16 +181,142 @@ widows: 3;
 h2, h3, h4 {
 page-break-after: avoid;
 }
-} img{max-width:100%;border:1px solid #ccc;margin:4px 0 12px}</style>
-  <style type="text/css">body{font-family:Calibri,Arial,sans-serif;font-size:10.5pt;color:#1a1714;max-width:none;margin:0}
-h1,h2,h3{color:#7a5a16}h1{font-size:20pt}h2{font-size:15pt;border-bottom:1px solid #d8c9a3;padding-bottom:2px}
-table{border-collapse:collapse;width:100%;margin:6px 0;font-size:9.5pt}th,td{border:1px solid #bbb;padding:3px 5px;text-align:left;vertical-align:top}th{background:#efe6cf}
-pre{background:#f6f3ec;padding:6px;font-size:8.5pt;white-space:pre-wrap;page-break-inside:avoid}code{font-family:Consolas,monospace;font-size:9pt}
-blockquote{border-left:3px solid #c9a84c;margin:6px 0;padding-left:8px;color:#444}
-@page{size:A4;margin:18mm 16mm}
-img{max-width:100%;border:1px solid #ccc;margin:4px 0 12px}</style>
+} </style>
+  <style>
+:root {
+--tinta: #1f1a14; --suave: #5b5247; --laton: #8a6414; --laton-claro: #f3e7c8;
+--fondo: #faf7f0; --papel: #ffffff; --borde: #e4dccb; --dicho: #fff8e6;
+}
+html { scroll-behavior: smooth; }
+body {
+margin: 0; background: var(--fondo); color: var(--tinta);
+font: 17px/1.65 "Segoe UI", system-ui, sans-serif;
+display: grid; grid-template-columns: 270px minmax(0, 1fr); max-width: none; padding: 0;
+}
+
+nav#TOC {
+position: sticky; top: 0; height: 100vh; overflow-y: auto;
+background: #241e17; color: #e9dfcc; padding: 22px 16px; box-sizing: border-box; font-size: 14px;
+}
+nav#TOC::before { content: "Guion · bloques"; display: block; font-weight: 700; color: #e0b54a;
+letter-spacing: .04em; text-transform: uppercase; font-size: 12px; margin-bottom: 10px; }
+nav#TOC ul { list-style: none; margin: 0; padding: 0; }
+nav#TOC > ul > li > a { display: none; }
+nav#TOC a { display: block; color: #e9dfcc; text-decoration: none; padding: 6px 10px; border-radius: 6px; }
+nav#TOC a:hover, nav#TOC a.activo { background: #3a3025; color: #fff; }
+main, body > header, body > .contenido { grid-column: 2; }
+.contenido { max-width: 860px; margin: 0 auto; padding: 36px 40px 120px; }
+header#title-block-header { display: none; }
+h1 { font-size: 34px; color: var(--laton); margin: 0 0 12px; line-height: 1.2; }
+h2 {
+font-size: 23px; margin: 56px 0 14px; padding: 12px 16px; line-height: 1.3;
+background: var(--papel); border: 1px solid var(--borde); border-left: 6px solid var(--laton);
+border-radius: 8px; scroll-margin-top: 16px;
+}
+h2 em { font-style: normal; font-size: 14px; color: var(--laton); background: var(--laton-claro);
+padding: 2px 8px; border-radius: 99px; vertical-align: middle; white-space: nowrap; }
+p, li { max-width: 72ch; }
+li { margin: 6px 0; }
+code { font-family: Consolas, monospace; font-size: .88em; background: #efe8d8; padding: 1px 5px; border-radius: 4px; }
+strong { color: #000; }
+
+blockquote {
+margin: 16px 0; padding: 14px 18px 14px 52px; position: relative;
+background: var(--dicho); border: 1px solid #ecd9a6; border-radius: 10px;
+font-size: 18px; line-height: 1.6; color: #2b2116;
+}
+blockquote::before { content: "🎙"; position: absolute; left: 16px; top: 12px; font-size: 22px; }
+blockquote p { margin: 6px 0; }
+
+figure { margin: 18px 0 26px; }
+figure img, p > img {
+display: block; width: 100%; max-width: 640px; height: auto; cursor: zoom-in;
+border: 1px solid var(--borde); border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,.08);
+transition: transform .15s;
+}
+figure img:hover { transform: translateY(-2px); }
+figcaption { font-size: 14px; color: var(--suave); margin-top: 6px; max-width: 640px; }
+#visor { position: fixed; inset: 0; background: rgba(15,12,9,.92); display: none;
+align-items: center; justify-content: center; z-index: 10; cursor: zoom-out; padding: 24px; }
+#visor.abierto { display: flex; }
+#visor img { max-width: 100%; max-height: 100%; border-radius: 6px; }
+#visor span { position: fixed; bottom: 14px; left: 0; right: 0; text-align: center; color: #ddd; font-size: 14px; }
+table { border-collapse: collapse; }
+@media (max-width: 900px) {
+body { display: block; } nav#TOC { display: none; } .contenido { padding: 20px; }
+}
+@media print {
+body { display: block; } nav#TOC, #visor { display: none; } figure img { max-width: 480px; }
+}
+</style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Mueve el contenido a una columna centrada
+      const toc = document.getElementById("TOC");
+      const cont = document.createElement("div"); cont.className = "contenido";
+      [...document.body.children].forEach(n => { if (n !== toc && n.tagName !== "SCRIPT") cont.appendChild(n); });
+      document.body.appendChild(cont);
+      // Visor de capturas
+      const visor = document.createElement("div"); visor.id = "visor";
+      visor.innerHTML = '<img alt=""><span>Clic o Esc para cerrar</span>';
+      document.body.appendChild(visor);
+      const cerrar = () => visor.classList.remove("abierto");
+      visor.onclick = cerrar; document.onkeydown = e => { if (e.key === "Escape") cerrar(); };
+      document.querySelectorAll(".contenido img").forEach(img => img.onclick = () => {
+        visor.querySelector("img").src = img.src; visor.classList.add("abierto");
+      });
+      // Resalta en el índice el bloque visible
+      const enlaces = [...document.querySelectorAll("nav#TOC a")];
+      const obs = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) enlaces.forEach(a => a.classList.toggle("activo", a.getAttribute("href") === "#" + e.target.id));
+      }), { rootMargin: "0px 0px -70% 0px" });
+      document.querySelectorAll("h2[id]").forEach(h => obs.observe(h));
+    });
+  </script>
 </head>
 <body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#guion-del-video-ep3-sonido-vivo" id="toc-guion-del-video-ep3-sonido-vivo">Guion del video EP3 — Sonido
+Vivo</a>
+<ul>
+<li><a href="#antes-de-grabar-checklist" id="toc-antes-de-grabar-checklist">0. Antes de grabar
+(checklist)</a></li>
+<li><a href="#presentación-20-s" id="toc-presentación-20-s">1.
+Presentación — 20 s</a></li>
+<li><a href="#arquitectura-en-el-código-40-s-integración" id="toc-arquitectura-en-el-código-40-s-integración">2. Arquitectura en
+el código — 40 s · <em>integración</em></a></li>
+<li><a href="#b.-backend-y-base-de-datos-60-s-ie3.1.1-backend-bd" id="toc-b.-backend-y-base-de-datos-60-s-ie3.1.1-backend-bd">2b. Backend
+y base de datos — 60 s · <em>IE3.1.1 backend + BD</em></a></li>
+<li><a href="#catálogo-público-desde-la-api-30-s-integración" id="toc-catálogo-público-desde-la-api-30-s-integración">3. Catálogo
+público desde la API — 30 s · <em>integración</em></a></li>
+<li><a href="#ruta-protegida-y-login-jwt-50-s-autenticación-jwt" id="toc-ruta-protegida-y-login-jwt-50-s-autenticación-jwt">4. Ruta
+protegida y login JWT — 50 s · <em>autenticación JWT</em></a></li>
+<li><a href="#compra-que-persiste-y-descuenta-stock-60-s-crud-persistencia" id="toc-compra-que-persiste-y-descuenta-stock-60-s-crud-persistencia">5.
+Compra que persiste y descuenta stock — 60 s · <em>CRUD +
+persistencia</em></a></li>
+<li><a href="#la-sesión-sobrevive-a-f5-20-s-sesiones" id="toc-la-sesión-sobrevive-a-f5-20-s-sesiones">6. La sesión sobrevive a
+F5 — 20 s · <em>sesiones</em></a></li>
+<li><a href="#restricción-por-rol-cliente-30-s-roles-frontend-backend" id="toc-restricción-por-rol-cliente-30-s-roles-frontend-backend">7.
+Restricción por rol: cliente — 30 s · <em>roles (frontend +
+backend)</em></a></li>
+<li><a href="#vendedor-gestiona-pedidos-nada-más-40-s-roles" id="toc-vendedor-gestiona-pedidos-nada-más-40-s-roles">8. Vendedor:
+gestiona pedidos, nada más — 40 s · <em>roles</em></a></li>
+<li><a href="#administrador-crud-de-productos-con-validaciones-75-s-crud" id="toc-administrador-crud-de-productos-con-validaciones-75-s-crud">9.
+Administrador: CRUD de productos con validaciones — 75 s ·
+<em>CRUD</em></a></li>
+<li><a href="#persistencia-en-mysql-30-s-persistencia" id="toc-persistencia-en-mysql-30-s-persistencia">10. Persistencia en
+MySQL — 30 s · <em>persistencia</em></a></li>
+<li><a href="#swagger-con-crud-90-s-ie3.2.1-crud-documentado-en-swagger" id="toc-swagger-con-crud-90-s-ie3.2.1-crud-documentado-en-swagger">11.
+Swagger con CRUD — 90 s · <em>IE3.2.1 CRUD documentado en
+Swagger</em></a></li>
+<li><a href="#cierre-15-s" id="toc-cierre-15-s">12. Cierre — 15
+s</a></li>
+<li><a href="#después-de-grabar" id="toc-después-de-grabar">Después de
+grabar</a></li>
+</ul></li>
+</ul>
+</nav>
 <h1 id="guion-del-video-ep3-sonido-vivo">Guion del video EP3 — Sonido
 Vivo</h1>
 <p>Duración objetivo: <strong>8–10 minutos</strong> (la guía oficial
