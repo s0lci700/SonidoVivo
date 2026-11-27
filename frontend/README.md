@@ -10,7 +10,7 @@ Consume los tres microservicios Spring Boot del repositorio del backend.
 ## Requisitos
 
 - **Node.js 20.19+ o 22.12+** (probado con Node 24 y 25).
-- **El backend en ejecución** (repositorio `SonidoVivo-backend`): XAMPP con MySQL iniciado
+- **El backend en ejecución** ([SonidoVivo-backend](https://github.com/s0lci700/SonidoVivo-backend)): XAMPP con MySQL iniciado
   y los microservicios `ms-productos` (8081), `ms-usuarios` (8082) y `ms-pedidos` (8083).
   Sin backend el sitio abre, pero el catálogo y el login muestran error de conexión.
 

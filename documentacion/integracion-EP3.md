@@ -5,11 +5,11 @@ Caso **Forma B — Tienda Sonido Vivo**
 
 | | |
 |---|---|
-| Versión | **1.0** — etapa **Evaluación Parcial 3** |
-| Fecha | 20 de noviembre de 2026 |
+| Versión | **1.1** — etapa **Evaluación Parcial 3** |
+| Fecha | 26 de noviembre de 2026 |
 | Autora | Sol León |
 | Sección | 005D |
-| Repositorio | https://github.com/s0lci700/SonidoVivo |
+| Repositorios | Frontend: https://github.com/s0lci700/SonidoVivo-frontend · Backend: https://github.com/s0lci700/SonidoVivo-backend |
 
 > Este documento describe la integración **tal como está construida** en el
 > repositorio: la arquitectura, los componentes, el flujo REST entre React y los

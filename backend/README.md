@@ -2,7 +2,7 @@
 
 Proyecto semestral **DSY1104 · Desarrollo Full Stack II · 2026-2**, sección 005D.
 Caso Forma B: *Tienda Sonido Vivo*. Proyecto individual de Sol León.
-El frontend en React está en el repositorio `SonidoVivo-frontend`.
+El frontend en React está en [SonidoVivo-frontend](https://github.com/s0lci700/SonidoVivo-frontend).
 
 Tres microservicios Spring Boot independientes. Cada uno tiene su propio `pom.xml`, su
 `application.properties` y su base de datos en MySQL.

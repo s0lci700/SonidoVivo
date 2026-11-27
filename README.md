@@ -10,7 +10,7 @@ administración para mantener los productos.
 **Versión actual: Evaluación Parcial 3** — frontend React + tres microservicios Spring Boot
 con MySQL y JWT. Instrucciones de ejecución actualizadas en
 [`frontend/README.md`](frontend/README.md) y [`backend/README.md`](backend/README.md);
-arquitectura en [`documentacion/integracion-EP3.md`](documentacion/integracion-EP3.md).
+repositorios de entrega: [frontend](https://github.com/s0lci700/SonidoVivo-frontend) y [backend](https://github.com/s0lci700/SonidoVivo-backend); arquitectura en [`documentacion/integracion-EP3.md`](documentacion/integracion-EP3.md).
 
 > Lo que sigue describe la versión del Parcial 2 y se conserva como registro.
 
